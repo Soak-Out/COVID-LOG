@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/post-page">Post-Page</router-link>
+      <router-link to="/covidList">covidList</router-link>
     </div>
     <router-view />
   </div>
