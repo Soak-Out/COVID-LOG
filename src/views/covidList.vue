@@ -2,8 +2,8 @@
   <div>
     <table
       border="1"
-      v-for="postContent in postContents"
-      v-bind:key="postContent"
+      v-for="(postContent, index) in postContents"
+      v-bind:key="(postContent, index)"
     >
       <tr>
         <th>HN</th>
@@ -43,19 +43,23 @@
         </td>
       </tr>
       <th colspan="2">
-        <div v-for="(postContent, index) in postContents" :key="index">
-          <button v-on:click="usefulButton(index)">役に立った</button> +
-          {{ postContent.usefulLevel }}
-        </div>
+        <!-- <div v-for="(postContent, index) in postContents" :key="index"> -->
+        <button v-on:click="usefulButton(index)">役に立った</button> +
+        {{ postContent.usefulLevel }}
+        <!-- </div> -->
       </th>
     </table>
   </div>
 </template>
 <script>
 import { defineComponent } from "@vue/composition-api";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default defineComponent({
   setup() {},
+  components: {
+    InfiniteLoading,
+  },
 
   data: () => ({
     postContents: [
