@@ -52,15 +52,9 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "@vue/composition-api";
-import InfiniteLoading from "vue-infinite-loading";
+// import InfiniteLoading from "vue-infinite-loading"
 
-export default defineComponent({
-  setup() {},
-  components: {
-    InfiniteLoading,
-  },
-
+export default {
   data: () => ({
     postContents: [
       {
@@ -99,11 +93,11 @@ export default defineComponent({
   }),
   methods: {
     // 役に立つボタンのカウント
-    usefulButton: function(index) {
-      this.postContents[index].usefulLevel++;
+    usefulButton: function (index) {
+      this.postContents[index].usefulLevel++
     },
   },
-});
+}
 
 // v-for="HN in postContents" v-bind:key="HN"
 //  v-for="title in postContents" v-bind:key="title"
