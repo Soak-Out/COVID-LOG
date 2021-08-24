@@ -5,7 +5,7 @@
         type="text"
         v-model="postTitle"
       />
-      投稿内容<textarea type="text" v-model="postText" id="post-text" />
+      投稿内容<textarea type="text" v-model="postText" />
       <input type="checkbox" v-model="infection" id="infection" /><label
         for="infection"
         >コロナに感染している/したことがある</label
@@ -54,9 +54,9 @@
         >
       </div>
 
-      <button onclick="kaigyou();" v-on:click="post" @click="openModal">
-        投稿
-      </button>
+      <button v-on:click="post" @click="openModal">投稿</button>
+
+      <!-- <button v-on:click="getPost">投稿を取得</button> -->
       <modal v-show="showContent" @close="closeModal" />
     </div>
   </div>
@@ -92,13 +92,15 @@ export default {
   data() {
     return initialState()
   },
+
   methods: {
     post() {
       if (this.postTitle !== "" && this.postText !== "") {
+        const kaigyou = this.postText.replace(/\n/g, "\\n")
         firebase.firestore().collection("posts").add({
           handleName: this.handleName,
           title: this.postTitle,
-          text: this.postText,
+          text: kaigyou,
           infection: this.infection,
           vaccine: this.vaccine,
           illLevel: this.illLevel,
