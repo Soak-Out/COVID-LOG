@@ -1,29 +1,39 @@
 <template>
   <div>
-    <div class="flex-cl">
-      お名前<input type="text" v-model="handleName" />タイトル<input
-        type="text"
-        v-model="postTitle"
-      />
-      投稿内容<textarea type="text" v-model="postText" id="post-text" />
-      <input type="checkbox" v-model="infection" id="infection" /><label
-        for="infection"
-        >コロナに感染している/したことがある</label
-      >
-      <input type="checkbox" v-model="vaccine" id="vaccine" /><label
-        for="vaccine"
-        >ワクチン接種</label
-      >
-      <label for="illLevel">重症度</label>
-      <input
-        type="range"
-        v-model="illLevel"
-        min="1"
-        max="5"
-        step="1"
-        id="illLevel"
-      />
+    <div class="post-content">
+      お名前<input type="text" v-model="handleName" class="small-input" />
+      タイトル<input type="text" v-model="postTitle" class="small-input" />
+      投稿内容<textarea type="text" v-model="postText" />
+
+      <ul class="exp">
+        <li>
+          <input type="checkbox" v-model="infection" id="infection" /><label
+            for="infection"
+            >コロナに感染している/したことがある</label
+          >
+        </li>
+        <li>
+          <input type="checkbox" v-model="vaccine" id="vaccine" /><label
+            for="vaccine"
+            >ワクチンを接種</label
+          >
+        </li>
+      </ul>
+
+      <div class="range">
+        <label for="illLevel">重症度(5段階)</label>
+        <input
+          type="range"
+          v-model="illLevel"
+          min="1"
+          max="5"
+          step="1"
+          id="illLevel"
+        />
+      </div>
+
       <div class="symptoms">
+        症状：
         <input type="checkbox" v-model="fever" id="fever" /><label for="fever"
           >発熱</label
         >
@@ -54,9 +64,9 @@
         >
       </div>
 
-      <button onclick="kaigyou();" v-on:click="post" @click="openModal">
-        投稿
-      </button>
+      <button v-on:click="post" @click="openModal">投稿</button>
+
+      <!-- <button v-on:click="getPost">投稿を取得</button> -->
       <modal v-show="showContent" @close="closeModal" />
     </div>
   </div>
@@ -65,6 +75,8 @@
 <script>
 import firebase from "firebase"
 import Modal from "../components/Modal.vue"
+
+require("../assets/css/post-page.css")
 
 function initialState() {
   return {
@@ -92,13 +104,17 @@ export default {
   data() {
     return initialState()
   },
+
   methods: {
     post() {
       if (this.postTitle !== "" && this.postText !== "") {
+        // const user = firebase.auth().currentUser
+        const kaigyou = this.postText.replace(/\n/g, "\\n")
+        // const displayName = user.displayName
         firebase.firestore().collection("posts").add({
           handleName: this.handleName,
           title: this.postTitle,
-          text: this.postText,
+          text: kaigyou,
           infection: this.infection,
           vaccine: this.vaccine,
           illLevel: this.illLevel,
@@ -123,19 +139,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.flex-cl {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  max-width: 500px;
-  margin-bottom: 100px;
-}
-input {
-  height: 1rem;
-  margin-bottom: 20px;
-}
-.symptoms {
-  padding: 30px;
-}
-</style>
+<style scoped></style>
