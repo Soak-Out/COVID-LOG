@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+
+.post-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: left;
+  font-weight: bold;
+  .small-input {
+    width: 40%;
+    margin: 0.5rem 0;
+  }
+  textarea {
+    margin: 0.5rem 0;
+    height: 200px;
+  }
+  .exp {
+    display: flex;
+    flex-direction: column;
+    margin-left: -40px;
+    li {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+  }
+  .range {
+    margin-bottom: 1rem;
+    #illLevel {
+      width: 30%;
+    }
+  }
+  .symptoms {
+    margin-bottom: 1rem;
+    display: flex;
+
+    flex-wrap: wrap;
+    label {
+      margin-right: 20px;
+    }
+  }
+  button {
+    margin: 0 auto;
+    width: 155px;
+    height: 37px;
+    background: $btn-color;
+    color: #fff;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+    line-height: 37px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  }
+}
