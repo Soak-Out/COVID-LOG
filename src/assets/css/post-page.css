@@ -12,6 +12,14 @@
   font-weight: bold;
 }
 
+.post-content label {
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 .post-content .small-input {
   width: 40%;
   margin: 0.5rem 0;
@@ -59,7 +67,7 @@
   margin-right: 20px;
 }
 
-.post-content button {
+.post-content .btn {
   margin: 0 auto;
   width: 155px;
   height: 37px;
@@ -74,5 +82,10 @@
   font-weight: bold;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.post-content .handle-name {
+  color: #00aeff;
+  margin: 1rem 0;
 }
 /*# sourceMappingURL=post-page.css.map */

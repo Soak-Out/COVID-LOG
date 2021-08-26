@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import Home from "../views/Home.vue"
 import Top from "../views/Top.vue"
 import Login from "../views/Login.vue"
+import Mypage from "../views/Mypage.vue"
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,16 @@ const routes = [
     path: "/top",
     name: "Top",
     component: Top,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/mypage",
+    name: "Mypage",
+    component: Mypage,
   },
   {
     path: "/login",
