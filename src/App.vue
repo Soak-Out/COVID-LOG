@@ -5,8 +5,9 @@
       <router-link to="/top">Top</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/post-page">Post-Page</router-link> |
-      <router-link to="/covidList">covidList</router-link> |
+      <router-link to="/covidList">CovidList</router-link> |
       <router-link to="/Login">Login</router-link> |
+      <router-link to="/mypage">Mypage</router-link> |
     </div>
     <router-view />
   </div>
