@@ -2,7 +2,7 @@
   <div>
     <h1>アカウント情報</h1>
     <div class="text">ニックネーム</div>
-    <div class="name">{{ gethandleName }}<span>さん</span></div>
+    <div class="name">{{ gethandleName }}</div>
     <div class="text">ニックネーム変更</div>
     <input type="text" v-model="handleName" class="nick" />
     <a @click="newName" class="btn">変更</a>
@@ -72,11 +72,7 @@ export default {
   font-size: 2rem;
   color: rgb(0, 174, 255);
 }
-span {
-  margin-left: 10px;
-  font-weight: normal;
-  color: #000;
-}
+
 .nick {
   width: 200px;
   height: 30px;
