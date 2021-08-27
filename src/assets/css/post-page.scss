@@ -61,6 +61,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   .handle-name {
     color: rgb(0, 174, 255);
+  }
+  .nickname {
     margin: 1rem 0;
+    display: flex;
   }
 }
