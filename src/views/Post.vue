@@ -109,14 +109,6 @@ export default {
   data() {
     return initialState()
   },
-  created: function () {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        // サインインしていない状態
-        location.href = "/Login"
-      }
-    })
-  },
   mounted: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
       const userDoc = await db.collection("users").doc(user.uid).get()
