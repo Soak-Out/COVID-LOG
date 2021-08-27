@@ -2,8 +2,11 @@
   <div>
     <div class="post-content">
       ニックネーム
-      <a href="/mypage" class="handle-name">{{ handleName }}</a>
-      <!-- <input type="text" v-model="handleName" class="small-input" /> -->
+      <div class="nickname">
+        <a href="/mypage" class="handle-name">{{ handleName }}</a>
+        <span>さん</span>
+      </div>
+
       タイトル<input type="text" v-model="postTitle" class="small-input" />
       投稿内容<textarea type="text" v-model="postText" />
 
@@ -68,7 +71,6 @@
 
       <a v-on:click="post" @click="openModal" class="btn">投稿</a>
 
-      <!-- <button v-on:click="getPost">投稿を取得</button> -->
       <modal v-show="showContent" @close="closeModal" />
     </div>
   </div>
@@ -110,30 +112,14 @@ export default {
   },
   created: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
-      // 未ログイン時
-      // if (!user) {
-      //   // 匿名ログインする
-      //   // firebase.auth().signInAnonymously()
-      //   location.href = "/Login"
-      // }
-      // // ログイン時
-      // else {
-      //   // ログイン済みのユーザー情報があるかをチェック
-      const userDoc = await firebase
-        .firestore()
-        .collection("users")
-        .doc(user.uid)
-        .get()
+      const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
         const docRef = db.collection("users").doc(user.uid)
         docRef
           .get()
           .then((doc) => {
-            // thisの挙動から、ここはアロー関数にする必要があるはず。functionだと動かないと思う。
             if (doc.exists) {
-              // console.log("Document data:", doc.data())
-              this.handleName = doc.data().handleName // ここ追記！
-              console.log(this.handleName)
+              this.handleName = doc.data().handleName
             } else {
               console.log("No such document!")
             }
@@ -142,15 +128,12 @@ export default {
             console.log("Error getting document:", error)
           })
       }
-      // }
     })
   },
   methods: {
     post() {
       if (this.postTitle !== "" && this.postText !== "") {
-        // const user = firebase.auth().currentUser
         const kaigyou = this.postText.replace(/\n/g, "\\n")
-        // const displayName = user.displayName
         db.collection("posts").add({
           handleName: this.handleName,
           title: this.postTitle,
@@ -174,9 +157,8 @@ export default {
     },
     closeModal() {
       this.showContent = false
+      this.$router.go({ path: this.$router.currentRoute.path, force: true })
     },
   },
 }
 </script>
-
-<style scoped></style>
