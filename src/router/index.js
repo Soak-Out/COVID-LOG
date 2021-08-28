@@ -66,12 +66,30 @@ const router = new VueRouter({
   routes,
 })
 
-let isSignedIn = () => {
-  return firebase.auth().currentUser
+const isSignedIn = async () => {
+  // Promise を使って、onAuthStateChanged が完了するまで待つ
+  return await new Promise((resolve, reject) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          unsubscribe()
+          resolve(true)
+        } else {
+          unsubscribe()
+          resolve(false)
+        }
+      },
+      (error) => {
+        unsubscribe()
+        reject(error)
+      }
+    )
+  })
 }
 
-router.beforeEach((to, from, next) => {
-  if (to.name !== "Login" && !isSignedIn()) {
+router.beforeEach(async (to, from, next) => {
+  const auth = await isSignedIn()
+  if (to.name !== "Login" && !auth) {
     next("/Login")
   } else {
     next()
