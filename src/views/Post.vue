@@ -83,8 +83,6 @@ import Modal from "../components/Modal.vue"
 const db = firebase.firestore()
 
 //css読み込み
-require("../assets/css/global.css")
-require("../assets/css/post-page.css")
 
 function initialState() {
   return {
@@ -166,10 +164,74 @@ export default {
 }
 </script>
 
-<style>
-.photo {
-  border: #ccc 1px solid;
-  border-radius: 50%;
-  width: 150px;
+<style lang="scss" scoped>
+.post-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1024px;
+  text-align: left;
+  font-weight: bold;
+  label {
+    cursor: pointer;
+    user-select: none;
+  }
+  .small-input {
+    width: 40%;
+    margin: 0.5rem 0;
+  }
+  textarea {
+    margin: 0.5rem 0;
+    height: 200px;
+  }
+  .exp {
+    display: flex;
+    flex-direction: column;
+    margin-left: -40px;
+    li {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+  }
+  .range {
+    margin-bottom: 1rem;
+    #illLevel {
+      width: 30%;
+    }
+  }
+  .symptoms {
+    margin-bottom: 1rem;
+    display: flex;
+
+    flex-wrap: wrap;
+    label {
+      margin-right: 20px;
+    }
+  }
+
+  .handle-name {
+    color: rgb(0, 174, 255);
+  }
+  .nickname {
+    margin: 1rem 0;
+    display: flex;
+  }
+
+  $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+  .btn {
+    margin: 1rem auto;
+    width: 155px;
+    height: 47px;
+    background: $btn-color;
+    color: #fff;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+    line-height: 47px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    user-select: none;
+    cursor: pointer;
+  }
 }
 </style>

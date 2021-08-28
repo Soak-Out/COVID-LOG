@@ -4,6 +4,7 @@ import firebase from "firebase"
 import Home from "../views/Home.vue"
 import Top from "../views/Top.vue"
 import Login from "../views/Login.vue"
+import Post from "../views/Post.vue"
 import Mypage from "../views/Mypage.vue"
 
 Vue.use(VueRouter)
@@ -46,11 +47,7 @@ const routes = [
   {
     path: "/post-page",
     name: "Post-Page",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Post.vue"),
+    component: Post,
   },
   {
     path: "/covidList",
@@ -90,7 +87,7 @@ const isSignedIn = async () => {
 router.beforeEach(async (to, from, next) => {
   const auth = await isSignedIn()
   if (to.name !== "Login" && !auth) {
-    next("/Login")
+    next("/login")
   } else {
     next()
   }

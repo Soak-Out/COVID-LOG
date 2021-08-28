@@ -14,7 +14,7 @@
 <script>
 import firebase from "firebase"
 const db = firebase.firestore()
-require("../assets/css/global.css")
+
 export default {
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style scped>
+<style lang="scss" scoped>
 .text {
   margin: 1rem;
   font-weight: bold;
@@ -79,5 +79,27 @@ export default {
   width: 40%;
   color: red;
   font-weight: bold;
+}
+$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+.btn {
+  margin: 1rem auto;
+  width: 155px;
+  height: 47px;
+  background: $btn-color;
+  color: #fff;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+  line-height: 47px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  user-select: none;
+  cursor: pointer;
+}
+.photo {
+  width: 150px;
+  border-radius: 50%;
+  border: 1px #ccc solid;
 }
 </style>
