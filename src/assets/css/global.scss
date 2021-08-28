@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+// @import "reset.scss";
+@import "parts/_btn";
+@import "parts/hamburger";
+
+.photo {
+  border: #ccc 1px solid;
+  border-radius: 50%;
+  width: 150px;
+}

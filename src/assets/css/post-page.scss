@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
-
 .post-content {
   display: flex;
   flex-direction: column;
@@ -45,20 +43,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       margin-right: 20px;
     }
   }
-  .btn {
-    margin: 0 auto;
-    width: 155px;
-    height: 37px;
-    background: $btn-color;
-    color: #fff;
-    border-radius: 10px;
-    display: block;
-    text-align: center;
-    line-height: 37px;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-  }
+
   .handle-name {
     color: rgb(0, 174, 255);
   }

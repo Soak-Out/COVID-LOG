@@ -1,10 +1,12 @@
 <template>
   <div>
     <h1>アカウント情報</h1>
+    <img :src="user.photoURL" class="photo" />
     <div class="text">ニックネーム</div>
     <div class="name">{{ gethandleName }}</div>
     <div class="text">ニックネーム変更</div>
     <input type="text" v-model="handleName" class="nick" />
+    <div v-show="error" class="error">ニックネームを入力してください！</div>
     <a @click="newName" class="btn">変更</a>
   </div>
 </template>
@@ -12,11 +14,13 @@
 <script>
 import firebase from "firebase"
 const db = firebase.firestore()
+require("../assets/css/global.css")
 export default {
   data() {
     return {
       handleName: "",
       gethandleName: "",
+      error: false,
     }
   },
   created: function () {
@@ -32,36 +36,29 @@ export default {
       }
     })
   },
+  computed: {
+    user() {
+      return this.$auth.currentUser
+    },
+  },
   methods: {
     newName() {
-      this.gethandleName = this.handleName
-      const user = firebase.auth().currentUser
-      const docRef = db.collection("users").doc(user.uid)
-      docRef.update({ handleName: this.gethandleName }).then(() => {
-        this.handleName = ""
-      })
+      if (this.handleName !== "") {
+        this.gethandleName = this.handleName
+        const user = firebase.auth().currentUser
+        const docRef = db.collection("users").doc(user.uid)
+        docRef.update({ handleName: this.gethandleName }).then(() => {
+          this.handleName = ""
+        })
+      } else {
+        this.error = true
+      }
     },
   },
 }
 </script>
 
 <style scped>
-.btn {
-  margin: 1rem auto 4rem;
-  padding: 1rem 2rem;
-  width: 105px;
-  height: 27px;
-  background: linear-gradient(to right, #7dbaf3, #386de0);
-  color: #fff;
-  cursor: pointer;
-  border-radius: 10px;
-  display: block;
-  text-align: center;
-  line-height: 27px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-}
 .text {
   margin: 1rem;
   font-weight: bold;
@@ -76,5 +73,11 @@ export default {
 .nick {
   width: 200px;
   height: 30px;
+}
+.error {
+  margin: 0 auto;
+  width: 40%;
+  color: red;
+  font-weight: bold;
 }
 </style>

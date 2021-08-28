@@ -2,8 +2,10 @@
   <div>
     <div class="links">
       <div v-if="isAuth">
+        <img :src="user.photoURL" class="photo" />
+        <div @click="mypage" class="name">{{ gethandleName }}</div>
+        <router-link to="/mypage">Mypageへ</router-link>
         <a @click="signOut" class="btn log-out">ログアウト</a>
-        <a href="/mypage">Mypageへ</a>
       </div>
       <div v-else class="login-page">
         <a @click="signUp" class="btn">ログイン</a>
@@ -15,7 +17,9 @@
 <script>
 import firebase from "firebase"
 import "firebase/auth"
-// import { use } from "vue/types/umd"
+const db = firebase.firestore()
+
+require("../assets/css/global.css")
 
 export default {
   data() {
@@ -23,10 +27,27 @@ export default {
       isAuth: false,
       notNickName: false,
       handleName: "名無しさん",
+      gethandleName: "",
     }
   },
   created: function () {
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
+    firebase.auth().onAuthStateChanged(async (user) => {
+      const userDoc = await db.collection("users").doc(user.uid).get()
+      if (userDoc.exists) {
+        const docRef = db.collection("users").doc(user.uid)
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+            this.gethandleName = doc.data().handleName
+          }
+        })
+      }
+    })
+  },
+  computed: {
+    user() {
+      return this.$auth.currentUser
+    },
   },
   methods: {
     signOut() {
@@ -67,6 +88,9 @@ export default {
         }
       })
     },
+    mypage() {
+      location.href = "/mypage"
+    },
   },
 }
 </script>
@@ -92,21 +116,5 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-}
-.btn {
-  margin: 1rem auto 4rem;
-  padding: 1rem 2rem;
-  width: 155px;
-  height: 37px;
-  background: linear-gradient(to right, #7dbaf3, #386de0);
-  color: #fff;
-  cursor: pointer;
-  border-radius: 10px;
-  display: block;
-  text-align: center;
-  line-height: 37px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 </style>
