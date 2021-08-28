@@ -4,7 +4,6 @@
       ニックネーム
       <div class="nickname">
         <a href="/mypage" class="handle-name">{{ handleName }}</a>
-        <span>さん</span>
       </div>
 
       タイトル<input type="text" v-model="postTitle" class="small-input" />
@@ -110,7 +109,7 @@ export default {
   data() {
     return initialState()
   },
-  created: function () {
+  mounted: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
       const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
@@ -130,6 +129,7 @@ export default {
       }
     })
   },
+
   methods: {
     post() {
       if (this.postTitle !== "" && this.postText !== "") {

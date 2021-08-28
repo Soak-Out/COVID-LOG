@@ -2,21 +2,11 @@
   <div>
     <div class="links">
       <div v-if="isAuth">
-        <a @click="signOut" class="btn">ログアウト</a>
+        <a @click="signOut" class="btn log-out">ログアウト</a>
+        <a href="/mypage">Mypageへ</a>
       </div>
       <div v-else class="login-page">
-        <div v-if="notNickName" class="error">
-          Error：ニックネームを入力してください！
-        </div>
-        <div>
-          はじめての方はニックネームを入力して新規登録を行ってください！
-        </div>
-        ニックネーム
-        <input type="text" v-model="handleName" />
-        <!-- <a @click="signInTwitter">signInTwitter</a> -->
-        <a @click="signUp" class="btn">新規登録</a>
-        <div>2回目以降の方はログインしてください！！</div>
-        <a @click="signIn" class="btn">ログイン</a>
+        <a @click="signUp" class="btn">ログイン</a>
       </div>
     </div>
   </div>
@@ -32,7 +22,7 @@ export default {
     return {
       isAuth: false,
       notNickName: false,
-      handleName: "",
+      handleName: "名無しさん",
     }
   },
   created: function () {
@@ -51,13 +41,8 @@ export default {
       firebase.auth().onAuthStateChanged(async (user) => {
         // 未ログイン時
         if (!user) {
-          // firebase.auth().signInAnonymously()
-          if (this.handleName !== "") {
-            const provider = new firebase.auth.GoogleAuthProvider()
-            firebase.auth().signInWithPopup(provider)
-          } else {
-            this.notNickName = true
-          }
+          const provider = new firebase.auth.GoogleAuthProvider()
+          firebase.auth().signInWithPopup(provider)
         }
         // ログイン時
         else {
@@ -82,19 +67,6 @@ export default {
         }
       })
     },
-    signIn() {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(() => {
-          location.href = "/"
-        })
-    },
-    // signInTwitter() {
-    //   const provider = new firebase.auth.TwitterAuthProvider()
-    //   firebase.auth().signInWithRedirect(provider)
-    // },
   },
 }
 </script>
@@ -106,14 +78,8 @@ export default {
   line-height: 4rem;
   font-weight: bold;
 }
-input {
-  margin: 0 auto;
-  width: 40%;
-  height: 20px;
-  border: blue 1px solid;
-  border-radius: 50px;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+.links a {
+  text-decoration: none;
 }
 .error {
   font-size: 1rem;
