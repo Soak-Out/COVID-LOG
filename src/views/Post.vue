@@ -3,7 +3,9 @@
     <div class="post-content">
       ニックネーム
       <div class="nickname">
-        <a href="/mypage" class="handle-name">{{ handleName }}</a>
+        <router-link to="/mypage" class="handle-name">{{
+          handleName
+        }}</router-link>
       </div>
 
       タイトル<input type="text" v-model="postTitle" class="small-input" />
@@ -81,6 +83,7 @@ import Modal from "../components/Modal.vue"
 const db = firebase.firestore()
 
 //css読み込み
+require("../assets/css/global.css")
 require("../assets/css/post-page.css")
 
 function initialState() {
@@ -162,3 +165,11 @@ export default {
   },
 }
 </script>
+
+<style>
+.photo {
+  border: #ccc 1px solid;
+  border-radius: 50%;
+  width: 150px;
+}
+</style>
