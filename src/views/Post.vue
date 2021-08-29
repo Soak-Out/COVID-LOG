@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="post-content">
-      ニックネーム
+      <img :src="user.photoURL" class="photo" />
       <div class="nickname">
-        <router-link to="/mypage" class="handle-name">{{
-          handleName
-        }}</router-link>
+        <router-link to="/mypage" class="handle-name">
+          {{ handleName }}</router-link
+        >
       </div>
 
       タイトル<input type="text" v-model="postTitle" class="small-input" />
@@ -27,7 +27,7 @@
       </ul>
 
       <div class="range">
-        <label for="illLevel">重症度(5段階)</label>
+        <label for="illLevel">重症度(0 〜 5)</label>
         <input
           type="range"
           v-model="illLevel"
@@ -111,6 +111,11 @@ export default {
   data() {
     return initialState()
   },
+  computed: {
+    user() {
+      return this.$auth.currentUser
+    },
+  },
   mounted: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
       const userDoc = await db.collection("users").doc(user.uid).get()
@@ -152,6 +157,8 @@ export default {
           headache: this.headache,
           tasteOrDisappearance: this.tasteOrDisappearance,
           other: this.other,
+          photo: this.user.photoURL,
+          post_at: firebase.firestore.FieldValue.serverTimestamp(),
         })
         Object.assign(this.$data, initialState())
       }
@@ -168,6 +175,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+.photo {
+  width: 100px;
+  border-radius: 50%;
+  border: 1px #ccc solid;
+}
 .post-content {
   display: flex;
   flex-direction: column;

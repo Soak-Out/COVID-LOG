@@ -57,7 +57,7 @@ export default {
     top: 0;
     left: 15px;
     width: 45px;
-    height: 3.75px;
+    height: 3px;
     background: #333;
     text-align: left;
   }
