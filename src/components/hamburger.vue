@@ -57,7 +57,7 @@ export default {
     top: 0;
     left: 15px;
     width: 45px;
-    height: 3.75px;
+    height: 3px;
     background: #333;
     text-align: left;
   }
@@ -144,5 +144,8 @@ export default {
 .scroll {
   height: 75vh;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
