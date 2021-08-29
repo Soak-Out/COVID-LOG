@@ -2,8 +2,10 @@
   <div>
     <div class="links">
       <div v-if="isAuth">
+        <img :src="user.photoURL" class="photo" />
+        <div class="name">{{ gethandleName }}</div>
+        <router-link to="/mypage">Mypageへ</router-link>
         <a @click="signOut" class="btn log-out">ログアウト</a>
-        <a href="/mypage">Mypageへ</a>
       </div>
       <div v-else class="login-page">
         <a @click="signUp" class="btn">ログイン</a>
@@ -15,7 +17,7 @@
 <script>
 import firebase from "firebase"
 import "firebase/auth"
-// import { use } from "vue/types/umd"
+const db = firebase.firestore()
 
 export default {
   data() {
@@ -23,10 +25,27 @@ export default {
       isAuth: false,
       notNickName: false,
       handleName: "名無しさん",
+      gethandleName: "",
     }
   },
   created: function () {
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
+    firebase.auth().onAuthStateChanged(async (user) => {
+      const userDoc = await db.collection("users").doc(user.uid).get()
+      if (userDoc.exists) {
+        const docRef = db.collection("users").doc(user.uid)
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+            this.gethandleName = doc.data().handleName
+          }
+        })
+      }
+    })
+  },
+  computed: {
+    user() {
+      return this.$auth.currentUser
+    },
   },
   methods: {
     signOut() {
@@ -34,7 +53,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/Login"
+          location.href = "/login"
         })
     },
     signUp() {
@@ -71,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .links {
   margin-top: 100px;
   font-size: 1.25rem;
@@ -93,20 +112,33 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .btn {
-  margin: 1rem auto 4rem;
-  padding: 1rem 2rem;
+  margin: 1rem auto;
   width: 155px;
-  height: 37px;
-  background: linear-gradient(to right, #7dbaf3, #386de0);
+  height: 47px;
+  background: $btn-color;
   color: #fff;
-  cursor: pointer;
   border-radius: 10px;
   display: block;
   text-align: center;
-  line-height: 37px;
-  font-size: 1.5rem;
+  line-height: 47px;
+  font-size: 1rem;
   font-weight: bold;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  user-select: none;
+  cursor: pointer;
+}
+.photo {
+  width: 150px;
+  border-radius: 50%;
+  border: 1px #ccc solid;
+}
+.name {
+  margin-bottom: 3rem;
+  font-weight: bold;
+  font-size: 2rem;
+  color: rgb(0, 174, 255);
 }
 </style>

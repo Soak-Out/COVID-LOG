@@ -6,12 +6,29 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/post-page">Post-Page</router-link> |
       <router-link to="/covidList">CovidList</router-link> |
-      <router-link to="/Login">Login</router-link> |
+      <router-link to="/login">Login</router-link> |
       <router-link to="/mypage">Mypage</router-link> |
     </div>
     <router-view />
+    <hamburger></hamburger>
   </div>
 </template>
+
+<script>
+import hamburger from "../src/components/hamburger.vue"
+
+export default {
+  components: {
+    hamburger,
+  },
+  data() {
+    return {
+      ActiveBtn: false,
+      isAuth: true,
+    }
+  },
+}
+</script>
 
 <style>
 #app {
