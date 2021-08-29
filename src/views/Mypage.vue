@@ -85,6 +85,7 @@ export default {
           const postRef = await db
             .collection("posts")
             .where("screen_name", "==", `${userID}`)
+            .orderBy("post_at")
             .get()
           this.postnumber = postRef.size
           console.log(this.postnumber)
@@ -95,7 +96,7 @@ export default {
             const postedTime = strigTime.slice(0, -20)
             console.log(postedTime)
             post.postedTime = postedTime
-            this.posts.push(post)
+            this.posts.unshift(post)
           })
         })
       }
