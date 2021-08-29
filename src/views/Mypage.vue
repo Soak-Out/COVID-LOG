@@ -8,6 +8,23 @@
     <input type="text" v-model="handleName" class="nick" />
     <div v-show="error" class="error">ニックネームを入力してください！</div>
     <a @click="newName" class="btn">変更</a>
+    <div v-for="(post, postnumber) in posts" v-bind:key="postnumber">
+      <div>------------------------------------------</div>
+      <div class="flex">
+        <div class="ttl">「{{ post.title }}」</div>
+        <div class="text">{{ post.text }}</div>
+        <div>{{ post.infection }}</div>
+        <div>{{ post.vaccine }}</div>
+        <div>{{ post.illLevel }}</div>
+        <div>{{ post.headache }}</div>
+        <div>{{ post.fever }}</div>
+        <div>{{ post.respiratoryOrgan }}</div>
+        <div>{{ post.soreThroat }}</div>
+        <div>{{ post.tasteOrDisappearance }}</div>
+        <div>{{ post.diarrhea }}</div>
+        <div>{{ post.other }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +38,10 @@ export default {
       handleName: "",
       gethandleName: "",
       error: false,
+      getScreenName: "",
+      //-------投稿を配列にする-----
+      posts: [],
+      postnumber: 0,
     }
   },
   created: function () {
@@ -28,10 +49,20 @@ export default {
       const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
         const docRef = db.collection("users").doc(user.uid)
-        docRef.get().then((doc) => {
-          if (doc.exists) {
-            this.gethandleName = doc.data().handleName
-          }
+        docRef.get().then(async (doc) => {
+          this.gethandleName = doc.data().handleName
+          this.getScreenName = doc.data().screen_name
+          const userID = this.getScreenName
+          const postRef = await db
+            .collection("posts")
+            .where("screen_name", "==", `${userID}`)
+            .get()
+          this.postnumber = postRef.size
+          console.log(this.postnumber)
+          postRef.forEach((postdoc) => {
+            const post = postdoc.data()
+            this.posts.push(post)
+          })
         })
       }
     })
@@ -101,5 +132,15 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   width: 150px;
   border-radius: 50%;
   border: 1px #ccc solid;
+}
+.flex {
+  display: flex;
+  .ttl {
+    font-weight: bold;
+  }
+  .text {
+    width: 40%;
+    text-align: left;
+  }
 }
 </style>

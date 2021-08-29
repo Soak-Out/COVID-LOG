@@ -144,5 +144,8 @@ export default {
 .scroll {
   height: 75vh;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

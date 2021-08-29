@@ -87,6 +87,7 @@ const db = firebase.firestore()
 function initialState() {
   return {
     handleName: "",
+    screen_name: "",
     postTitle: "",
     postText: "",
     infection: false,
@@ -120,6 +121,7 @@ export default {
           .then((doc) => {
             if (doc.exists) {
               this.handleName = doc.data().handleName
+              this.screen_name = doc.data().screen_name
             } else {
               console.log("No such document!")
             }
@@ -137,6 +139,7 @@ export default {
         const kaigyou = this.postText.replace(/\n/g, "\\n")
         db.collection("posts").add({
           handleName: this.handleName,
+          screen_name: this.screen_name,
           title: this.postTitle,
           text: kaigyou,
           infection: this.infection,
