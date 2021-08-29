@@ -26,11 +26,7 @@
     </div>
 
     <div class="mypost">
-      <div
-        v-for="(post, postnumber) in posts"
-        v-bind:key="postnumber"
-        class="post"
-      >
+      <div v-for="(post, index) in posts" v-bind:key="index" class="post">
         <div class="status">
           <div class="flex">
             <div class="ttl">{{ post.title }}</div>
@@ -52,6 +48,7 @@
           <li v-show="post.other">#その他</li>
         </ul>
         <div class="text">{{ post.text }}</div>
+        <div @click="deletePost(index)" class="deleteBtn">🗑</div>
       </div>
     </div>
   </div>
@@ -70,7 +67,8 @@ export default {
       getScreenName: "",
       //-------投稿を配列にする-----
       posts: [],
-      postnumber: 0,
+      index: 0,
+      postId: "",
     }
   },
   created: function () {
@@ -87,14 +85,16 @@ export default {
             .where("screen_name", "==", `${userID}`)
             .orderBy("post_at")
             .get()
-          this.postnumber = postRef.size
-          console.log(this.postnumber)
+          this.index = postRef.size
           postRef.forEach((postdoc) => {
             const post = postdoc.data()
+            post.postId = postdoc.id
+            console.log(post.postId)
+            this.postId = post.postId
             const getpostedTime = post.post_at.toDate()
             const strigTime = String(getpostedTime)
             const postedTime = strigTime.slice(0, -20)
-            console.log(postedTime)
+            // console.log(postedTime)
             post.postedTime = postedTime
             this.posts.unshift(post)
           })
@@ -118,6 +118,18 @@ export default {
         })
       } else {
         this.error = true
+      }
+    },
+    deletePost(index) {
+      const result = window.confirm("この投稿を削除しますか？")
+      if (result) {
+        const docPath = this.posts[index].postId
+        db.collection("posts")
+          .doc(`${docPath}`)
+          .delete()
+          .then(() => {
+            this.posts.splice(index, 1)
+          })
       }
     },
   },
@@ -240,6 +252,13 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       li {
         margin-right: 10px;
       }
+    }
+    .deleteBtn {
+      cursor: pointer;
+      font-weight: 900;
+      text-align: right;
+      bottom: 10px;
+      right: 50px;
     }
   }
 }
