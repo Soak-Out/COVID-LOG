@@ -47,7 +47,9 @@
           <li v-show="post.diarrhea">#下痢</li>
           <li v-show="post.other">#その他</li>
         </ul>
-        <div class="text">{{ post.text }}</div>
+
+        <div class="text">{{ post.uploadText }}</div>
+
         <div @click="deletePost(index)" class="deleteBtn">🗑</div>
       </div>
     </div>
@@ -65,6 +67,7 @@ export default {
       gethandleName: "",
       error: false,
       getScreenName: "",
+      isEditing: false,
       //-------投稿を配列にする-----
       posts: [],
       index: 0,
@@ -78,24 +81,24 @@ export default {
         const docRef = db.collection("users").doc(user.uid)
         docRef.get().then(async (doc) => {
           this.gethandleName = doc.data().handleName
-          this.getScreenName = doc.data().screen_name
-          const userID = this.getScreenName
           const postRef = await db
             .collection("posts")
-            .where("screen_name", "==", `${userID}`)
+            .where("screen_name", "==", `${doc.data().screen_name}`)
             .orderBy("post_at")
             .get()
           this.index = postRef.size
           postRef.forEach((postdoc) => {
             const post = postdoc.data()
+            //ドキュメントID取得
             post.postId = postdoc.id
-            console.log(post.postId)
-            this.postId = post.postId
+            // 投稿時間を取得し文字列にし、不必要な部分をカット
             const getpostedTime = post.post_at.toDate()
             const strigTime = String(getpostedTime)
-            const postedTime = strigTime.slice(0, -20)
-            // console.log(postedTime)
-            post.postedTime = postedTime
+            post.postedTime = strigTime.slice(0, -20)
+            //post.textを改行したものをpost.kaigyoutext
+            post.uploadText = post.text.replaceAll("\\n", "\n")
+            console.log(post.uploadText)
+            //posts配列にいれる
             this.posts.unshift(post)
           })
         })
@@ -139,6 +142,9 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/css/_reset.scss";
 
+.look {
+  background-color: aqua;
+}
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .wrapper {
   max-width: 1024px;
@@ -242,6 +248,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       line-height: 1.5;
       letter-spacing: 2px;
       font-size: 1rem;
+      white-space: pre-wrap;
     }
     .tag {
       display: flex;
@@ -256,9 +263,8 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     .deleteBtn {
       cursor: pointer;
       font-weight: 900;
-      text-align: right;
-      bottom: 10px;
-      right: 50px;
+      margin-left: 90%;
+      margin-right: 10px;
     }
   }
 }
