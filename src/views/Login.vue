@@ -3,7 +3,7 @@
     <div class="links">
       <div v-if="isAuth">
         <img :src="user.photoURL" class="photo" />
-        <div @click="mypage" class="name">{{ gethandleName }}</div>
+        <div class="name">{{ gethandleName }}</div>
         <router-link to="/mypage">Mypageへ</router-link>
         <a @click="signOut" class="btn log-out">ログアウト</a>
       </div>
@@ -18,8 +18,6 @@
 import firebase from "firebase"
 import "firebase/auth"
 const db = firebase.firestore()
-
-require("../assets/css/global.css")
 
 export default {
   data() {
@@ -55,7 +53,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/Login"
+          location.href = "/login"
         })
     },
     signUp() {
@@ -88,14 +86,11 @@ export default {
         }
       })
     },
-    mypage() {
-      location.href = "/mypage"
-    },
   },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .links {
   margin-top: 100px;
   font-size: 1.25rem;
@@ -116,5 +111,34 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+.btn {
+  margin: 1rem auto;
+  width: 155px;
+  height: 47px;
+  background: $btn-color;
+  color: #fff;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+  line-height: 47px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  user-select: none;
+  cursor: pointer;
+}
+.photo {
+  width: 150px;
+  border-radius: 50%;
+  border: 1px #ccc solid;
+}
+.name {
+  margin-bottom: 3rem;
+  font-weight: bold;
+  font-size: 2rem;
+  color: rgb(0, 174, 255);
 }
 </style>

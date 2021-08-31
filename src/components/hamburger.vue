@@ -1,5 +1,47 @@
-@import "_variable.scss";
+<template>
+  <div class="hamburger__container" v-if="isAuth">
+    <!--ハンバーガーメニューのボタン-->
+    <div class="hamburger__btn" @click="ActiveBtn = !ActiveBtn">
+      <span class="line line_01" :class="{ btn_line01: ActiveBtn }"></span>
+      <span class="line line_02" :class="{ btn_line02: ActiveBtn }"></span>
+      <span class="line line_03" :class="{ btn_line03: ActiveBtn }"></span>
+    </div>
+    <!--サイドメニュー-->
+    <transition name="hamburger__menu">
+      <div class="hamburger__menu" v-show="ActiveBtn">
+        <div>logo</div>
+        <ul class="scroll">
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/top">Top</router-link></li>
+          <li><router-link to="/about">About</router-link></li>
+          <li><router-link to="/post-page">Post-Page</router-link></li>
+          <li><router-link to="/covidList">CovidList</router-link></li>
+          <li><router-link to="/login">Login</router-link></li>
+          <li><router-link to="/mypage">Mypage</router-link></li>
+        </ul>
+      </div>
+    </transition>
+  </div>
+</template>
 
+<script>
+import firebase from "firebase"
+
+export default {
+  name: "hamburger",
+  data() {
+    return {
+      ActiveBtn: false,
+      isAuth: true,
+    }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
+  },
+}
+</script>
+
+<style lang="scss">
 .hamburger__btn {
   position: fixed;
   top: 0;
@@ -15,7 +57,7 @@
     top: 0;
     left: 15px;
     width: 45px;
-    height: 3.75px;
+    height: 3px;
     background: #333;
     text-align: left;
   }
@@ -99,3 +141,11 @@
     padding-bottom: 8px;
   }
 }
+.scroll {
+  height: 75vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+</style>

@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="post-content">
-      ニックネーム
+      <img :src="user.photoURL" class="photo" />
       <div class="nickname">
-        <router-link to="/mypage" class="handle-name">{{
-          handleName
-        }}</router-link>
+        <router-link to="/mypage" class="handle-name">
+          {{ handleName }}</router-link
+        >
       </div>
 
       タイトル<input type="text" v-model="postTitle" class="small-input" />
@@ -27,7 +27,7 @@
       </ul>
 
       <div class="range">
-        <label for="illLevel">重症度(5段階)</label>
+        <label for="illLevel">重症度(0 〜 5)</label>
         <input
           type="range"
           v-model="illLevel"
@@ -83,12 +83,11 @@ import Modal from "../components/Modal.vue"
 const db = firebase.firestore()
 
 //css読み込み
-require("../assets/css/global.css")
-require("../assets/css/post-page.css")
 
 function initialState() {
   return {
     handleName: "",
+    screen_name: "",
     postTitle: "",
     postText: "",
     infection: false,
@@ -112,6 +111,11 @@ export default {
   data() {
     return initialState()
   },
+  computed: {
+    user() {
+      return this.$auth.currentUser
+    },
+  },
   mounted: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
       const userDoc = await db.collection("users").doc(user.uid).get()
@@ -122,6 +126,7 @@ export default {
           .then((doc) => {
             if (doc.exists) {
               this.handleName = doc.data().handleName
+              this.screen_name = doc.data().screen_name
             } else {
               console.log("No such document!")
             }
@@ -139,6 +144,7 @@ export default {
         const kaigyou = this.postText.replace(/\n/g, "\\n")
         db.collection("posts").add({
           handleName: this.handleName,
+          screen_name: this.screen_name,
           title: this.postTitle,
           text: kaigyou,
           infection: this.infection,
@@ -151,6 +157,8 @@ export default {
           headache: this.headache,
           tasteOrDisappearance: this.tasteOrDisappearance,
           other: this.other,
+          photo: this.user.photoURL,
+          post_at: firebase.firestore.FieldValue.serverTimestamp(),
         })
         Object.assign(this.$data, initialState())
       }
@@ -166,10 +174,83 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.wrapper {
+  max-width: 1024px;
+  margin: 0 auto;
+}
 .photo {
-  border: #ccc 1px solid;
+  width: 100px;
   border-radius: 50%;
-  width: 150px;
+  border: 1px #ccc solid;
+}
+.post-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1024px;
+  text-align: left;
+  font-weight: bold;
+  label {
+    cursor: pointer;
+    user-select: none;
+  }
+  .small-input {
+    width: 40%;
+    margin: 0.5rem 0;
+  }
+  textarea {
+    margin: 0.5rem 0;
+    height: 200px;
+  }
+  .exp {
+    display: flex;
+    flex-direction: column;
+    margin-left: -40px;
+    li {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+  }
+  .range {
+    margin-bottom: 1rem;
+    #illLevel {
+      width: 30%;
+    }
+  }
+  .symptoms {
+    margin-bottom: 1rem;
+    display: flex;
+
+    flex-wrap: wrap;
+    label {
+      margin-right: 20px;
+    }
+  }
+
+  .handle-name {
+    color: rgb(0, 174, 255);
+  }
+  .nickname {
+    margin: 1rem 0;
+    display: flex;
+  }
+
+  $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+  .btn {
+    margin: 1rem auto;
+    width: 155px;
+    height: 47px;
+    background: $btn-color;
+    color: #fff;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+    line-height: 47px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    user-select: none;
+    cursor: pointer;
+  }
 }
 </style>
