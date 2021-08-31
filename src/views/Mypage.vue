@@ -1,56 +1,82 @@
 <template>
-  <div class="wrapper">
-    <div class="prof">
-      <div class="img">
-        <img :src="user.photoURL" class="photo" />
-      </div>
-      <div class="text">
-        <div class="ttl">ニックネーム</div>
-        <label for="change">
-          <div class="nickname">{{ gethandleName }}</div></label
-        >
-        <div class="inputbtn">
-          <input
-            type="text"
-            v-model="handleName"
-            id="change"
-            placeholder="ニックネーム変更"
-            class="change-nickname"
-          />
-          <div v-show="error" class="error">
-            ニックネームを入力してください！
-          </div>
-          <a @click="newName" class="btn">変更</a>
+  <div class="html">
+    <div class="wrapper">
+      <div class="prof">
+        <div class="img">
+          <img :src="user.photoURL" class="photo" />
         </div>
-      </div>
-    </div>
-
-    <div class="mypost">
-      <div v-for="(post, index) in posts" v-bind:key="index" class="post">
-        <div class="status">
-          <div class="flex">
-            <div class="ttl">{{ post.title }}</div>
-            <div class="level">
-              重症度<span>Lv.{{ post.illLevel }}</span>
+        <div class="text">
+          <div class="ttl">ニックネーム</div>
+          <label for="change">
+            <div class="nickname">{{ gethandleName }}</div></label
+          >
+          <div class="inputbtn">
+            <input
+              type="text"
+              v-model="handleName"
+              id="change"
+              placeholder="ニックネーム変更"
+              class="change-nickname"
+            />
+            <div v-show="error" class="error">
+              ニックネームを入力してください！
             </div>
+            <a @click="newName" class="btn">変更</a>
           </div>
-          <div class="time">{{ post.postedTime }}</div>
         </div>
-        <ul class="tag">
-          <li v-show="post.infection">#感染経験あり</li>
-          <li v-show="post.vaccine">#ワクチン接種</li>
-          <li v-show="post.headache">#頭痛</li>
-          <li v-show="post.fever">#発熱</li>
-          <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-          <li v-show="post.soreThroat">#喉の渇き</li>
-          <li v-show="post.tasteOrDisappearance">#味覚異常</li>
-          <li v-show="post.diarrhea">#下痢</li>
-          <li v-show="post.other">#その他</li>
-        </ul>
+      </div>
 
-        <div class="text">{{ post.uploadText }}</div>
+      <div class="mypost">
+        <div v-for="(post, index) in posts" v-bind:key="index" class="post">
+          <div class="status">
+            <div class="flex">
+              <div class="ttl">{{ post.title }}</div>
+              <div class="level">
+                重症度<span>Lv.{{ post.illLevel }}</span>
+              </div>
+            </div>
+            <div class="time">{{ post.postedTime }}</div>
+          </div>
+          <ul class="tag">
+            <li v-show="post.infection">#感染経験あり</li>
+            <li v-show="post.vaccine">#ワクチン接種</li>
+            <li v-show="post.headache">#頭痛</li>
+            <li v-show="post.fever">#発熱</li>
+            <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+            <li v-show="post.soreThroat">#喉の渇き</li>
+            <li v-show="post.tasteOrDisappearance">#味覚異常</li>
+            <li v-show="post.diarrhea">#下痢</li>
+            <li v-show="post.other">#その他</li>
+          </ul>
 
-        <div @click="deletePost(index)" class="deleteBtn">🗑</div>
+          <div class="text">{{ post.uploadText }}</div>
+          <div class="post-btns">
+            <div @click="deletePost(index)" class="post-btn">🗑</div>
+            <div @click="editPost(index)" class="post-btn">🖋</div>
+          </div>
+          <modal
+            v-if="showContent"
+            @close="closeModal"
+            @enter="enterPost"
+            :title="postData.title"
+            :text="postData.text"
+            :infection="postData.infection"
+            :vaccine="postData.vaccine"
+            :illLevel="postData.illLevel"
+            :fever="postData.fever"
+            :soreThroat="postData.soreThroat"
+            :respiratoryOrgan="postData.respiratoryOrgan"
+            :diarrhea="postData.diarrhea"
+            :headache="postData.headache"
+            :tasteOrDisappearance="postData.tasteOrDisappearance"
+            :other="postData.other"
+            :screen_name="postData.screen_name"
+            :handleName="postData.handleName"
+            :post_at="postData.post_at"
+            :photo="postData.photo"
+            :postId="postData.postId"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +84,7 @@
 
 <script>
 import firebase from "firebase"
+import Modal from "../components/EditModal.vue"
 const db = firebase.firestore()
 
 export default {
@@ -72,7 +99,26 @@ export default {
       posts: [],
       index: 0,
       postId: "",
+
+      postData: {
+        title: "",
+        text: "",
+        infection: false,
+        vaccine: false,
+        illLevel: 0,
+        fever: false,
+        soreThroat: false,
+        respiratoryOrgan: false,
+        diarrhea: false,
+        headache: false,
+        tasteOrDisappearance: false,
+        other: false,
+      },
+      showContent: false,
     }
+  },
+  components: {
+    Modal,
   },
   created: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -95,9 +141,9 @@ export default {
             const getpostedTime = post.post_at.toDate()
             const strigTime = String(getpostedTime)
             post.postedTime = strigTime.slice(0, -20)
-            //post.textを改行したものをpost.kaigyoutext
+            //post.textを改行
             post.uploadText = post.text.replaceAll("\\n", "\n")
-            console.log(post.uploadText)
+
             //posts配列にいれる
             this.posts.unshift(post)
           })
@@ -135,6 +181,41 @@ export default {
           })
       }
     },
+    editPost(index) {
+      const PD = this.postData
+      const p = this.posts[index]
+      // データを子に送るために変換
+      PD.title = p.title
+      PD.text = p.uploadText
+      PD.infection = p.infection
+      console.log(this.postData.infection)
+      PD.vaccine = p.vaccine
+      PD.illLevel = p.illLevel
+      PD.fever = p.fever
+      PD.soreThroat = p.soreThroat
+      PD.respiratoryOrgan = p.respiratoryOrgan
+      PD.diarrhea = p.diarrhea
+      PD.headache = p.headache
+      PD.tasteOrDisappearance = p.tasteOrDisappearance
+      PD.other = p.other
+      PD.postId = p.postId
+      PD.screen_name = p.screen_name
+      PD.handleName = p.handleName
+      PD.post_at = p.post_at
+      PD.photo = p.photo
+      this.showContent = true
+    },
+    closeModal() {
+      this.showContent = false
+    },
+    enterPost() {
+      // const docPath = this.posts[index].postId
+      // console.log(docPath)
+      // db.collection("posts").set({
+      //   title: "oatethaotheoaeothaeotoehtahtoetehtahetoh",
+      // })
+      // this.showContent = false
+    },
   },
 }
 </script>
@@ -142,10 +223,8 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/css/_reset.scss";
 
-.look {
-  background-color: aqua;
-}
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+
 .wrapper {
   max-width: 1024px;
   margin: 0 auto;
@@ -215,7 +294,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
     margin: 35px;
     padding: 15px;
-    background-color: rgb(241, 253, 255);
+    background-color: #fff;
     .status {
       display: flex;
       justify-content: space-between;
@@ -260,11 +339,25 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         margin-right: 10px;
       }
     }
-    .deleteBtn {
-      cursor: pointer;
-      font-weight: 900;
-      margin-left: 90%;
-      margin-right: 10px;
+    .post-btns {
+      display: flex;
+      flex-direction: row-reverse;
+      .post-btn {
+        width: 2rem;
+        height: 2rem;
+        text-align: center;
+        line-height: 2rem;
+        background-color: rgb(162, 255, 243);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
+        border-radius: 50%;
+        cursor: pointer;
+        user-select: none;
+        margin-right: 0.5rem;
+        transition: 0.3s;
+        &:hover {
+          transform: scale(1.3) translateY(-5px);
+        }
+      }
     }
   }
 }
