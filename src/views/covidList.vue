@@ -2,9 +2,9 @@
   <div>
     <div>
       フィルタリング：
-      <button @click="allShowButton">全て表示</button>
-      <button @click="showTags">タグで絞り込み</button>
-      <div v-if="isShowTags">
+      <button>全て表示</button>
+      <button v-on:click="showTags = !showTags">タグで絞り込み</button>
+      <div v-if="showTags">
         <button>熱</button>
         <button>喉の痛み</button>
         <button>呼吸器障害</button>
@@ -58,9 +58,8 @@
           </td>
         </tr>
         <th colspan="2">
-          <button v-on:click="usefulButton(post.id)">役に立った</button> +
-          {{ post.fav.length }}
-          <!-- </div> -->
+          <button v-on:click="usefulButton(post.id)">役に立った</button>
+          <div>{{ post.starCount }}</div>
         </th>
       </table>
     </div>
@@ -74,26 +73,17 @@ export default {
   data() {
     return {
       posts: [],
-      isShowTags: false,
+      showTags: false,
+      pushedUsefulButton: false,
     }
   },
   methods: {
-    showTags: function () {
-      this.isShowTags = !this.isShowTags
-    },
-    // usefulButton: async (index) => {
-    //   // [START firestore_data_set_array_operations]
-    //   const admin = require("firebase-admin")
-    //   const db = admin.firestore()
-    //   const usefulRef = db.collection("posts").doc(this.posts[index].fav)
-    //   const unionRes = await usefulRef.update({
-    //     regions: admin.firestore.FieldValue.arrayUnion(
-    //       this.posts[index].handleName
-    //     ),
-    //   })
-    //   console.log(unionRes)
-    // },
     usefulButton: function (postId) {
+      //    if(this.pushedUsefulButton){
+      // this.pushedUsefulButton:false
+      //    }else{
+      //      this.pushedUsefulButton:true
+      //    }
       if (this.$auth.uid) {
         firebase
           .firestore()
