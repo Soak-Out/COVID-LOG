@@ -26,8 +26,25 @@
         </div>
       </div>
 
-      <div class="mypost">
-        <div v-for="(post, index) in posts" v-bind:key="index" class="post">
+      <div class="tabs">
+        <div
+          @click="MyPostTab"
+          :class="{ tabActive: hiddenMyLiked }"
+          class="tab"
+        >
+          投稿
+        </div>
+        <div
+          @click="MyLikedTab"
+          :class="{ tabActive: hiddenMyPost }"
+          class="tab"
+        >
+          いいねした投稿
+        </div>
+      </div>
+
+      <div class="mypost" :class="{ hidden: hiddenMyPost }">
+        <div v-for="(post, index) in myposts" v-bind:key="index" class="post">
           <div class="status">
             <div class="flex">
               <div class="ttl">{{ post.title }}</div>
@@ -78,6 +95,33 @@
           />
         </div>
       </div>
+
+      <div class="myliked" :class="{ hidden: hiddenMyLiked }">
+        <div v-for="(post, index) in starPosts" v-bind:key="index" class="post">
+          <div class="status">
+            <div class="flex">
+              <div class="ttl">{{ post.title }}</div>
+              <div class="level">
+                重症度<span>Lv.{{ post.illLevel }}</span>
+              </div>
+            </div>
+            <div class="time">{{ post.postedTime }}</div>
+          </div>
+          <ul class="tag">
+            <li v-show="post.infection">#感染経験あり</li>
+            <li v-show="post.vaccine">#ワクチン接種</li>
+            <li v-show="post.headache">#頭痛</li>
+            <li v-show="post.fever">#発熱</li>
+            <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+            <li v-show="post.soreThroat">#喉の渇き</li>
+            <li v-show="post.tasteOrDisappearance">#味覚異常</li>
+            <li v-show="post.diarrhea">#下痢</li>
+            <li v-show="post.other">#その他</li>
+          </ul>
+
+          <div class="text">{{ post.uploadText }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -90,16 +134,15 @@ const db = firebase.firestore()
 export default {
   data() {
     return {
+      //-----nickname----------
       handleName: "",
       gethandleName: "",
       error: false,
       getScreenName: "",
-      isEditing: false,
       //-------投稿を配列にする-----
-      posts: [],
-      index: 0,
-      postId: "",
-
+      myposts: [],
+      starPosts: [],
+      //--------コンポーネントに渡すData----
       postData: {
         title: "",
         text: "",
@@ -114,7 +157,11 @@ export default {
         tasteOrDisappearance: false,
         other: false,
       },
+      //---------modalを表示---------
       showContent: false,
+      //--------tab--------
+      hiddenMyPost: false,
+      hiddenMyLiked: true,
     }
   },
   components: {
@@ -129,10 +176,14 @@ export default {
           this.gethandleName = doc.data().handleName
           const postRef = await db
             .collection("posts")
-            .where("screen_name", "==", `${doc.data().screen_name}`)
+            // .where("screen_name", "==", `${doc.data().screen_name}`)
             .orderBy("post_at")
             .get()
+          this.starpost = doc.data().star_post_id
+          this.mypost = doc.data().screen_name
+
           this.index = postRef.size
+
           postRef.forEach((postdoc) => {
             const post = postdoc.data()
             //ドキュメントID取得
@@ -144,8 +195,15 @@ export default {
             //post.textを改行
             post.uploadText = post.text.replaceAll("\\n", "\n")
 
-            //posts配列にいれる
-            this.posts.unshift(post)
+            for (let i = 0; i < this.starpost.length; i++) {
+              if (post.postId === this.starpost[i]) {
+                this.starPosts.unshift(post)
+              }
+            }
+
+            if (this.mypost === post.screen_name) {
+              this.myposts.unshift(post)
+            }
           })
         })
       }
@@ -208,13 +266,13 @@ export default {
     closeModal() {
       this.showContent = false
     },
-    enterPost() {
-      // const docPath = this.posts[index].postId
-      // console.log(docPath)
-      // db.collection("posts").set({
-      //   title: "oatethaotheoaeothaeotoehtahtoetehtahetoh",
-      // })
-      // this.showContent = false
+    MyPostTab() {
+      this.hiddenMyPost = false
+      this.hiddenMyLiked = true
+    },
+    MyLikedTab() {
+      this.hiddenMyPost = true
+      this.hiddenMyLiked = false
     },
   },
 }
@@ -287,7 +345,8 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     }
   }
 }
-.mypost {
+.mypost,
+.myliked {
   .post {
     border: 4px solid rgb(206, 242, 252);
     border-radius: 20px;
@@ -359,6 +418,33 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         }
       }
     }
+  }
+}
+//-------tab------------
+.hidden {
+  display: none;
+}
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  transition: 0.4s;
+  .tab {
+    text-align: center;
+    width: 50%;
+    padding: 1rem 0;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+  .tabActive {
+    border-bottom: 1px solid #fff;
+
+    background-color: rgb(0, 153, 255);
+    color: #fff;
   }
 }
 </style>
