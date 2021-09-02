@@ -1,45 +1,47 @@
 <template>
-  <div class="mypost">
+  <div class="post-list">
     <div v-for="(post, index) in posts" v-bind:key="index" class="post">
       <div class="status">
         <div class="flex">
+          <img :src="post.photo" class="photo" />
           <div class="ttl">{{ post.title }}</div>
           <div class="level">
             重症度<span>Lv.{{ post.illLevel }}</span>
           </div>
+          <div class="handle-name">{{ post.handleName }}</div>
         </div>
         <div class="time">{{ post.postedTime }}</div>
       </div>
-      <ul class="tag">
-        <li v-show="post.infection">#感染経験あり</li>
-        <li v-show="post.vaccine">#ワクチン接種</li>
-        <li v-show="post.headache">#頭痛</li>
-        <li v-show="post.fever">#発熱</li>
-        <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-        <li v-show="post.soreThroat">#喉の渇き</li>
-        <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
-        <li v-show="post.diarrhea">#下痢</li>
-        <li v-show="post.other">#その他</li>
-      </ul>
 
       <div class="text">{{ post.uploadText }}</div>
-      <div class="post-btns">
-        <div
-          v-if="isActive[index]"
-          @click="NOTusefulButton(index)"
-          class="star-btn"
-        >
-          💖{{ post.starCount }}
+      <div class="post-info">
+        <div class="post-btns">
+          <div
+            v-if="isActive[index]"
+            @click="NOTusefulButton(index)"
+            class="star-btn"
+          >
+            💖{{ post.starCount }}
+          </div>
+          <div
+            v-if="!isActive[index]"
+            @click="usefulButton(index)"
+            class="star-btn"
+          >
+            🤍{{ post.starCount }}
+          </div>
         </div>
-        <div
-          v-if="!isActive[index]"
-          @click="usefulButton(index)"
-          class="star-btn"
-        >
-          🤍{{ post.starCount }}
-        </div>
-        <!-- <div @click="deletePost(index)" class="post-btn">🗑</div>
-        <div @click="editPost(index)" class="post-btn">🖋</div> -->
+        <ul class="tag">
+          <li v-show="post.infection">#感染経験あり</li>
+          <li v-show="post.vaccine">#ワクチン接種</li>
+          <li v-show="post.headache">#頭痛</li>
+          <li v-show="post.fever">#発熱</li>
+          <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+          <li v-show="post.soreThroat">#喉の渇き</li>
+          <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+          <li v-show="post.diarrhea">#下痢</li>
+          <li v-show="post.other">#その他</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -55,7 +57,7 @@ export default {
     return {
       posts: [],
       isActive: [],
-      // starCount: 0,
+      handleName: "",
     }
   },
   created() {
@@ -72,6 +74,7 @@ export default {
             const post = postdoc.data()
             //ドキュメントID取得
             post.postId = postdoc.id
+
             // 投稿時間を取得し文字列にし、不必要な部分をカット
             const getpostedTime = post.post_at.toDate()
             const strigTime = String(getpostedTime)
@@ -99,10 +102,6 @@ export default {
     },
   },
   methods: {
-    showTags: function () {
-      this.isShowTags = !this.isShowTags
-    },
-
     usefulButton(index) {
       const docPath = this.posts[index].postId
       if (this.user.uid) {
@@ -162,65 +161,8 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   max-width: 1024px;
   margin: 0 auto;
 }
-.prof {
-  padding: 10% 10% 5%;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1.5px #000 solid;
-  user-select: none;
-  .img {
-    width: 30%;
-    .photo {
-      margin-left: 5%;
-      width: 170px;
-      height: 170px;
-      border: 1px solid rgb(151, 151, 151);
-      border-radius: 50%;
-    }
-  }
-  .text {
-    width: 65%;
-    .ttl {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .nickname {
-      margin: 10px 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-      // color: rgb(0, 140, 255);
-    }
-    .inputbtn {
-      display: flex;
-      .change-nickname {
-        border: 1px solid rgb(0, 110, 255);
-        border-radius: 30px;
-        font-size: 1.75rem;
-        width: 70%;
-        height: 50px;
-        padding: 5px;
-      }
 
-      .btn {
-        margin-left: 2.5%;
-        width: 25%;
-        height: 47px;
-        background: $btn-color;
-        color: #fff;
-        border-radius: 10px;
-        display: block;
-        text-align: center;
-        line-height: 47px;
-        font-size: 1.25rem;
-        font-weight: bold;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-        user-select: none;
-        cursor: pointer;
-      }
-    }
-  }
-}
-.mypost {
+.post-list {
   .post {
     border: 4px solid rgb(206, 242, 252);
     border-radius: 20px;
@@ -228,6 +170,12 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     margin: 35px;
     padding: 15px;
     background-color: #fff;
+    .photo {
+      width: 3rem;
+      height: 3rem;
+      border: #ddd 1px solid;
+      border-radius: 50%;
+    }
     .status {
       display: flex;
       justify-content: space-between;
@@ -235,13 +183,20 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         display: flex;
         position: relative;
         .ttl {
+          height: 2rem;
+          line-height: 2rem;
           font-weight: bold;
           font-size: 1.25rem;
-          margin: 5px;
+          margin: 0 1rem;
+        }
+        .handle-name {
+          @extend .ttl;
+          font-weight: normal;
+          color: rgb(151, 151, 151);
         }
         .level {
-          font-size: 1.25rem;
-          margin: 5px;
+          @extend .handle-name;
+          color: #000;
           span {
             font-weight: bold;
             color: red;
@@ -256,40 +211,41 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       }
     }
     .text {
+      margin: 1rem 0;
       padding: 0 0 10px;
       line-height: 1.5;
       letter-spacing: 2px;
       font-size: 1rem;
       white-space: pre-wrap;
     }
-    .tag {
+
+    .post-info {
       display: flex;
-      flex-wrap: wrap;
-      font-weight: 500;
-      color: rgb(0, 140, 255);
-      margin: 10px 0;
-      li {
-        margin-right: 10px;
-      }
-    }
-    .post-btns {
-      display: flex;
-      flex-direction: row-reverse;
-      .star-btn {
-        width: 5rem;
+      .tag {
+        display: flex;
+        flex-wrap: wrap;
+        font-weight: 500;
+        color: rgb(0, 140, 255);
+        margin: 10px 0;
         height: 2rem;
-        text-align: center;
         line-height: 2rem;
-        // background-color: rgb(162, 255, 243);
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
-        border-radius: 50%;
-        cursor: pointer;
-        user-select: none;
-        margin-right: 0.5rem;
-        transition: 0.3s;
-        // &:hover {
-        //   transform: scale(1.3) translateY(-5px);
-        // }
+        li {
+          margin-right: 10px;
+        }
+      }
+      .post-btns {
+        display: flex;
+        flex-direction: row-reverse;
+        .star-btn {
+          width: 4rem;
+          height: 2rem;
+          line-height: 2rem;
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer;
+          user-select: none;
+          margin: 10px;
+        }
       }
     }
   }
