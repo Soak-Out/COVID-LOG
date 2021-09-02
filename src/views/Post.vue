@@ -159,6 +159,7 @@ export default {
           other: this.other,
           photo: this.user.photoURL,
           post_at: firebase.firestore.FieldValue.serverTimestamp(),
+          starCount: 0,
         })
         Object.assign(this.$data, initialState())
       }

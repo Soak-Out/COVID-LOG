@@ -78,6 +78,7 @@ export default {
                 screen_name: user.uid,
                 handleName: this.handleName,
                 created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
                 location.href = "/"
