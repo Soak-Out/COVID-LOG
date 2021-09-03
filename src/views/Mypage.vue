@@ -54,22 +54,26 @@
             </div>
             <div class="time">{{ post.postedTime }}</div>
           </div>
-          <ul class="tag">
-            <li v-show="post.infection">#感染経験あり</li>
-            <li v-show="post.vaccine">#ワクチン接種</li>
-            <li v-show="post.headache">#頭痛</li>
-            <li v-show="post.fever">#発熱</li>
-            <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-            <li v-show="post.soreThroat">#喉の渇き</li>
-            <li v-show="post.tasteOrDisappearance">#味覚異常</li>
-            <li v-show="post.diarrhea">#下痢</li>
-            <li v-show="post.other">#その他</li>
-          </ul>
-
           <div class="text">{{ post.uploadText }}</div>
-          <div class="post-btns">
-            <div @click="deletePost(index)" class="post-btn">🗑</div>
-            <div @click="editPost(index)" class="post-btn">🖋</div>
+
+          <div class="post-info">
+            <ul class="tag">
+              <div>いいね数：{{ post.starCount }}</div>
+              <li v-show="post.infection">#感染経験あり</li>
+              <li v-show="post.vaccine">#ワクチン接種</li>
+              <li v-show="post.headache">#頭痛</li>
+              <li v-show="post.fever">#発熱</li>
+              <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+              <li v-show="post.soreThroat">#喉の渇き</li>
+              <li v-show="post.tasteOrDisappearance">#味覚異常</li>
+              <li v-show="post.diarrhea">#下痢</li>
+              <li v-show="post.other">#その他</li>
+            </ul>
+
+            <div class="post-btns">
+              <div @click="deletePost(index)" class="post-btn">🗑</div>
+              <div @click="editPost(index)" class="post-btn">🖋</div>
+            </div>
           </div>
           <modal
             v-if="showContent"
@@ -104,22 +108,41 @@
               <div class="level">
                 重症度<span>Lv.{{ post.illLevel }}</span>
               </div>
+              <div class="handle-name">{{ post.handleName }}</div>
             </div>
             <div class="time">{{ post.postedTime }}</div>
           </div>
-          <ul class="tag">
-            <li v-show="post.infection">#感染経験あり</li>
-            <li v-show="post.vaccine">#ワクチン接種</li>
-            <li v-show="post.headache">#頭痛</li>
-            <li v-show="post.fever">#発熱</li>
-            <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-            <li v-show="post.soreThroat">#喉の渇き</li>
-            <li v-show="post.tasteOrDisappearance">#味覚異常</li>
-            <li v-show="post.diarrhea">#下痢</li>
-            <li v-show="post.other">#その他</li>
-          </ul>
 
           <div class="text">{{ post.uploadText }}</div>
+          <div class="starpost-info">
+            <div class="post-btns">
+              <div
+                v-if="isActive[index]"
+                @click="NOTusefulButton(index)"
+                class="star-btn"
+              >
+                💖{{ post.starCount }}
+              </div>
+              <div
+                v-if="!isActive[index]"
+                @click="usefulButton(index)"
+                class="star-btn"
+              >
+                🤍{{ post.starCount }}
+              </div>
+            </div>
+            <ul class="tag">
+              <li v-show="post.infection">#感染経験あり</li>
+              <li v-show="post.vaccine">#ワクチン接種</li>
+              <li v-show="post.headache">#頭痛</li>
+              <li v-show="post.fever">#発熱</li>
+              <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+              <li v-show="post.soreThroat">#喉の渇き</li>
+              <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+              <li v-show="post.diarrhea">#下痢</li>
+              <li v-show="post.other">#その他</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -129,6 +152,8 @@
 <script>
 import firebase from "firebase"
 import Modal from "../components/EditModal.vue"
+import Vue from "vue"
+
 const db = firebase.firestore()
 
 export default {
@@ -141,7 +166,10 @@ export default {
       getScreenName: "",
       //-------投稿を配列にする-----
       myposts: [],
+      //----いいね-----
       starPosts: [],
+      isActive: [],
+
       //--------コンポーネントに渡すData----
       postData: {
         title: "",
@@ -197,6 +225,7 @@ export default {
 
             for (let i = 0; i < this.starpost.length; i++) {
               if (post.postId === this.starpost[i]) {
+                this.isActive.unshift(true)
                 this.starPosts.unshift(post)
               }
             }
@@ -230,18 +259,18 @@ export default {
     deletePost(index) {
       const result = window.confirm("この投稿を削除しますか？")
       if (result) {
-        const docPath = this.posts[index].postId
+        const docPath = this.myposts[index].postId
         db.collection("posts")
           .doc(`${docPath}`)
           .delete()
           .then(() => {
-            this.posts.splice(index, 1)
+            this.myposts.splice(index, 1)
           })
       }
     },
     editPost(index) {
       const PD = this.postData
-      const p = this.posts[index]
+      const p = this.myposts[index]
       // データを子に送るために変換
       PD.title = p.title
       PD.text = p.uploadText
@@ -273,6 +302,52 @@ export default {
     MyLikedTab() {
       this.hiddenMyPost = true
       this.hiddenMyLiked = false
+    },
+    usefulButton(index) {
+      const docPath = this.starPosts[index].postId
+      if (this.user.uid) {
+        db.collection("posts")
+          .doc(`${docPath}`)
+          .update({
+            starCount: firebase.firestore.FieldValue.increment(1),
+          })
+        this.starPosts[index].starCount += 1
+
+        db.collection(`users`)
+          .doc(this.user.uid)
+          .set(
+            {
+              star_post_id: firebase.firestore.FieldValue.arrayUnion(
+                `${docPath}`
+              ),
+            },
+            { merge: true }
+          )
+      }
+      Vue.set(this.isActive, index, true)
+    },
+    NOTusefulButton(index) {
+      const docPath = this.starPosts[index].postId
+      if (this.user.uid) {
+        db.collection("posts")
+          .doc(`${docPath}`)
+          .update({
+            starCount: firebase.firestore.FieldValue.increment(-1),
+          })
+        this.starPosts[index].starCount -= 1
+
+        db.collection(`users`)
+          .doc(this.user.uid)
+          .set(
+            {
+              star_post_id: firebase.firestore.FieldValue.arrayRemove(
+                `${docPath}`
+              ),
+            },
+            { merge: true }
+          )
+        Vue.set(this.isActive, index, false)
+      }
     },
   },
 }
@@ -352,7 +427,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     border-radius: 20px;
     box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
     margin: 35px;
-    padding: 15px;
+    padding: 1rem 1rem 0.5rem 1rem;
     background-color: #fff;
     .status {
       display: flex;
@@ -361,13 +436,20 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         display: flex;
         position: relative;
         .ttl {
+          height: 2rem;
+          line-height: 2rem;
           font-weight: bold;
           font-size: 1.25rem;
-          margin: 5px;
+          margin: 0 1rem;
+        }
+        .handle-name {
+          @extend .ttl;
+          font-weight: normal;
+          color: rgb(151, 151, 151);
         }
         .level {
-          font-size: 1.25rem;
-          margin: 5px;
+          @extend .handle-name;
+          color: #000;
           span {
             font-weight: bold;
             color: red;
@@ -382,39 +464,74 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       }
     }
     .text {
-      padding: 0 0 10px;
+      padding: 0 10px 10px;
       line-height: 1.5;
       letter-spacing: 2px;
       font-size: 1rem;
       white-space: pre-wrap;
     }
-    .tag {
+
+    .post-info {
       display: flex;
-      flex-wrap: wrap;
-      font-weight: 500;
-      color: rgb(0, 140, 255);
-      margin: 10px 0;
-      li {
-        margin-right: 10px;
+      justify-content: space-between;
+      .tag {
+        display: flex;
+        flex-wrap: wrap;
+        font-weight: 500;
+        color: rgb(0, 140, 255);
+        margin-top: 10px;
+        li,
+        div {
+          margin-right: 10px;
+        }
+      }
+      .post-btns {
+        display: flex;
+        flex-direction: row-reverse;
+        .post-btn {
+          width: 2rem;
+          height: 2rem;
+          text-align: center;
+          line-height: 2rem;
+          background-color: rgb(162, 255, 243);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
+          border-radius: 50%;
+          cursor: pointer;
+          user-select: none;
+          margin-right: 0.5rem;
+          transition: 0.3s;
+          &:hover {
+            transform: scale(1.3) translateY(-5px);
+          }
+        }
       }
     }
-    .post-btns {
+    .starpost-info {
       display: flex;
-      flex-direction: row-reverse;
-      .post-btn {
-        width: 2rem;
-        height: 2rem;
-        text-align: center;
-        line-height: 2rem;
-        background-color: rgb(162, 255, 243);
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
-        border-radius: 50%;
-        cursor: pointer;
-        user-select: none;
-        margin-right: 0.5rem;
-        transition: 0.3s;
-        &:hover {
-          transform: scale(1.3) translateY(-5px);
+      height: 2rem;
+      line-height: 2rem;
+      .tag {
+        display: flex;
+        flex-wrap: wrap;
+        font-weight: 500;
+        color: rgb(0, 140, 255);
+        margin: 10px;
+
+        li {
+          margin-right: 10px;
+        }
+      }
+      .post-btns {
+        display: flex;
+        flex-direction: row-reverse;
+        .star-btn {
+          width: 4rem;
+
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer;
+          user-select: none;
+          margin: 10px;
         }
       }
     }
