@@ -46,6 +46,7 @@
     </div>
   </div>
 </template>
+
 <script>
 // import InfiniteLoading from "vue-infinite-loading"
 import firebase from "firebase"
