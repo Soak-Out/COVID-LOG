@@ -104,6 +104,7 @@
         <div v-for="(post, index) in starPosts" v-bind:key="index" class="post">
           <div class="status">
             <div class="flex">
+              <img :src="post.photo" class="photo" alt="アイコン" />
               <div class="ttl">{{ post.title }}</div>
               <div class="level">
                 重症度<span>Lv.{{ post.illLevel }}</span>
@@ -435,6 +436,12 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       .flex {
         display: flex;
         position: relative;
+        .photo {
+          width: 3rem;
+          height: 3rem;
+          border: #ddd 1px solid;
+          border-radius: 50%;
+        }
         .ttl {
           height: 2rem;
           line-height: 2rem;

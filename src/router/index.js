@@ -86,8 +86,8 @@ const isSignedIn = async () => {
 
 router.beforeEach(async (to, from, next) => {
   const auth = await isSignedIn()
-  if (to.name !== "Login" && !auth) {
-    next("/login")
+  if (to.name !== "Top" && !auth) {
+    next("/top")
   } else {
     next()
   }
