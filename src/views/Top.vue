@@ -107,10 +107,19 @@
       </div> -->
     </div>
 
-    <!-- <div class="wordbox">
-      <div>ねぎらいの言葉</div>
-      <div v-for="word of words ">{{  word  }}</div>
+    <!-- <div class="shuffleword">
+        <h3>配列の内容表示</h3>
+            <button v-on:click="shuffleword">ここを押してね</button>
+            <div v-for="(word, index) in words" v-bind:key="index">
+          {{ word.name }}
+        </div>
     </div> -->
+
+    <div class="shuffleword">
+        <h3>配列の内容表示</h3>
+            <button v-on:click="shuffleword">ここを押してね</button>
+          <div>{{ message }}</div>
+    </div>
 
     <!-- ここが最下層 -->
   </div>
@@ -125,8 +134,8 @@ export default {
     return {
       dates: [0],
       npatients: {},
-      // word: [今日もごくろうさま,いつもありがとう,体に気をつけて],
-
+      words: ["今日もお疲れ様","元気になってね","仕事したい"],
+      message: "",
       //ログイン関連
       isAuth: false,
       // gethandleName: "",//ようこそ、〇〇さんとかに使う用です。一旦コメントアウト
@@ -215,6 +224,11 @@ export default {
           }
         }
       })
+    },
+    shuffleword(){
+      // console.log(this.words)
+      // return this.words[Math.floor(Math.random() * this.words.length)];
+      this.message = this.words[Math.floor(Math.random() * this.words.length)]
     },
   },
   computed: {
@@ -404,5 +418,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .wordbox {
   background-color: darkkhaki;
   height: 300px;
+}
+
+.shuffleword {
+  text-align: center;
 }
 </style>
