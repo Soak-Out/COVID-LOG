@@ -16,20 +16,18 @@
       <div class="text">{{ post.uploadText }}</div>
       <div class="post-info">
         <div class="post-btns">
-          <div
-            v-if="isActive[index]"
-            @click="NOTusefulButton(index)"
-            class="star-btn"
+          <vue-star
+            animate="animated rubberBand"
+            color="#F05654"
+            :ref="`${index}`"
           >
-            💖{{ post.starCount }}
-          </div>
-          <div
-            v-if="!isActive[index]"
-            @click="usefulButton(index)"
-            class="star-btn"
-          >
-            🤍{{ post.starCount }}
-          </div>
+            <font-awesome-icon
+              slot="icon"
+              icon="heart"
+              @click="StarButton(index)"
+            />
+          </vue-star>
+          {{ post.starCount }}
         </div>
         <ul class="tag">
           <li v-show="post.infection">#感染経験あり</li>
@@ -50,14 +48,14 @@
 <script>
 // import InfiniteLoading from "vue-infinite-loading"
 import firebase from "firebase"
-import Vue from "vue"
+
 const db = firebase.firestore()
 
 export default {
   data() {
     return {
       posts: [],
-      isActive: [],
+
       handleName: "",
     }
   },
@@ -67,33 +65,44 @@ export default {
       if (userDoc.exists) {
         const docRef = db.collection("users").doc(user.uid)
 
-        docRef.get().then(async (doc) => {
-          const postRef = await db.collection("posts").orderBy("post_at").get()
-          this.starpost = doc.data().star_post_id
+        docRef
+          .get()
+          .then(async (doc) => {
+            const postRef = await db
+              .collection("posts")
+              .orderBy("post_at")
+              .get()
+            this.starpost = doc.data().star_post_id
 
-          postRef.forEach((postdoc) => {
-            const post = postdoc.data()
-            //ドキュメントID取得
-            post.postId = postdoc.id
+            postRef.forEach((postdoc) => {
+              const post = postdoc.data()
+              //ドキュメントID取得
+              post.postId = postdoc.id
 
-            // 投稿時間を取得し文字列にし、不必要な部分をカット
-            const getpostedTime = post.post_at.toDate()
-            const strigTime = String(getpostedTime)
-            post.postedTime = strigTime.slice(0, -20)
-            //post.textを改行
+              // 投稿時間を取得し文字列にし、不必要な部分をカット
+              const getpostedTime = post.post_at.toDate()
+              const strigTime = String(getpostedTime)
+              post.postedTime = strigTime.slice(0, -20)
+              //post.textを改行
 
-            post.uploadText = post.text.replaceAll("\\n", "\n")
-            //以前にいいねしたか判定
-            this.isActive.unshift(false)
+              post.uploadText = post.text.replaceAll("\\n", "\n")
+
+              //posts配列にいれる
+              this.posts.unshift(post)
+            })
+          })
+          .then(() => {
             for (let i = 0; i < this.starpost.length; i++) {
-              if (post.postId === this.starpost[i]) {
-                this.isActive[0] = true
+              for (let j = 0; j < this.posts.length; j++) {
+                if (this.posts[j].postId === this.starpost[i]) {
+                  // console.log(this.$refs[j])
+                  this.$refs[j][0].$data.active = true
+                  this.$refs[j][0].$data.toggleAnimate = true
+                  this.$refs[j][0].$data.toggleColor = true
+                }
               }
             }
-            //posts配列にいれる
-            this.posts.unshift(post)
           })
-        })
       }
     })
   },
@@ -103,6 +112,13 @@ export default {
     },
   },
   methods: {
+    StarButton(index) {
+      if (this.$refs[index][0].$data.active === false) {
+        this.usefulButton(index)
+      } else {
+        this.NOTusefulButton(index)
+      }
+    },
     usefulButton(index) {
       const docPath = this.posts[index].postId
       if (this.user.uid) {
@@ -124,7 +140,6 @@ export default {
             { merge: true }
           )
       }
-      Vue.set(this.isActive, index, true)
     },
     NOTusefulButton(index) {
       const docPath = this.posts[index].postId
@@ -146,7 +161,6 @@ export default {
             },
             { merge: true }
           )
-        Vue.set(this.isActive, index, false)
       }
     },
   },

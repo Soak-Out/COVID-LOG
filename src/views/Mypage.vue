@@ -117,20 +117,18 @@
           <div class="text">{{ post.uploadText }}</div>
           <div class="starpost-info">
             <div class="post-btns">
-              <div
-                v-if="isActive[index]"
-                @click="NOTusefulButton(index)"
-                class="star-btn"
+              <vue-star
+                animate="animated rubberBand"
+                color="#F05654"
+                :ref="`${index}`"
               >
-                💖{{ post.starCount }}
-              </div>
-              <div
-                v-if="!isActive[index]"
-                @click="usefulButton(index)"
-                class="star-btn"
-              >
-                🤍{{ post.starCount }}
-              </div>
+                <font-awesome-icon
+                  slot="icon"
+                  icon="heart"
+                  @click="StarButton(index)"
+                />
+              </vue-star>
+              {{ post.starCount }}
             </div>
             <ul class="tag">
               <li v-show="post.infection">#感染経験あり</li>
@@ -201,41 +199,54 @@ export default {
       const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
         const docRef = db.collection("users").doc(user.uid)
-        docRef.get().then(async (doc) => {
-          this.gethandleName = doc.data().handleName
-          const postRef = await db
-            .collection("posts")
-            // .where("screen_name", "==", `${doc.data().screen_name}`)
-            .orderBy("post_at")
-            .get()
-          this.starpost = doc.data().star_post_id
-          this.mypost = doc.data().screen_name
+        docRef
+          .get()
+          .then(async (doc) => {
+            this.gethandleName = doc.data().handleName
+            const postRef = await db
+              .collection("posts")
+              // .where("screen_name", "==", `${doc.data().screen_name}`)
+              .orderBy("post_at")
+              .get()
+            this.starpost = doc.data().star_post_id
+            this.mypost = doc.data().screen_name
 
-          this.index = postRef.size
+            this.index = postRef.size
 
-          postRef.forEach((postdoc) => {
-            const post = postdoc.data()
-            //ドキュメントID取得
-            post.postId = postdoc.id
-            // 投稿時間を取得し文字列にし、不必要な部分をカット
-            const getpostedTime = post.post_at.toDate()
-            const strigTime = String(getpostedTime)
-            post.postedTime = strigTime.slice(0, -20)
-            //post.textを改行
-            post.uploadText = post.text.replaceAll("\\n", "\n")
+            postRef.forEach((postdoc) => {
+              const post = postdoc.data()
+              //ドキュメントID取得
+              post.postId = postdoc.id
+              // 投稿時間を取得し文字列にし、不必要な部分をカット
+              const getpostedTime = post.post_at.toDate()
+              const strigTime = String(getpostedTime)
+              post.postedTime = strigTime.slice(0, -20)
+              //post.textを改行
+              post.uploadText = post.text.replaceAll("\\n", "\n")
+              if (this.mypost === post.screen_name) {
+                this.myposts.unshift(post)
+              }
 
+              for (let i = 0; i < this.starpost.length; i++) {
+                if (post.postId === this.starpost[i]) {
+                  this.starPosts.unshift(post)
+                }
+              }
+            })
+          })
+
+          .then(() => {
             for (let i = 0; i < this.starpost.length; i++) {
-              if (post.postId === this.starpost[i]) {
-                this.isActive.unshift(true)
-                this.starPosts.unshift(post)
+              for (let j = 0; j < this.starPosts.length; j++) {
+                if (this.starPosts[j].postId === this.starpost[i]) {
+                  // console.log(this.$refs[j])
+                  this.$refs[j][0].$data.active = true
+                  this.$refs[j][0].$data.toggleAnimate = true
+                  this.$refs[j][0].$data.toggleColor = true
+                }
               }
             }
-
-            if (this.mypost === post.screen_name) {
-              this.myposts.unshift(post)
-            }
           })
-        })
       }
     })
   },
@@ -303,6 +314,13 @@ export default {
     MyLikedTab() {
       this.hiddenMyPost = true
       this.hiddenMyLiked = false
+    },
+    StarButton(index) {
+      if (this.$refs[index][0].$data.active === false) {
+        this.usefulButton(index)
+      } else {
+        this.NOTusefulButton(index)
+      }
     },
     usefulButton(index) {
       const docPath = this.starPosts[index].postId

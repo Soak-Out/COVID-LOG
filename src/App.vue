@@ -21,12 +21,6 @@ export default {
   components: {
     hamburger,
   },
-  data() {
-    return {
-      ActiveBtn: false,
-      isAuth: true,
-    }
-  },
 }
 </script>
 
