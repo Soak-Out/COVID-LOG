@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+     <font-awesome-icon icon="user-secret" />
+      <vue-star animate="yourAnimateCssClass" color="rgb(152, 138, 222)">
+      </vue-star>
+
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/top">Top</router-link> |

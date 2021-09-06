@@ -107,17 +107,8 @@
       </div> -->
     </div>
 
-    <!-- <div class="shuffleword">
-        <h3>配列の内容表示</h3>
-            <button v-on:click="shuffleword">ここを押してね</button>
-            <div v-for="(word, index) in words" v-bind:key="index">
-          {{ word.name }}
-        </div>
-    </div> -->
-
     <div class="shuffleword">
         <h3>配列の内容表示</h3>
-            <button v-on:click="shuffleword">ここを押してね</button>
           <div>{{ message }}</div>
     </div>
 
@@ -145,7 +136,8 @@ export default {
       // handleName: "",
     }
   },
-  created() {
+  created: function() {
+    this.message = this.words[Math.floor(Math.random() * this.words.length)]
     //API取得
     fetch(
       `https://data.corona.go.jp/converted-json/covid19japan-npatients.json`
@@ -183,7 +175,7 @@ export default {
           this.posts.push(post)
         })
       })
-  },
+    },
 
   methods: {
     signOut() {
@@ -224,11 +216,6 @@ export default {
           }
         }
       })
-    },
-    shuffleword(){
-      // console.log(this.words)
-      // return this.words[Math.floor(Math.random() * this.words.length)];
-      this.message = this.words[Math.floor(Math.random() * this.words.length)]
     },
   },
   computed: {
