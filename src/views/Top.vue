@@ -112,6 +112,11 @@
       <div v-for="word of words ">{{  word  }}</div>
     </div> -->
 
+    <div class=“shuffleword”>
+        <h3>配列の内容表示</h3>
+          <div>{{ message }}</div>
+    </div>
+
     <!-- ここが最下層 -->
   </div>
 </template>
@@ -125,7 +130,8 @@ export default {
     return {
       dates: [0],
       npatients: {},
-      // word: [今日もごくろうさま,いつもありがとう,体に気をつけて],
+      words: ["今日もごくろうさま","いつもありがとう","体に気をつけて"],
+      message: "",
 
       //ログイン関連
       isAuth: false,
@@ -136,7 +142,8 @@ export default {
       // handleName: "",
     }
   },
-  created() {
+  created: function() {
+    this.message = this.words[Math.floor(Math.random() * this.words.length)]
     //API取得
     fetch(
       `https://data.corona.go.jp/converted-json/covid19japan-npatients.json`
@@ -405,4 +412,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   background-color: darkkhaki;
   height: 300px;
 }
+
+
 </style>
