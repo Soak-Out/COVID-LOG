@@ -8,14 +8,28 @@
         /></router-link>
         <nav>
           <ul>
-            <li><router-link to="/top">トップ</router-link></li>
+            <li>
+              <router-link to="/top">トップ</router-link>
+            </li>
             |
-            <li><router-link to="/covidList">投稿を見る</router-link></li>
+            <li :class="{ gray: !isAuth }">
+              <router-link to="/covidList" :class="{ nopoint: !isAuth }"
+                >投稿を見る</router-link
+              >
+            </li>
             |
-            <li><router-link to="/post-page">投稿する</router-link></li>
+            <li :class="{ gray: !isAuth }">
+              <router-link to="/post-page" :class="{ nopoint: !isAuth }"
+                >投稿する</router-link
+              >
+            </li>
             |
-            <li><router-link to="/mypage">マイページ</router-link></li>
-            |
+            <li :class="{ gray: !isAuth }">
+              <router-link to="/mypage" :class="{ nopoint: !isAuth }"
+                >マイページ</router-link
+              >
+            </li>
+            ｜
             <li>
               <div v-if="isAuth">
                 <a @click="signOut" class="btn log-out">ログアウト</a>
@@ -94,6 +108,7 @@ export default {
 
 $active-color: #4986e1;
 $main-color: #9ad5ff;
+$btn-color: rgb(4, 163, 255);
 
 #header {
   height: 100px;
@@ -119,6 +134,11 @@ $main-color: #9ad5ff;
           margin: 0 1.125rem;
           text-align: center;
           position: relative;
+          user-select: none;
+        }
+        .gray {
+          color: rgb(192, 192, 192);
+          cursor: default;
         }
 
         a.router-link-exact-active {
@@ -132,6 +152,23 @@ $main-color: #9ad5ff;
             height: 3px;
             background: $main-color;
           }
+        }
+        .nopoint {
+          cursor: default;
+        }
+      }
+      .btn {
+        width: 10rem;
+        color: #fff;
+        display: inline-block;
+        border-radius: 10px;
+        height: 3rem;
+        line-height: 3rem;
+        padding: 0 1.5rem;
+        cursor: pointer;
+        background-color: $btn-color;
+        &:hover {
+          opacity: 0.7;
         }
       }
     }

@@ -7,13 +7,25 @@ import { faUserSecret } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { faPen } from "@fortawesome/free-solid-svg-icons"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { faTwitter } from "@fortawesome/free-brands-svg-icons"
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import VueStar from "vue-star"
 
 Vue.component("VueStar", VueStar)
 
-library.add(faUserSecret, faHeart, faTrash, faPen)
+library.add(
+  faUserSecret,
+  faHeart,
+  faTrash,
+  faPen,
+  faTimes,
+  faEnvelope,
+  faTwitter
+)
 
 Vue.component("font-awesome-icon", FontAwesomeIcon)
 

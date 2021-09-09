@@ -55,6 +55,18 @@
                 <span>5</span>
               </div>
             </div>
+
+            <div class="block-ttl">年齢</div>
+            <select name="age" class="age" v-model="age">
+              <option value="10歳未満">10歳未満</option>
+              <option value="10代">10代</option>
+              <option value="20代">20代</option>
+              <option value="30代">30代</option>
+              <option value="40代">40代</option>
+              <option value="50代">50代</option>
+              <option value="60代">60代</option>
+              <option value="70代">70歳以上</option>
+            </select>
           </div>
 
           <div class="right-side">
@@ -141,6 +153,7 @@ function initialState() {
     tasteOrDisappearance: false,
     other: false,
     showContent: false,
+    age: "10代",
   }
 }
 
@@ -199,6 +212,7 @@ export default {
           other: this.other,
           photo: this.user.photoURL,
           post_at: firebase.firestore.FieldValue.serverTimestamp(),
+          age: this.age,
           starCount: 0,
         })
         Object.assign(this.$data, initialState())
@@ -219,10 +233,15 @@ export default {
 @import "../assets/css/_reset.scss";
 
 $main-color: #9ad5ff;
+$sub-color: #4986e1;
+$btn-color: rgb(4, 163, 255);
 
 .wrapper {
   max-width: 1420px;
   display: flex;
+}
+li {
+  user-select: none;
 }
 //----------------------------
 //サイドバー
@@ -252,7 +271,7 @@ $main-color: #9ad5ff;
     .text {
       display: inline-block;
       font-size: 0.75rem;
-      color: #4986e1;
+      color: $sub-color;
     }
   }
 }
@@ -269,7 +288,7 @@ $main-color: #9ad5ff;
     width: 100px;
     text-align: center;
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
     position: relative;
     &::after {
       position: absolute;
@@ -286,26 +305,28 @@ $main-color: #9ad5ff;
     width: 100%;
     border-radius: 10px;
     border: 3px solid $main-color;
+    padding: 1%;
   }
   .inttl {
     height: 42px;
-    margin-bottom: 40px;
+    margin-bottom: 1.5rem;
   }
   .intext {
     height: 198px;
-    margin-bottom: 49px;
+    margin-bottom: 1.5rem;
   }
   .check-list {
     display: flex;
-    margin-bottom: 60px;
+    margin-bottom: 2rem;
     .left-side {
       width: 60%;
       .attribute {
-        padding: 2rem 1rem;
+        padding: 1rem;
         li {
           margin-bottom: 0.5rem;
           input {
             margin-right: 0.5rem;
+            margin-bottom: 0.3rem;
             cursor: pointer;
           }
         }
@@ -359,6 +380,14 @@ $main-color: #9ad5ff;
           justify-content: space-between;
         }
       }
+      .age {
+        width: 3rem;
+        margin: 0.5rem 1rem;
+        font-size: 1.25rem;
+        font-weight: 540;
+        cursor: pointer;
+        border-bottom: 2px dotted $main-color;
+      }
     }
   }
 
@@ -368,12 +397,12 @@ $main-color: #9ad5ff;
       display: flex;
       flex-direction: column;
       margin: 1rem;
-      input {
-        margin-right: 0.5rem;
-        cursor: pointer;
-      }
       li {
-        margin-bottom: 0.54rem;
+        margin-bottom: 0.875rem;
+        input {
+          margin-right: 0.5rem;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -387,10 +416,102 @@ $main-color: #9ad5ff;
     text-align: center;
     margin: 0 auto;
     color: #fff;
-    background-color: $main-color;
     border-radius: 10px;
     user-select: none;
     cursor: pointer;
+    margin-bottom: 2rem;
+    background-color: $btn-color;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+//----------------------------
+//SP
+//----------------------------
+
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    margin-top: 1.5rem;
+    .prof {
+      margin: 0 auto;
+      img {
+        width: 8rem;
+        margin-bottom: 1rem;
+      }
+      .name {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  //----------------------------
+  //投稿作成欄
+  //----------------------------
+  .make-post {
+    width: 100%;
+    .inner {
+      margin: 0 4%;
+    }
+    .block-ttl {
+      font-size: 1.25rem;
+      &::after {
+        height: 2.5px;
+        width: 90px;
+      }
+    }
+    .inttl {
+      height: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .intext {
+      height: 10rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    .check-list {
+      flex-direction: column;
+      margin-bottom: 1.5rem;
+      .left-side {
+        width: 100%;
+        .attribute {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0.5rem 1rem;
+          li {
+            margin-right: 1rem;
+            input {
+              margin-right: 0.325rem;
+            }
+          }
+        }
+      }
+      .right-side {
+        width: 100%;
+        .tag {
+          flex-direction: row;
+          flex-wrap: wrap;
+          margin-bottom: 0;
+          li {
+            margin-bottom: 0.5rem;
+            margin-right: 1rem;
+            input {
+              margin-right: 0.325rem;
+            }
+          }
+        }
+      }
+    }
+    .btn {
+      width: 12rem;
+      height: 3rem;
+      line-height: 3rem;
+    }
   }
 }
 </style>
