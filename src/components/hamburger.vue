@@ -1,5 +1,5 @@
 <template>
-  <div class="hamburger__container" v-if="isAuth">
+  <div class="hamburger__container">
     <!--ハンバーガーメニューのボタン-->
     <div class="hamburger__btn" @click="ActiveBtn = !ActiveBtn">
       <span class="line line_01" :class="{ btn_line01: ActiveBtn }"></span>
@@ -9,19 +9,33 @@
     <!--サイドメニュー-->
     <transition name="hamburger__menu">
       <div class="hamburger__menu" v-show="ActiveBtn">
-        <div>logo</div>
+        <router-link to="/top"
+          ><img src="../assets/logo-text.png" alt="" @click="clickEvent"
+        /></router-link>
         <ul class="scroll">
-          <li><router-link to="/top">トップ</router-link></li>
-          <li><router-link to="/covidList">投稿を見る</router-link></li>
-          <li><router-link to="/post-page">投稿する</router-link></li>
-          <li><router-link to="/mypage">マイページ</router-link></li>
+          <li v-if="isAuth" @click="clickEvent">
+            <router-link to="/top">トップ</router-link>
+          </li>
+          <li v-if="isAuth" @click="clickEvent">
+            <router-link to="/covidList">投稿を見る</router-link>
+          </li>
+          <li v-if="isAuth" @click="clickEvent">
+            <router-link to="/post-page">投稿する</router-link>
+          </li>
+          <li v-if="isAuth" @click="clickEvent">
+            <router-link to="/mypage">マイページ</router-link>
+          </li>
 
           <li>
             <div v-if="isAuth">
-              <a @click="signOut" class="btn log-out">ログアウト</a>
+              <a @click="clickEvent" v-on:click="signOut" class="btn log-out"
+                >ログアウト</a
+              >
             </div>
             <div v-else class="login-page">
-              <a @click="signUp" class="btn">ログイン</a>
+              <a @click="clickEvent" v-on:click="signUp" class="btn"
+                >ログイン</a
+              >
             </div>
           </li>
         </ul>
@@ -45,6 +59,9 @@ export default {
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
   },
   methods: {
+    clickEvent() {
+      this.ActiveBtn = false
+    },
     signOut() {
       firebase
         .auth()
@@ -79,7 +96,7 @@ export default {
                 star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
-                location.href = "/"
+                location.href = "/top"
               })
           }
         }
@@ -91,12 +108,13 @@ export default {
 
 <style lang="scss">
 $main-color: #9ad5ff;
+$btn-color: rgb(4, 163, 255);
 
 @media screen and (max-width: 1024px) {
   .hamburger__btn {
     position: fixed;
-    top: 2rem;
-    right: 2rem;
+    top: 3%;
+    right: 5%;
     width: 75px;
     height: 46px;
     cursor: pointer;
@@ -157,39 +175,58 @@ $main-color: #9ad5ff;
   }
 
   .hamburger__menu {
-    border-left: 1px solid #000;
-    box-shadow: -1px 0 10px #333;
-    background-color: #fff;
+    background-color: rgba($color: #fff, $alpha: 0.9);
     z-index: 30;
-    padding: 2rem 0;
     position: fixed;
-    width: 100%;
+    width: 280px;
     height: 80rem;
     top: 0;
     right: 0;
 
+    img {
+      max-width: 70%;
+      padding: 1rem 1rem 0.25rem 1rem;
+    }
     ul {
-      padding: 0;
-      padding-top: 40px;
+      padding: 0 0.25rem;
+      width: 100%;
     }
 
     li {
-      border-top: 1px solid #000;
-      &:last-child {
-        border-bottom: 1px solid #000;
-      }
+      width: 100%;
+      border-top: 1px solid $main-color;
       text-align: left;
-      padding: 20px 0;
       list-style: none;
       line-height: 1;
+      cursor: pointer;
+
+      a {
+        padding: 1.25rem 4vw;
+        display: block;
+        width: 100%;
+        color: rgb(66, 66, 66);
+        text-decoration: none;
+        font-size: 1.25rem;
+      }
     }
 
-    a {
-      color: rgb(66, 66, 66);
-      text-decoration: none;
-      font-size: 25px;
-      margin: 0 4vw;
-      padding-bottom: 8px;
+    .btn {
+      width: 12rem;
+      text-align: center;
+      font-size: 1.125rem;
+      color: #fff;
+      display: inline-block;
+      border-radius: 10px;
+      height: 3.25rem;
+      line-height: 3.25rem;
+      padding: 0 1.5rem;
+      margin-left: 2.75rem;
+      cursor: pointer;
+      margin-top: 2rem;
+      background-color: $btn-color;
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
   .scroll {

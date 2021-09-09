@@ -45,8 +45,10 @@
           <div v-for="(post, index) in myposts" v-bind:key="index" class="post">
             <div class="time">{{ post.postedTime }}</div>
             <div class="post-info">
-              <img :src="user.photoURL" />
-
+              <div class="img-age">
+                <img :src="user.photoURL" />
+                <div class="age">{{ post.age }}</div>
+              </div>
               <div class="post-status">
                 <div class="ttl">{{ post.title }}</div>
                 <div class="post-detail">
@@ -99,7 +101,6 @@
             <modal
               v-if="showContent"
               @close="closeModal"
-              @enter="enterPost"
               :title="postData.title"
               :text="postData.text"
               :infection="postData.infection"
@@ -117,6 +118,8 @@
               :post_at="postData.post_at"
               :photo="postData.photo"
               :postId="postData.postId"
+              :starCount="postData.starCount"
+              :age="postData.age"
             />
           </div>
         </div>
@@ -130,7 +133,10 @@
           >
             <div class="time">{{ post.postedTime }}</div>
             <div class="post-info">
-              <img :src="user.photoURL" />
+              <div class="img-age">
+                <img :src="post.photo" />
+                <div class="age">{{ post.age }}</div>
+              </div>
 
               <div class="post-status">
                 <div class="ttl">{{ post.title }}</div>
@@ -341,6 +347,8 @@ export default {
       PD.handleName = p.handleName
       PD.post_at = p.post_at
       PD.photo = p.photo
+      PD.starCount = p.starCount
+      PD.age = p.age
       this.showContent = true
     },
     closeModal() {
@@ -416,6 +424,8 @@ export default {
 
 $main-color: #9ad5ff;
 $sub-color: #4986e1;
+$btn-color: rgb(4, 163, 255);
+
 .wrapper {
   max-width: 1420px;
   display: flex;
@@ -441,6 +451,7 @@ $sub-color: #4986e1;
       border-radius: 50%;
       margin-bottom: 43px;
     }
+
     .name {
       width: 100%;
       display: inline-block;
@@ -467,7 +478,7 @@ $sub-color: #4986e1;
       line-height: 27px;
       text-align: center;
       margin-left: 0.625rem;
-      background-color: $main-color;
+      background-color: $btn-color;
       color: #fff;
       border-radius: 10px;
       cursor: pointer;
@@ -521,26 +532,34 @@ $sub-color: #4986e1;
   }
   .post-info {
     display: flex;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .img-age {
+      position: relative;
       margin: 3%;
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+      .age {
+        position: absolute;
+        top: 3.25rem;
+        right: 0.4rem;
+      }
     }
     .post-status {
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1rem;
+        font-size: 1.25rem;
         padding-left: 0.5rem;
-        padding-bottom: 0.875rem;
-        margin-bottom: 0.875rem;
-        border-bottom: 3px solid $main-color;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 2px solid $main-color;
       }
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 0.875rem;
+        font-size: 1rem;
         padding-left: 0.5rem;
         span,
         div {
@@ -553,7 +572,7 @@ $sub-color: #4986e1;
     }
   }
   .text {
-    font-size: 0.875rem;
+    font-size: 1rem;
     // font-weight: bold;
     margin: 0 8% 1rem;
   }
@@ -568,7 +587,7 @@ $sub-color: #4986e1;
       ul {
         display: flex;
         flex-wrap: wrap;
-        padding-right: 3rem;
+        padding-right: 5%;
         li {
           margin-left: 0.5rem;
           color: $sub-color;
@@ -589,7 +608,7 @@ $sub-color: #4986e1;
       .edit-btn {
         margin-top: 0.05rem;
         margin-left: 1rem;
-        color: $main-color;
+        color: $btn-color;
         cursor: pointer;
       }
     }
@@ -602,7 +621,7 @@ $sub-color: #4986e1;
     @extend .extendpost;
     .btns {
       .like {
-        color: $main-color;
+        color: $btn-color;
       }
     }
   }
@@ -642,7 +661,7 @@ $sub-color: #4986e1;
     .prof {
       margin: 0 auto;
       img {
-        width: 100px;
+        width: 8rem;
         margin-bottom: 1rem;
       }
       .name {
@@ -683,14 +702,13 @@ $sub-color: #4986e1;
     .post-info {
       .post-status {
         .ttl {
-          font-size: 0.875rem;
+          font-size: 1rem;
           margin-top: 0.3rem;
           padding-bottom: 0.4rem;
           margin-bottom: 0.4rem;
         }
         .post-detail {
-          font-size: 0.625rem;
-
+          font-size: 0.875rem;
           span,
           div {
             margin-left: 0.5rem;
