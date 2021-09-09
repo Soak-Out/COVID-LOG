@@ -1,78 +1,118 @@
 <template>
   <div class="wrapper">
-    <div class="post-content">
-      <img :src="user.photoURL" class="photo" />
-      <div class="nickname">
-        <router-link to="/mypage" class="handle-name">
-          {{ handleName }}</router-link
+    <aside class="sidebar">
+      <div class="prof">
+        <img :src="user.photoURL" />
+        <router-link to="/mypage" class="name"> {{ handleName }}</router-link
+        ><br />
+        <router-link to="/mypage" class="text"
+          >マイページでで名前を変更</router-link
         >
       </div>
+    </aside>
 
-      タイトル<input type="text" v-model="postTitle" class="small-input" />
-      投稿内容<textarea type="text" v-model="postText" />
+    <div class="make-post">
+      <div class="inner">
+        <p class="block-ttl">タイトル</p>
+        <input type="text" v-model="postTitle" class="inttl" />
+        <div class="block-ttl">投稿内容</div>
+        <textarea type="text" v-model="postText" class="intext" />
 
-      <ul class="exp">
-        <li>
-          <input type="checkbox" v-model="infection" id="infection" /><label
-            for="infection"
-            >コロナに感染している/したことがある</label
-          >
-        </li>
-        <li>
-          <input type="checkbox" v-model="vaccine" id="vaccine" /><label
-            for="vaccine"
-            >ワクチンを接種</label
-          >
-        </li>
-      </ul>
+        <div class="check-list">
+          <div class="left-side">
+            <div class="block-ttl">属性</div>
+            <ul class="attribute">
+              <li>
+                <input
+                  type="checkbox"
+                  v-model="infection"
+                  id="infection"
+                /><label for="infection">感染記録</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="vaccine" id="vaccine" /><label
+                  for="vaccine"
+                  >ワクチン接種記録</label
+                >
+              </li>
+            </ul>
 
-      <div class="range">
-        <label for="illLevel">重症度(0 〜 5)</label>
-        <input
-          type="range"
-          v-model="illLevel"
-          min="1"
-          max="5"
-          step="1"
-          id="illLevel"
-        />
+            <div class="block-ttl">重症度</div>
+            <div class="severity">
+              <input
+                type="range"
+                v-model="illLevel"
+                min="1"
+                max="5"
+                step="1"
+                id="illLevel"
+              />
+              <div class="numbers">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-side">
+            <div class="block-ttl">症状</div>
+            <ul class="tag">
+              <li>
+                <input type="checkbox" v-model="fever" id="fever" /><label
+                  for="fever"
+                  >発熱</label
+                >
+              </li>
+              <li>
+                <input type="checkbox" v-model="headache" id="headache" /><label
+                  for="headache"
+                  >頭痛</label
+                >
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  v-model="soreThroat"
+                  id="soreThroat"
+                /><label for="soreThroat">喉の渇き</label>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  v-model="respiratoryOrgan"
+                  id="respiratoryOrgan"
+                /><label for="respiratoryOrgan">呼吸困難</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="diarrhea" id="diarrhea" /><label
+                  for="diarrhea"
+                  >下痢</label
+                >
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  v-model="tasteOrDisappearance"
+                  id="tasteOrDisappearance"
+                /><label for="tasteOrDisappearance">味覚などの異常</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="other" id="other" /><label
+                  for="other"
+                  >その他</label
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <a v-on:click="post" @click="openModal" class="btn">投稿する</a>
+
+        <modal v-show="showContent" @close="closeModal" />
       </div>
-
-      <div class="symptoms">
-        症状：
-        <input type="checkbox" v-model="fever" id="fever" /><label for="fever"
-          >発熱</label
-        >
-        <input type="checkbox" v-model="soreThroat" id="soreThroat" /><label
-          for="soreThroat"
-          >空咳・喉の痛み</label
-        >
-        <input
-          type="checkbox"
-          v-model="respiratoryOrgan"
-          id="respiratoryOrgan"
-        /><label for="respiratoryOrgan">呼吸器障害</label>
-        <input type="checkbox" v-model="diarrhea" id="diarrhea" /><label
-          for="diarrhea"
-          >下痢</label
-        >
-        <input type="checkbox" v-model="headache" id="headache" /><label
-          for="headache"
-          >頭痛</label
-        >
-        <input
-          type="checkbox"
-          v-model="tasteOrDisappearance"
-          id="tasteOrDisappearance"
-        /><label for="tasteOrDisappearance">味覚または嗅覚の消失</label>
-        <input type="checkbox" v-model="other" id="other" /><label for="other"
-          >その他</label
-        >
-      </div>
-
-      <a v-on:click="post" @click="openModal" class="btn">投稿</a>
-
-      <modal v-show="showContent" @close="closeModal" />
     </div>
   </div>
 </template>
@@ -116,7 +156,7 @@ export default {
       return this.$auth.currentUser
     },
   },
-  mounted: function () {
+  created: function () {
     firebase.auth().onAuthStateChanged(async (user) => {
       const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
@@ -176,80 +216,179 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/css/_reset.scss";
+
+$main-color: #9ad5ff;
+
 .wrapper {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-.photo {
-  width: 100px;
-  border-radius: 50%;
-  border: 1px #ccc solid;
-}
-.post-content {
+  max-width: 1420px;
   display: flex;
-  flex-direction: column;
-  max-width: 1024px;
-  text-align: left;
-  font-weight: bold;
-  label {
-    cursor: pointer;
-    user-select: none;
-  }
-  .small-input {
-    width: 40%;
-    margin: 0.5rem 0;
-  }
-  textarea {
-    margin: 0.5rem 0;
-    height: 200px;
-  }
-  .exp {
-    display: flex;
-    flex-direction: column;
-    margin-left: -40px;
-    li {
-      list-style: none;
-      margin: 0.5rem 0;
+}
+//----------------------------
+//サイドバー
+//----------------------------
+.sidebar {
+  width: calc(100% / 3);
+  border-right: 1px solid #c4c4c4;
+  .prof {
+    width: 198px;
+    text-align: center;
+    margin: {
+      top: 103px;
+      left: 30%;
+    }
+    img {
+      width: 198px;
+      border-radius: 50%;
+      margin-bottom: 43px;
+    }
+    .name {
+      width: 100%;
+      display: inline-block;
+      color: #000;
+      font-size: 1.5rem;
+      border-bottom: 3px solid $main-color;
+    }
+    .text {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: #4986e1;
     }
   }
-  .range {
-    margin-bottom: 1rem;
-    #illLevel {
-      width: 30%;
+}
+//----------------------------
+//投稿作成欄
+//----------------------------
+.make-post {
+  width: calc(200% / 3);
+  margin: 0 auto;
+  .inner {
+    margin: 61px 119px 91px 10%;
+  }
+  .block-ttl {
+    width: 100px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      height: 3px;
+      background-color: $main-color;
+      width: 93.26px;
+      top: 100%;
+      left: 5%;
     }
   }
-  .symptoms {
-    margin-bottom: 1rem;
-    display: flex;
-
-    flex-wrap: wrap;
-    label {
-      margin-right: 20px;
-    }
-  }
-
-  .handle-name {
-    color: rgb(0, 174, 255);
-  }
-  .nickname {
-    margin: 1rem 0;
-    display: flex;
-  }
-
-  $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
-  .btn {
-    margin: 1rem auto;
-    width: 155px;
-    height: 47px;
-    background: $btn-color;
-    color: #fff;
+  .inttl,
+  .intext {
+    width: 100%;
     border-radius: 10px;
+    border: 3px solid $main-color;
+  }
+  .inttl {
+    height: 42px;
+    margin-bottom: 40px;
+  }
+  .intext {
+    height: 198px;
+    margin-bottom: 49px;
+  }
+  .check-list {
+    display: flex;
+    margin-bottom: 60px;
+    .left-side {
+      width: 60%;
+      .attribute {
+        padding: 2rem 1rem;
+        li {
+          margin-bottom: 0.5rem;
+          input {
+            margin-right: 0.5rem;
+            cursor: pointer;
+          }
+        }
+      }
+      .severity {
+        margin: 1rem;
+        input {
+          width: 235px;
+          border-radius: 10px;
+          background: #ceeaff;
+          -webkit-appearance: none;
+          border: solid 3px #aad0ee;
+          appearance: none;
+          cursor: pointer;
+          outline: 0;
+        }
+        &:focus {
+          box-shadow: 0 0 3px rgb(0, 161, 255);
+        }
+        // -webkit-向けのつまみ
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          background: #53aeff;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+        }
+        // -moz-向けのつまみ
+        &::-moz-range-thumb {
+          background: #53aeff;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+          border: none;
+        }
+        // Firefoxで点線が周りに表示されてしまう問題の解消
+        &::-moz-focus-outer {
+          border: 0;
+        }
+        // つまみをドラッグしているときのスタイル
+        &:active::-webkit-slider-thumb {
+          box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.3);
+        }
+        .numbers {
+          width: 235px;
+          font-weight: bold;
+          font-size: 1.25rem;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+
+  .right-side {
+    width: 40%;
+    .tag {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem;
+      input {
+        margin-right: 0.5rem;
+        cursor: pointer;
+      }
+      li {
+        margin-bottom: 0.54rem;
+      }
+    }
+  }
+
+  .btn {
+    width: 230px;
+    height: 49px;
+    line-height: 49px;
+    font-size: 1.125rem;
     display: block;
     text-align: center;
-    line-height: 47px;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    margin: 0 auto;
+    color: #fff;
+    background-color: $main-color;
+    border-radius: 10px;
     user-select: none;
     cursor: pointer;
   }

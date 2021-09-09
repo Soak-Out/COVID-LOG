@@ -1,146 +1,185 @@
 <template>
-  <div class="html">
-    <div class="wrapper">
+  <div class="wrapper">
+    <aside class="sidebar">
       <div class="prof">
-        <div class="img">
-          <img :src="user.photoURL" class="photo" />
-        </div>
-        <div class="text">
-          <div class="ttl">ニックネーム</div>
-          <label for="change">
-            <div class="nickname">{{ gethandleName }}</div></label
+        <img :src="user.photoURL" />
+        <router-link to="/mypage" class="name">
+          {{ gethandleName }}</router-link
+        >
+      </div>
+      <div class="change-name">
+        <input
+          type="text"
+          v-model="handleName"
+          id="change"
+          placeholder="ニックネーム変更"
+          class="inname"
+        />
+
+        <div @click="newName" class="btn">変更</div>
+      </div>
+    </aside>
+
+    <div class="posts">
+      <div class="inner">
+        <div class="tabs">
+          <div
+            @click="MyPostTab"
+            :class="{ tabActive: hiddenMyLiked }"
+            class="tab"
           >
-          <div class="inputbtn">
-            <input
-              type="text"
-              v-model="handleName"
-              id="change"
-              placeholder="ニックネーム変更"
-              class="change-nickname"
+            あなたの投稿
+          </div>
+          <span class="solid">｜</span>
+          <div
+            @click="MyLikedTab"
+            :class="{ tabActive: hiddenMyPost }"
+            class="tab"
+          >
+            いいねした投稿
+          </div>
+        </div>
+
+        <!-- あなたの投稿 -->
+        <div class="mypost" :class="{ hidden: hiddenMyPost }">
+          <div v-for="(post, index) in myposts" v-bind:key="index" class="post">
+            <div class="time">{{ post.postedTime }}</div>
+            <div class="post-info">
+              <img :src="user.photoURL" />
+
+              <div class="post-status">
+                <div class="ttl">{{ post.title }}</div>
+                <div class="post-detail">
+                  <div>
+                    重症度<span>{{ post.illLevel }}</span>
+                  </div>
+                  <span>｜</span>
+                  <div v-show="post.infection">感染記録</div>
+                  <span v-show="post.infection">｜</span>
+                  <div v-show="post.vaccine">ワクチン接種記録</div>
+                  <span v-show="post.vaccine">｜</span>
+                  <div class="handle-name">{{ post.handleName }} さん</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text">{{ post.uploadText }}</div>
+
+            <div class="sub-info">
+              <div class="tags">
+                <ul>
+                  <p>症状：</p>
+                  <li v-show="post.headache">#頭痛</li>
+                  <li v-show="post.fever">#発熱</li>
+                  <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+                  <li v-show="post.soreThroat">#喉の渇き</li>
+                  <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+                  <li v-show="post.diarrhea">#下痢</li>
+                  <li v-show="post.other">#その他</li>
+                </ul>
+              </div>
+
+              <div class="btns">
+                <font-awesome-icon slot="icon" icon="heart" class="like" />{{
+                  post.starCount
+                }}
+                <div @click="deletePost(index)">
+                  <font-awesome-icon
+                    slot="icon"
+                    icon="trash"
+                    class="delete-btn"
+                  />
+                </div>
+                <div @click="editPost(index)" class="edit-btn">
+                  <font-awesome-icon slot="icon" icon="pen" />
+                </div>
+              </div>
+            </div>
+
+            <modal
+              v-if="showContent"
+              @close="closeModal"
+              @enter="enterPost"
+              :title="postData.title"
+              :text="postData.text"
+              :infection="postData.infection"
+              :vaccine="postData.vaccine"
+              :illLevel="postData.illLevel"
+              :fever="postData.fever"
+              :soreThroat="postData.soreThroat"
+              :respiratoryOrgan="postData.respiratoryOrgan"
+              :diarrhea="postData.diarrhea"
+              :headache="postData.headache"
+              :tasteOrDisappearance="postData.tasteOrDisappearance"
+              :other="postData.other"
+              :screen_name="postData.screen_name"
+              :handleName="postData.handleName"
+              :post_at="postData.post_at"
+              :photo="postData.photo"
+              :postId="postData.postId"
             />
-            <div v-show="error" class="error">
-              ニックネームを入力してください！
-            </div>
-            <a @click="newName" class="btn">変更</a>
           </div>
         </div>
-      </div>
 
-      <div class="tabs">
-        <div
-          @click="MyPostTab"
-          :class="{ tabActive: hiddenMyLiked }"
-          class="tab"
-        >
-          投稿
-        </div>
-        <div
-          @click="MyLikedTab"
-          :class="{ tabActive: hiddenMyPost }"
-          class="tab"
-        >
-          いいねした投稿
-        </div>
-      </div>
+        <!-- いいねした投稿 -->
+        <div class="myliked" :class="{ hidden: hiddenMyLiked }">
+          <div
+            v-for="(post, index) in starPosts"
+            v-bind:key="index"
+            class="post"
+          >
+            <div class="time">{{ post.postedTime }}</div>
+            <div class="post-info">
+              <img :src="user.photoURL" />
 
-      <div class="mypost" :class="{ hidden: hiddenMyPost }">
-        <div v-for="(post, index) in myposts" v-bind:key="index" class="post">
-          <div class="status">
-            <div class="flex">
-              <div class="ttl">{{ post.title }}</div>
-              <div class="level">
-                重症度<span>Lv.{{ post.illLevel }}</span>
+              <div class="post-status">
+                <div class="ttl">{{ post.title }}</div>
+                <div class="post-detail">
+                  <div>
+                    重症度<span>{{ post.illLevel }}</span>
+                  </div>
+                  <span>｜</span>
+                  <div v-show="post.infection">感染記録</div>
+                  <span v-show="post.infection">｜</span>
+                  <div v-show="post.vaccine">ワクチン接種記録</div>
+                  <span v-show="post.vaccine">｜</span>
+                  <div class="handle-name">{{ post.handleName }} さん</div>
+                </div>
               </div>
             </div>
-            <div class="time">{{ post.postedTime }}</div>
-          </div>
-          <div class="text">{{ post.uploadText }}</div>
 
-          <div class="post-info">
-            <ul class="tag">
-              <div>いいね数：{{ post.starCount }}</div>
-              <li v-show="post.infection">#感染経験あり</li>
-              <li v-show="post.vaccine">#ワクチン接種</li>
-              <li v-show="post.headache">#頭痛</li>
-              <li v-show="post.fever">#発熱</li>
-              <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-              <li v-show="post.soreThroat">#喉の渇き</li>
-              <li v-show="post.tasteOrDisappearance">#味覚異常</li>
-              <li v-show="post.diarrhea">#下痢</li>
-              <li v-show="post.other">#その他</li>
-            </ul>
+            <div class="text">{{ post.uploadText }}</div>
 
-            <div class="post-btns">
-              <div @click="deletePost(index)" class="post-btn">🗑</div>
-              <div @click="editPost(index)" class="post-btn">🖋</div>
-            </div>
-          </div>
-          <modal
-            v-if="showContent"
-            @close="closeModal"
-            @enter="enterPost"
-            :title="postData.title"
-            :text="postData.text"
-            :infection="postData.infection"
-            :vaccine="postData.vaccine"
-            :illLevel="postData.illLevel"
-            :fever="postData.fever"
-            :soreThroat="postData.soreThroat"
-            :respiratoryOrgan="postData.respiratoryOrgan"
-            :diarrhea="postData.diarrhea"
-            :headache="postData.headache"
-            :tasteOrDisappearance="postData.tasteOrDisappearance"
-            :other="postData.other"
-            :screen_name="postData.screen_name"
-            :handleName="postData.handleName"
-            :post_at="postData.post_at"
-            :photo="postData.photo"
-            :postId="postData.postId"
-          />
-        </div>
-      </div>
-
-      <div class="myliked" :class="{ hidden: hiddenMyLiked }">
-        <div v-for="(post, index) in starPosts" v-bind:key="index" class="post">
-          <div class="status">
-            <div class="flex">
-              <img :src="post.photo" class="photo" alt="アイコン" />
-              <div class="ttl">{{ post.title }}</div>
-              <div class="level">
-                重症度<span>Lv.{{ post.illLevel }}</span>
+            <div class="sub-info">
+              <div class="tags">
+                <ul>
+                  <p>症状：</p>
+                  <li v-show="post.headache">#頭痛</li>
+                  <li v-show="post.fever">#発熱</li>
+                  <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+                  <li v-show="post.soreThroat">#喉の渇き</li>
+                  <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+                  <li v-show="post.diarrhea">#下痢</li>
+                  <li v-show="post.other">#その他</li>
+                </ul>
               </div>
-              <div class="handle-name">{{ post.handleName }}</div>
-            </div>
-            <div class="time">{{ post.postedTime }}</div>
-          </div>
 
-          <div class="text">{{ post.uploadText }}</div>
-          <div class="starpost-info">
-            <div class="post-btns">
-              <vue-star
-                animate="animated rubberBand"
-                color="#F05654"
-                :ref="`${index}`"
-              >
-                <font-awesome-icon
-                  slot="icon"
-                  icon="heart"
-                  @click="StarButton(index)"
-                />
-              </vue-star>
-              {{ post.starCount }}
+              <div class="btns">
+                <vue-star
+                  animate="animated rubberBand"
+                  color="#F05654"
+                  :ref="`${index}`"
+                  class="like"
+                >
+                  <font-awesome-icon
+                    slot="icon"
+                    icon="heart"
+                    @click="StarButton(index)"
+                  />
+                </vue-star>
+                {{ post.starCount }}
+              </div>
             </div>
-            <ul class="tag">
-              <li v-show="post.infection">#感染経験あり</li>
-              <li v-show="post.vaccine">#ワクチン接種</li>
-              <li v-show="post.headache">#頭痛</li>
-              <li v-show="post.fever">#発熱</li>
-              <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-              <li v-show="post.soreThroat">#喉の渇き</li>
-              <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
-              <li v-show="post.diarrhea">#下痢</li>
-              <li v-show="post.other">#その他</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -375,218 +414,296 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/css/_reset.scss";
 
-$btn-color: linear-gradient(to right, #7dbaf3, #386de0);
-
+$main-color: #9ad5ff;
+$sub-color: #4986e1;
 .wrapper {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-.prof {
-  padding: 10% 10% 5%;
+  max-width: 1420px;
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1.5px #000 solid;
-  user-select: none;
-  .img {
-    width: 30%;
-    .photo {
-      margin-left: 5%;
-      width: 170px;
-      height: 170px;
-      border: 1px solid rgb(151, 151, 151);
+}
+.hidden {
+  display: none;
+}
+//----------------------------
+//サイドバー
+//----------------------------
+.sidebar {
+  width: calc(100% / 3);
+  border-right: 1px solid #c4c4c4;
+  .prof {
+    width: 198px;
+    text-align: center;
+    margin: {
+      top: 103px;
+      left: 30%;
+    }
+    img {
+      width: 198px;
       border-radius: 50%;
+      margin-bottom: 43px;
+    }
+    .name {
+      width: 100%;
+      display: inline-block;
+      color: #000;
+      font-size: 1.5rem;
+      border-bottom: 3px solid $main-color;
+      margin-bottom: 0.625rem;
+    }
+  }
+  .change-name {
+    text-align: left;
+    display: flex;
+    .inname {
+      width: 169px;
+      height: 27px;
+      margin-left: 25%;
+      border: 3px solid $main-color;
+      border-radius: 10px;
+      padding-left: 0.25rem;
+    }
+    .btn {
+      width: 12%;
+      height: 27px;
+      line-height: 27px;
+      text-align: center;
+      margin-left: 0.625rem;
+      background-color: $main-color;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}
+.posts {
+  width: calc(200% / 3);
+  .inner {
+    margin: 61px 10% 91px;
+  }
+  .tabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .tab {
+      font-size: 1.5rem;
+      text-align: center;
+      width: 40%;
+      cursor: pointer;
+    }
+    span {
+      font-size: 1.5rem;
+    }
+    .tabActive {
+      color: $sub-color;
+      position: relative;
+      &::after {
+        position: absolute;
+        bottom: -5%;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: $main-color;
+      }
+    }
+  }
+}
+//extend--------------------ここから
+.extendpost {
+  border: 3px solid $main-color;
+  border-radius: 10px;
+  margin-top: 3rem;
+  position: relative;
+  .time {
+    position: absolute;
+    height: 20px;
+    top: 1%;
+    right: 1%;
+  }
+  .post-info {
+    display: flex;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 3%;
+    }
+    .post-status {
+      margin: 3% 10% 1.45rem 0%;
+      width: 100%;
+      .ttl {
+        font-size: 1rem;
+        padding-left: 0.5rem;
+        padding-bottom: 0.875rem;
+        margin-bottom: 0.875rem;
+        border-bottom: 3px solid $main-color;
+      }
+      .post-detail {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0.875rem;
+        padding-left: 0.5rem;
+        span,
+        div {
+          margin-left: 0.5rem;
+        }
+        span:first-of-type {
+          font-weight: bold;
+        }
+      }
     }
   }
   .text {
-    width: 65%;
-    .ttl {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .nickname {
-      margin: 10px 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-      // color: rgb(0, 140, 255);
-    }
-    .inputbtn {
+    font-size: 0.875rem;
+    // font-weight: bold;
+    margin: 0 8% 1rem;
+  }
+  .sub-info {
+    margin: 1rem 8% 1rem 5%;
+    display: flex;
+    .tags {
       display: flex;
-      .change-nickname {
-        border: 1px solid rgb(0, 110, 255);
-        border-radius: 30px;
-        font-size: 1.75rem;
-        width: 70%;
-        height: 50px;
-        padding: 5px;
+      flex-wrap: wrap;
+      width: 100%;
+      font-size: 14px;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 3rem;
+        li {
+          margin-left: 0.5rem;
+          color: $sub-color;
+          &:first-child {
+            margin-left: 0;
+          }
+        }
       }
+    }
+    .btns {
+      display: flex;
 
-      .btn {
-        margin-left: 2.5%;
-        width: 25%;
-        height: 47px;
-        background: $btn-color;
-        color: #fff;
-        border-radius: 10px;
-        display: block;
-        text-align: center;
-        line-height: 47px;
-        font-size: 1.25rem;
-        font-weight: bold;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-        user-select: none;
+      .like {
+        margin: 0.1rem 0.5rem 0 0;
+        vertical-align: bottom;
+      }
+      .delete-btn,
+      .edit-btn {
+        margin-top: 0.05rem;
+        margin-left: 1rem;
+        color: $main-color;
         cursor: pointer;
       }
     }
   }
 }
-.mypost,
+//-----------------------------ここまで
+
+.mypost {
+  .post {
+    @extend .extendpost;
+    .btns {
+      .like {
+        color: $main-color;
+      }
+    }
+  }
+}
+
 .myliked {
   .post {
-    border: 4px solid rgb(206, 242, 252);
-    border-radius: 20px;
-    box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
-    margin: 35px;
-    padding: 1rem 1rem 0.5rem 1rem;
-    background-color: #fff;
-    .status {
+    @extend .extendpost;
+
+    .btns {
       display: flex;
-      justify-content: space-between;
-      .flex {
-        display: flex;
-        position: relative;
-        .photo {
-          width: 3rem;
-          height: 3rem;
-          border: #ddd 1px solid;
-          border-radius: 50%;
-        }
+      position: relative;
+      width: 10px;
+      height: 10px;
+      .like {
+        margin: 0.1rem 0.5rem 0 4rem;
+        position: absolute;
+        bottom: -490%;
+        right: -350%;
+      }
+    }
+  }
+}
+
+//----------------------------
+//SP
+//----------------------------
+
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    margin-top: 1.5rem;
+    .prof {
+      margin: 0 auto;
+      img {
+        width: 100px;
+        margin-bottom: 1rem;
+      }
+      .name {
+        font-size: 1.25rem;
+      }
+    }
+    .change-name {
+      margin: 0 auto;
+      justify-content: center;
+      .inname {
+        margin-left: 0;
+      }
+    }
+  }
+  //----------------------------
+  //tab
+  //----------------------------
+  .posts {
+    width: 100%;
+    .inner {
+      margin: 4%;
+    }
+    .tabs {
+      .tab,
+      span {
+        font-size: 1rem;
+      }
+    }
+  }
+  .extendpost {
+    margin-top: 1rem;
+    .time {
+      font-size: 0.75rem;
+      top: auto;
+      bottom: 0;
+      right: 1%;
+    }
+    .post-info {
+      .post-status {
         .ttl {
-          height: 2rem;
-          line-height: 2rem;
-          font-weight: bold;
-          font-size: 1.25rem;
-          margin: 0 1rem;
+          font-size: 0.875rem;
+          margin-top: 0.3rem;
+          padding-bottom: 0.4rem;
+          margin-bottom: 0.4rem;
         }
-        .handle-name {
-          @extend .ttl;
-          font-weight: normal;
-          color: rgb(151, 151, 151);
-        }
-        .level {
-          @extend .handle-name;
-          color: #000;
-          span {
+        .post-detail {
+          font-size: 0.625rem;
+
+          span,
+          div {
+            margin-left: 0.5rem;
+          }
+          span:first-of-type {
             font-weight: bold;
-            color: red;
-            margin-left: 5px;
           }
         }
-      }
-      .time {
-        margin: 5px;
-        font-weight: 500;
-        color: rgb(151, 151, 151);
       }
     }
     .text {
-      padding: 0 10px 10px;
-      line-height: 1.5;
-      letter-spacing: 2px;
-      font-size: 1rem;
-      white-space: pre-wrap;
+      margin: 0 5%;
     }
-
-    .post-info {
-      display: flex;
-      justify-content: space-between;
-      .tag {
-        display: flex;
-        flex-wrap: wrap;
-        font-weight: 500;
-        color: rgb(0, 140, 255);
-        margin-top: 10px;
-        li,
-        div {
-          margin-right: 10px;
-        }
-      }
-      .post-btns {
-        display: flex;
-        flex-direction: row-reverse;
-        .post-btn {
-          width: 2rem;
-          height: 2rem;
-          text-align: center;
-          line-height: 2rem;
-          background-color: rgb(162, 255, 243);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
-          border-radius: 50%;
-          cursor: pointer;
-          user-select: none;
-          margin-right: 0.5rem;
-          transition: 0.3s;
-          &:hover {
-            transform: scale(1.3) translateY(-5px);
-          }
-        }
-      }
-    }
-    .starpost-info {
-      display: flex;
-      height: 2rem;
-      line-height: 2rem;
-      .tag {
-        display: flex;
-        flex-wrap: wrap;
-        font-weight: 500;
-        color: rgb(0, 140, 255);
-        margin: 10px;
-
-        li {
-          margin-right: 10px;
-        }
-      }
-      .post-btns {
-        display: flex;
-        flex-direction: row-reverse;
-        .star-btn {
-          width: 4rem;
-
-          text-align: center;
-          border-radius: 50%;
-          cursor: pointer;
-          user-select: none;
-          margin: 10px;
-        }
-      }
-    }
-  }
-}
-//-------tab------------
-.hidden {
-  display: none;
-}
-.tabs {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  transition: 0.4s;
-  .tab {
-    text-align: center;
-    width: 50%;
-    padding: 1rem 0;
-    cursor: pointer;
-    user-select: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #ccc;
-    border-bottom: 1px solid #ccc;
-  }
-  .tabActive {
-    border-bottom: 1px solid #fff;
-
-    background-color: rgb(0, 153, 255);
-    color: #fff;
   }
 }
 </style>
