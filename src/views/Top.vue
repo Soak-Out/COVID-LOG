@@ -58,7 +58,7 @@
       <div v-for="(post, index) in posts" v-bind:key="index" class="post">
         <div class="status">
           <div class="flex">
-            <img :src="post.photo" class="photo" />
+            <img :src="user.photoURL" />
             <div class="ttl">{{ post.title }}</div>
             <div class="level">
               重症度<span>Lv.{{ post.illLevel }}</span>
@@ -112,9 +112,9 @@
       <div v-for="word of words ">{{  word  }}</div>
     </div> -->
 
-    <div class=“shuffleword”>
-        <h3>配列の内容表示</h3>
-          <div>{{ message }}</div>
+    <div class="“shuffleword”">
+      <h3>配列の内容表示</h3>
+      <div>{{ message }}</div>
     </div>
 
     <!-- ここが最下層 -->
@@ -130,7 +130,7 @@ export default {
     return {
       dates: [0],
       npatients: {},
-      words: ["今日もごくろうさま","いつもありがとう","体に気をつけて"],
+      words: ["今日もごくろうさま", "いつもありがとう", "体に気をつけて"],
       message: "",
 
       //ログイン関連
@@ -142,7 +142,7 @@ export default {
       // handleName: "",
     }
   },
-  created: function() {
+  created: function () {
     this.message = this.words[Math.floor(Math.random() * this.words.length)]
     //API取得
     fetch(
@@ -412,6 +412,4 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   background-color: darkkhaki;
   height: 300px;
 }
-
-
 </style>
