@@ -179,13 +179,13 @@ export default {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
             const docRef = db.collection("users").doc(user.uid)
-
             docRef
               .get()
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .orderBy("post_at")
+                  .limit(3)
                   .get()
                 this.starpost = doc.data().star_post_id
 
@@ -227,27 +227,27 @@ export default {
     //ログインしているかどうかでisAuthを変化
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
 
-    db.collection("posts")
-      .orderBy("post_at", "desc")
-      .limit(3)
-      .get()
-      .then((doc) => {
-        doc.forEach((postdoc) => {
-          const post = postdoc.data()
-          //ドキュメントID取得
-          post.postId = postdoc.id
-          // 投稿時間を取得し文字列にし、不必要な部分をカット
-          const getpostedTime = post.post_at.toDate()
-          const strigTime = String(getpostedTime)
-          post.postedTime = strigTime.slice(0, -20)
-          //post.textを改行
-          post.uploadText = post.text.replaceAll("\\n", "\n")
-          //以前にいいねしたか判定
-          this.isActive.push(false)
-          //posts配列にいれる
-          this.posts.push(post)
-        })
-      })
+    // db.collection("posts")
+    //   .orderBy("post_at", "desc")
+    //   .limit(3)
+    //   .get()
+    //   .then((doc) => {
+    //     doc.forEach((postdoc) => {
+    //       const post = postdoc.data()
+    //       //ドキュメントID取得
+    //       post.postId = postdoc.id
+    //       // 投稿時間を取得し文字列にし、不必要な部分をカット
+    //       const getpostedTime = post.post_at.toDate()
+    //       const strigTime = String(getpostedTime)
+    //       post.postedTime = strigTime.slice(0, -20)
+    //       //post.textを改行
+    //       post.uploadText = post.text.replaceAll("\\n", "\n")
+    //       //以前にいいねしたか判定
+    //       this.isActive.push(false)
+    //       //posts配列にいれる
+    //       this.posts.push(post)
+    //     })
+    //   })
   },
 
   methods: {
