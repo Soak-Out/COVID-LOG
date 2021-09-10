@@ -131,7 +131,7 @@
         <div v-for="(post, index) in posts" v-bind:key="index" class="post">
           <div class="time">{{ post.postedTime }}</div>
           <div class="post-info">
-            <img :src="user.photoURL" />
+            <img :src="post.photo" />
 
             <div class="post-status">
               <div class="ttl">{{ post.title }}</div>
@@ -330,7 +330,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   margin: 61px 10% 91px;
 }
 
-.post_list {
+.post-list {
   width: calc(200% / 3);
 }
 .list-ttl {
