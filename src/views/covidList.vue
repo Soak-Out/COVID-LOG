@@ -3,7 +3,7 @@
     <div class="side-wrapper">
       <aside class="sidebar">
         <div>
-          <div>
+          <div class="pcarraybox">
             <div class="searchIcon">並び替え</div>
             <div class="check-block">
               <ul class="attribute">
@@ -11,10 +11,9 @@
                   <label for="newarray">
                     <input
                       type="radio"
-                      v-model="newarray"
                       id="newarray"
-                      name="arraypost"
-                      v-on:change="onChange"
+                      name="pcarraypost"
+                      v-on:change="pconChange"
                       value="新着"
                       checked="checked"
                     />新着</label
@@ -24,114 +23,305 @@
                   <label for="usefularray">
                     <input
                       type="radio"
-                      v-model="usefularray"
                       id="usefularray"
-                      name="arraypost"
-                      v-on:change="onChange"
+                      name="pcarraypost"
+                      v-on:change="pconChange"
                       value="役に立った"
                     />「役に立った」順</label
                   >
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="check-list">
-            <div>
-              <div class="searchIcon">詳細検索</div>
-              <div class="block-ttl">属性</div>
-              <div class="check-block">
-                <ul class="attribute">
+
+            <div class="check-list">
+              <div>
+                <div class="searchIcon">詳細検索</div>
+                <div class="block-ttl">属性</div>
+                <div class="check-block">
+                  <ul class="attribute">
+                    <li>
+                      <input
+                        type="radio"
+                        id="infection"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="感染記録"
+                      /><label for="infection">感染記録</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="vaccine"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="ワクチン接種記録"
+                      /><label for="vaccine">ワクチン接種記録</label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="block-ttl">重症度</div>
+                <ul class="illlevelbutton">
                   <li>
                     <input
-                      type="checkbox"
-                      v-model="infection"
-                      id="infection"
-                      checked="checked"
-                    /><label for="infection">感染記録</label>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      v-model="vaccine"
-                      id="vaccine"
-                      checked="checked"
-                    /><label for="vaccine">ワクチン接種記録</label>
+                      type="radio"
+                      id="illLevel"
+                      name="pcarraypost"
+                      v-on:change="pconChange"
+                      value="重症度を指定"
+                    /><label for="illLevel">重症度を指定</label>
                   </li>
                 </ul>
-              </div>
-              <div class="block-ttl">重症度</div>
-              <div class="check-block">
-                <div class="severity">
-                  <input
-                    type="range"
-                    v-model="illLevel"
-                    min="1"
-                    max="5"
-                    step="1"
-                    id="illLevel"
-                  />
-                  <div class="numbers">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
+                <div class="check-block">
+                  <div class="severity">
+                    <input
+                      type="range"
+                      v-model="illLevel"
+                      min="1"
+                      max="5"
+                      step="1"
+                      id="illLevel"
+                    />
+                    <div class="numbers">
+                      <span>1</span>
+                      <span>2</span>
+                      <span>3</span>
+                      <span>4</span>
+                      <span>5</span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div>
+                <div class="block-ttl">症状</div>
+                <div class="check-block">
+                  <ul class="tag">
+                    <li>
+                      <input type="radio" id="fever" name="pcarraypost" /><label
+                        for="fever"
+                        v-on:change="pconChange"
+                        value="発熱"
+                        >発熱</label
+                      >
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="headache"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="頭痛"
+                      /><label for="headache">頭痛</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="soreThroat"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="喉の渇き"
+                      /><label for="soreThroat">喉の渇き</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="respiratoryOrgan"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="呼吸困難"
+                      /><label for="respiratoryOrgan">呼吸困難</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="diarrhea"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="下痢"
+                      /><label for="diarrhea">下痢</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="tasteOrDisappearance"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="味覚などの異常"
+                      /><label for="tasteOrDisappearance">味覚などの異常</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="other" name="pcarraypost" /><label
+                        for="other"
+                        value="その他"
+                        v-on:change="pconChange"
+                        >その他</label
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="block-ttl">症状</div>
-              <div class="check-block">
-                <ul class="tag">
-                  <li>
-                    <input type="checkbox" v-model="fever" id="fever" /><label
-                      for="fever"
-                      >発熱</label
-                    >
-                  </li>
+          </div>
+          <div class="searchIcon pcnotshow" @click="showArray">
+            並び替え・詳細検索
+          </div>
+          <div
+            class="pharraybox"
+            v-bind:class="arrayActive"
+            v-if="showarraybox"
+          >
+            <div class="searchIcon">並び替え</div>
+            <div class="check-block">
+              <ul class="attribute">
+                <li>
+                  <label for="newarray">
+                    <input
+                      type="radio"
+                      id="newarray"
+                      name="pharraypost"
+                      v-on:change="phonChange"
+                      value="新着"
+                    />新着</label
+                  >
+                </li>
+                <li>
+                  <label for="usefularray">
+                    <input
+                      type="radio"
+                      id="usefularray"
+                      name="pharraypost"
+                      v-on:change="phonChange"
+                      value="役に立った"
+                    />「役に立った」順</label
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="check-list">
+              <div>
+                <div class="searchIcon">詳細検索</div>
+                <div class="block-ttl">属性</div>
+                <div class="check-block">
+                  <ul class="attribute">
+                    <li>
+                      <input
+                        type="radio"
+                        id="infection"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="感染記録"
+                      /><label for="infection">感染記録</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="vaccine"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="ワクチン接種記録"
+                      /><label for="vaccine">ワクチン接種記録</label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="block-ttl">重症度</div>
+                <ul class="illlevelbutton">
                   <li>
                     <input
-                      type="checkbox"
-                      v-model="headache"
-                      id="headache"
-                    /><label for="headache">頭痛</label>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      v-model="soreThroat"
-                      id="soreThroat"
-                    /><label for="soreThroat">喉の渇き</label>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      v-model="respiratoryOrgan"
-                      id="respiratoryOrgan"
-                    /><label for="respiratoryOrgan">呼吸困難</label>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      v-model="diarrhea"
-                      id="diarrhea"
-                    /><label for="diarrhea">下痢</label>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      v-model="tasteOrDisappearance"
-                      id="tasteOrDisappearance"
-                    /><label for="tasteOrDisappearance">味覚などの異常</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" v-model="other" id="other" /><label
-                      for="other"
-                      >その他</label
-                    >
+                      type="radio"
+                      id="illLevel"
+                      name="pharraypost"
+                      v-on:change="pconChange"
+                      value="重症度を指定"
+                    /><label for="illLevel">重症度を指定</label>
                   </li>
                 </ul>
+                <div class="check-block">
+                  <div class="severity">
+                    <input
+                      type="range"
+                      v-model="illLevel"
+                      min="1"
+                      max="5"
+                      step="1"
+                      id="illLevel"
+                    />
+                    <div class="numbers">
+                      <span>1</span>
+                      <span>2</span>
+                      <span>3</span>
+                      <span>4</span>
+                      <span>5</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="block-ttl">症状</div>
+                <div class="check-block">
+                  <ul class="tag">
+                    <li>
+                      <input type="radio" id="fever" name="pharraypost" /><label
+                        for="fever"
+                        v-on:change="phonChange"
+                        value="発熱"
+                        >発熱</label
+                      >
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="headache"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="頭痛"
+                      /><label for="headache">頭痛</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="soreThroat"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="喉の渇き"
+                      /><label for="soreThroat">喉の渇き</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="respiratoryOrgan"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="呼吸困難"
+                      /><label for="respiratoryOrgan">呼吸困難</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="diarrhea"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="下痢"
+                      /><label for="diarrhea">下痢</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="tasteOrDisappearance"
+                        name="pharraypost"
+                        v-on:change="phonChange"
+                        value="味覚などの異常"
+                      /><label for="tasteOrDisappearance">味覚などの異常</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="other" name="pharraypost" /><label
+                        for="other"
+                        value="その他"
+                        v-on:change="phonChange"
+                        >その他</label
+                      >
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -210,8 +400,10 @@ export default {
   data() {
     return {
       posts: [],
-
+      arrayActive: "",
       handleName: "",
+      illLevel: 1,
+      showarraybox: false,
     }
   },
   created() {
@@ -260,6 +452,8 @@ export default {
           })
       }
     })
+
+    this.arrayActive = ".pcnotshow"
   },
   computed: {
     user() {
@@ -267,6 +461,9 @@ export default {
     },
   },
   methods: {
+    showArray() {
+      this.showarraybox = !this.showarraybox
+    },
     StarButton(index) {
       if (this.$refs[index][0].$data.active === false) {
         this.usefulButton(index)
@@ -318,8 +515,9 @@ export default {
           )
       }
     },
-    onChange(event) {
+    phonChange(event) {
       if (event.target.value === "新着") {
+        this.posts = []
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
@@ -366,6 +564,7 @@ export default {
           }
         })
       } else if (event.target.value === "役に立った") {
+        this.posts = []
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
@@ -396,9 +595,478 @@ export default {
                   //posts配列にいれる
                   this.posts.unshift(post)
 
-                  return this.posts.sort((a, b) => {
+                  this.posts.sort((a, b) => {
                     return b.starCount - a.starCount
                   })
+                  //ソートの中身が正の数か負の数かで動きが変わる
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "感染記録") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("infection", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "ワクチン接種記録") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("vaccine", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "発熱") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("fever", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "頭痛") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("headache", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "喉の渇き") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("soreThroat", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "呼吸困難") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("respiratoryOrgan", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "下痢") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("diarrhea", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "味覚などの異常") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("tasteOrDisappearance", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "その他") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("other", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
               })
               .then(() => {
@@ -417,6 +1085,838 @@ export default {
         })
       }
     },
+    pconChange(event) {
+      if (event.target.value === "新着") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .orderBy("post_at")
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "役に立った") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .orderBy("post_at")
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+
+                  this.posts.sort((a, b) => {
+                    return b.starCount - a.starCount
+                  })
+                  //ソートの中身が正の数か負の数かで動きが変わる
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "感染記録") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("infection", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "ワクチン接種記録") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("vaccine", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "発熱") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("fever", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "頭痛") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("headache", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "喉の渇き") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("soreThroat", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "呼吸困難") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("respiratoryOrgan", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "下痢") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("diarrhea", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "味覚などの異常") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("tasteOrDisappearance", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "その他") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db
+              .collection("users")
+
+              .doc(user.uid)
+
+            docRef
+              .get()
+
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("other", "==", true)
+
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "重症度を指定") {
+        if (event.target.illLevel === 1) {
+          this.posts = []
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const userDoc = await db.collection("users").doc(user.uid).get()
+            if (userDoc.exists) {
+              const docRef = db
+                .collection("users")
+
+                .doc(user.uid)
+
+              docRef
+                .get()
+
+                .then(async (doc) => {
+                  const postRef = await db
+                    .collection("posts")
+                    .where("illLevel", "===", "1")
+
+                    .get()
+                  this.starpost = doc.data().star_post_id
+
+                  postRef.forEach((postdoc) => {
+                    const post = postdoc.data()
+                    //ドキュメントID取得
+                    post.postId = postdoc.id
+
+                    // 投稿時間を取得し文字列にし、不必要な部分をカット
+                    const getpostedTime = post.post_at.toDate()
+                    const strigTime = String(getpostedTime)
+                    post.postedTime = strigTime.slice(0, -20)
+                    //post.textを改行
+
+                    post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                    //posts配列にいれる
+                    this.posts.unshift(post)
+                  })
+                })
+                .then(() => {
+                  for (let i = 0; i < this.starpost.length; i++) {
+                    for (let j = 0; j < this.posts.length; j++) {
+                      if (this.posts[j].postId === this.starpost[i]) {
+                        // console.log(this.$refs[j])
+                        this.$refs[j][0].$data.active = true
+                        this.$refs[j][0].$data.toggleAnimate = true
+                        this.$refs[j][0].$data.toggleColor = true
+                      }
+                    }
+                  }
+                })
+            }
+          })
+        } else if (event.target.illLevel === 2) {
+          this.posts = []
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const userDoc = await db.collection("users").doc(user.uid).get()
+            if (userDoc.exists) {
+              const docRef = db
+                .collection("users")
+
+                .doc(user.uid)
+
+              docRef
+                .get()
+
+                .then(async (doc) => {
+                  const postRef = await db
+                    .collection("posts")
+                    .where("illLevel", "===", "2")
+
+                    .get()
+                  this.starpost = doc.data().star_post_id
+
+                  postRef.forEach((postdoc) => {
+                    const post = postdoc.data()
+                    //ドキュメントID取得
+                    post.postId = postdoc.id
+
+                    // 投稿時間を取得し文字列にし、不必要な部分をカット
+                    const getpostedTime = post.post_at.toDate()
+                    const strigTime = String(getpostedTime)
+                    post.postedTime = strigTime.slice(0, -20)
+                    //post.textを改行
+
+                    post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                    //posts配列にいれる
+                    this.posts.unshift(post)
+                  })
+                })
+                .then(() => {
+                  for (let i = 0; i < this.starpost.length; i++) {
+                    for (let j = 0; j < this.posts.length; j++) {
+                      if (this.posts[j].postId === this.starpost[i]) {
+                        // console.log(this.$refs[j])
+                        this.$refs[j][0].$data.active = true
+                        this.$refs[j][0].$data.toggleAnimate = true
+                        this.$refs[j][0].$data.toggleColor = true
+                      }
+                    }
+                  }
+                })
+            }
+          })
+        } else if (event.target.illLevel === 3) {
+          this.posts = []
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const userDoc = await db.collection("users").doc(user.uid).get()
+            if (userDoc.exists) {
+              const docRef = db
+                .collection("users")
+
+                .doc(user.uid)
+
+              docRef
+                .get()
+
+                .then(async (doc) => {
+                  const postRef = await db
+                    .collection("posts")
+                    .where("illLevel", "===", "3")
+
+                    .get()
+                  this.starpost = doc.data().star_post_id
+
+                  postRef.forEach((postdoc) => {
+                    const post = postdoc.data()
+                    //ドキュメントID取得
+                    post.postId = postdoc.id
+
+                    // 投稿時間を取得し文字列にし、不必要な部分をカット
+                    const getpostedTime = post.post_at.toDate()
+                    const strigTime = String(getpostedTime)
+                    post.postedTime = strigTime.slice(0, -20)
+                    //post.textを改行
+
+                    post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                    //posts配列にいれる
+                    this.posts.unshift(post)
+                  })
+                })
+                .then(() => {
+                  for (let i = 0; i < this.starpost.length; i++) {
+                    for (let j = 0; j < this.posts.length; j++) {
+                      if (this.posts[j].postId === this.starpost[i]) {
+                        // console.log(this.$refs[j])
+                        this.$refs[j][0].$data.active = true
+                        this.$refs[j][0].$data.toggleAnimate = true
+                        this.$refs[j][0].$data.toggleColor = true
+                      }
+                    }
+                  }
+                })
+            }
+          })
+        } else if (event.target.illLevel === 4) {
+          this.posts = []
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const userDoc = await db.collection("users").doc(user.uid).get()
+            if (userDoc.exists) {
+              const docRef = db
+                .collection("users")
+
+                .doc(user.uid)
+
+              docRef
+                .get()
+
+                .then(async (doc) => {
+                  const postRef = await db
+                    .collection("posts")
+                    .where("illLevel", "===", "4")
+
+                    .get()
+                  this.starpost = doc.data().star_post_id
+
+                  postRef.forEach((postdoc) => {
+                    const post = postdoc.data()
+                    //ドキュメントID取得
+                    post.postId = postdoc.id
+
+                    // 投稿時間を取得し文字列にし、不必要な部分をカット
+                    const getpostedTime = post.post_at.toDate()
+                    const strigTime = String(getpostedTime)
+                    post.postedTime = strigTime.slice(0, -20)
+                    //post.textを改行
+
+                    post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                    //posts配列にいれる
+                    this.posts.unshift(post)
+                  })
+                })
+                .then(() => {
+                  for (let i = 0; i < this.starpost.length; i++) {
+                    for (let j = 0; j < this.posts.length; j++) {
+                      if (this.posts[j].postId === this.starpost[i]) {
+                        // console.log(this.$refs[j])
+                        this.$refs[j][0].$data.active = true
+                        this.$refs[j][0].$data.toggleAnimate = true
+                        this.$refs[j][0].$data.toggleColor = true
+                      }
+                    }
+                  }
+                })
+            }
+          })
+        } else if (event.target.illLevel === 5) {
+          this.posts = []
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const userDoc = await db.collection("users").doc(user.uid).get()
+            if (userDoc.exists) {
+              const docRef = db
+                .collection("users")
+
+                .doc(user.uid)
+
+              docRef
+                .get()
+
+                .then(async (doc) => {
+                  const postRef = await db
+                    .collection("posts")
+                    .where("illLevel", "===", "5")
+
+                    .get()
+                  this.starpost = doc.data().star_post_id
+
+                  postRef.forEach((postdoc) => {
+                    const post = postdoc.data()
+                    //ドキュメントID取得
+                    post.postId = postdoc.id
+
+                    // 投稿時間を取得し文字列にし、不必要な部分をカット
+                    const getpostedTime = post.post_at.toDate()
+                    const strigTime = String(getpostedTime)
+                    post.postedTime = strigTime.slice(0, -20)
+                    //post.textを改行
+
+                    post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                    //posts配列にいれる
+                    this.posts.unshift(post)
+                  })
+                })
+                .then(() => {
+                  for (let i = 0; i < this.starpost.length; i++) {
+                    for (let j = 0; j < this.posts.length; j++) {
+                      if (this.posts[j].postId === this.starpost[i]) {
+                        // console.log(this.$refs[j])
+                        this.$refs[j][0].$data.active = true
+                        this.$refs[j][0].$data.toggleAnimate = true
+                        this.$refs[j][0].$data.toggleColor = true
+                      }
+                    }
+                  }
+                })
+            }
+          })
+        }
+      }
+    },
   },
 }
 </script>
@@ -427,6 +1927,12 @@ $main-color: #9ad5ff;
 $sub-color: #4986e1;
 
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+.illlevelbutton {
+  margin-left: 3rem;
+}
+.pcnotshow {
+  display: none;
+}
 .sidebar {
   margin: 2rem;
 }
@@ -590,7 +2096,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
 }
 .severity {
-  margin: 1rem;
+  margin: auto;
   input {
     width: 235px;
     border-radius: 10px;
@@ -632,6 +2138,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     font-size: 1.25rem;
     display: flex;
     justify-content: space-between;
+    margin: auto;
   }
 }
 .searchIcon {
@@ -647,9 +2154,161 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 
   user-select: none;
 }
+.pcnotshow {
+  display: none;
+}
 
 .check-block {
   margin: 2rem 3rem 2rem 3rem;
   line-height: 2;
+}
+
+.pcarraybox {
+  display: block;
+}
+.pharraybox {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .pcnotshow {
+    display: block;
+  }
+  .wrapper {
+    flex-direction: column;
+  }
+  .side-wrapper {
+    width: 100%;
+    border-right: none;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  .post-list {
+    margin: auto;
+    width: 100%;
+  }
+  .post {
+    border: 3px solid $main-color;
+    border-radius: 10px;
+    margin-top: 3rem;
+    position: relative;
+    margin: 2rem;
+    text-align: center;
+  }
+  .block-ttl {
+    margin: auto;
+    margin-top: 2rem;
+  }
+  .severity {
+    margin: auto;
+  }
+  .searchIcon {
+    margin: auto;
+    margin-top: 2rem;
+  }
+  li {
+    text-align: left;
+  }
+  .pcarraybox {
+    display: none;
+  }
+  .pharraybox {
+    display: block;
+    border: 3px solid $main-color;
+    border-radius: 10px;
+    margin-top: 3rem;
+  }
+  .pcnotshow {
+    display: block;
+  }
+  .inner {
+    margin: auto;
+  }
+  .time {
+    display: none;
+  }
+  .post-detail {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.3rem;
+    padding-left: 0.3rem;
+    span,
+    div {
+      margin-left: 0.5rem;
+    }
+    span:first-of-type {
+      font-weight: bold;
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .post-detail {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.3rem;
+    padding-left: 0.3rem;
+    span,
+    div {
+      margin-left: 0.5rem;
+    }
+    span:first-of-type {
+      font-weight: bold;
+    }
+  }
+  .inner {
+    margin: auto;
+  }
+  .time {
+    display: none;
+  }
+  .pcarraybox {
+    display: none;
+  }
+  .pharraybox {
+    display: block;
+    border: 3px solid $main-color;
+    border-radius: 10px;
+    margin-top: 3rem;
+  }
+  .pcnotshow {
+    display: block;
+  }
+  .wrapper {
+    flex-direction: column;
+  }
+  .side-wrapper {
+    width: 100%;
+    border-right: none;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  .post-list {
+    margin: auto;
+    width: 100%;
+  }
+  .post {
+    border: 3px solid $main-color;
+    border-radius: 10px;
+    margin-top: 3rem;
+    position: relative;
+    margin: 2rem;
+    text-align: center;
+  }
+  .block-ttl {
+    margin: auto;
+    margin-top: 2rem;
+  }
+  .severity {
+    margin: auto;
+  }
+  .searchIcon {
+    margin: auto;
+    margin-top: 2rem;
+  }
+  li {
+    text-align: left;
+  }
+  .pcnotshow {
+    display: block;
+  }
 }
 </style>
