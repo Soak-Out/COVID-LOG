@@ -51,14 +51,16 @@
             </div>
             <div class="block-ttl">年齢</div>
             <select name="age" class="age" v-model="newage">
-              <option value="10歳未満">10歳未満</option>
+              <option value="U10">10歳未満</option>
               <option value="10代">10代</option>
               <option value="20代">20代</option>
               <option value="30代">30代</option>
               <option value="40代">40代</option>
               <option value="50代">50代</option>
               <option value="60代">60代</option>
-              <option value="70代">70歳以上</option>
+              <option value="70代">70代</option>
+              <option value="80代">80代</option>
+              <option value="90代">90代</option>
             </select>
           </div>
 
@@ -313,6 +315,9 @@ $btn-color: rgb(4, 163, 255);
           appearance: none;
           cursor: pointer;
           outline: 0;
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
         }
         &:focus {
           box-shadow: 0 0 3px rgb(0, 161, 255);
@@ -349,10 +354,13 @@ $btn-color: rgb(4, 163, 255);
           font-size: 1.25rem;
           display: flex;
           justify-content: space-between;
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
         }
       }
       .age {
-        width: 10%;
+        width: 5.2rem;
         margin: 0.5rem 1rem;
         font-size: 1.25rem;
         font-weight: 540;
@@ -413,7 +421,7 @@ $btn-color: rgb(4, 163, 255);
 @media screen and (max-width: 1024px) {
   #content {
     width: 95%;
-    height: 97%;
+    height: 94%;
   }
 
   .post-content {

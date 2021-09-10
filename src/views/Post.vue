@@ -58,14 +58,16 @@
 
             <div class="block-ttl">年齢</div>
             <select name="age" class="age" v-model="age">
-              <option value="10歳未満">10歳未満</option>
+              <option value="U10">10歳未満</option>
               <option value="10代">10代</option>
               <option value="20代">20代</option>
               <option value="30代">30代</option>
               <option value="40代">40代</option>
               <option value="50代">50代</option>
               <option value="60代">60代</option>
-              <option value="70代">70歳以上</option>
+              <option value="70代">70代</option>
+              <option value="80代">80代</option>
+              <option value="90代">90代</option>
             </select>
           </div>
 
@@ -282,7 +284,7 @@ li {
   width: calc(200% / 3);
   margin: 0 auto;
   .inner {
-    margin: 61px 119px 91px 10%;
+    margin: 61px 10% 91px;
   }
   .block-ttl {
     width: 100px;
@@ -342,6 +344,9 @@ li {
           appearance: none;
           cursor: pointer;
           outline: 0;
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
         }
         &:focus {
           box-shadow: 0 0 3px rgb(0, 161, 255);
@@ -378,10 +383,13 @@ li {
           font-size: 1.25rem;
           display: flex;
           justify-content: space-between;
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
         }
       }
       .age {
-        width: 3rem;
+        width: 5rem;
         margin: 0.5rem 1rem;
         font-size: 1.25rem;
         font-weight: 540;
@@ -439,6 +447,7 @@ li {
     width: 100%;
     border-right: none;
     margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
     .prof {
       margin: 0 auto;
       img {

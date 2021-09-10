@@ -1,24 +1,26 @@
 <template>
   <div id="overlay" @click.self="$emit('close')">
     <div id="content">
-      <h1>THANK YOU !!</h1>
-      <font-awesome-icon slot="icon" icon="envelope" class="envelope" />
-      <h2>ご投稿ありがとうございました</h2>
-      <h3>この投稿がたくさんの方の<br />安心に繋がります。</h3>
-      <div @click="$emit('close')" class="close-btn">閉じる</div>
+      <div class="inner">
+        <h1>THANK YOU !!</h1>
+        <font-awesome-icon slot="icon" icon="envelope" class="envelope" />
+        <h2>ご投稿ありがとうございました</h2>
+        <h3>この投稿がたくさんの方の<br />安心に繋がります。</h3>
+        <div @click="$emit('close')" class="close-btn">閉じる</div>
 
-      <div class="share">
-        <p>投稿をTwitterでシェアしませんか？</p>
-        <a
-          href="http://twitter.com/share?&text=コロナウイルス感染者やワクチン接種者の症状や対策方法が一覧で見れるサイトです！ぜひ参考にしてください！ #拡散希望"
-          class="to-twitter"
-        >
-          <font-awesome-icon
-            slot="icon"
-            :icon="['fab', 'twitter']"
-            class="twitter"
-          />Twitterに投稿
-        </a>
+        <div class="share">
+          <p>Twitterでシェアしませんか？</p>
+          <a
+            href="http://twitter.com/share?&text=コロナウイルス感染者やワクチン接種者の症状や対策方法が一覧で見れるサイトです！ぜひ参考にしてください！ #拡散希望"
+            class="to-twitter"
+          >
+            <font-awesome-icon
+              slot="icon"
+              :icon="['fab', 'twitter']"
+              class="twitter"
+            />Twitterに投稿
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -136,9 +138,12 @@ $Twitter-color: rgb(4, 163, 255);
 
 @media screen and (max-width: 1024px) {
   #content {
-    height: 90%;
+    height: 70%;
     width: 85%;
     padding: 1.5rem 0;
+    @media screen and (max-width: 500px) {
+      height: 90%;
+    }
     h1 {
       font-size: 2rem;
       margin-bottom: 0.875rem;
