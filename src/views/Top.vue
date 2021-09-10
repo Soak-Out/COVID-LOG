@@ -3,17 +3,13 @@
     <div class="middlebox">
       <div class="middlebox-left"><img src="../assets/logo.png" class="imgcovid"/></div>
       <div class="middlebox-right">
-      <div class="copyright">
-        <h1>このサイトで</h1>
-        <h1>１人でも</h1>
-        <h1>多くの人に情報を。</h1>
-        </div>
-  
+      <div class="copyright">このサイトで<br>１人でも<br>多くの人に情報を。</div>
+  <br>
         <div class="copyunder">
-          新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。
+          新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br />
+        新型コロナウイルス感染症専門の投稿サイト
         </div>
 
-        <h1>新型コロナウイルス感染症専門の投稿サイト</h1>
       </div>
         <!-- <div v-if="isAuth">
           <router-link to="/post-page">投稿する</router-link>
@@ -31,8 +27,6 @@
 <div class="side-wrapper">
       <aside class="sidebar">
     <div class="covidbox">
-      <!-- <button v-on:click="getcovidPatient">陽性患者を更新する。</button> -->
-      <!-- <h2>本日の陽性患者数です。</h2> -->
         <div class="word-ttl">新型コロナウイルス<br>新着情報</div>
         <div class="word-subttl">累計感染者数（昨日時点）</div>
         <div class="patient">
@@ -52,6 +46,11 @@
       </div>
     </div>
     </div>
+
+    <div class="mnlink">
+      <span>※厚生労働省新型コロナウイルス 特設サイトは<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html" class="covidlink">こちら</a></span>
+    </div>
+
         <div class="shuffleword">
           <div class="shufflems">{{ message }}</div>
         </div>
@@ -59,7 +58,6 @@
         <div class="hpinfo">このサイトについて</div>
   </aside>
     </div>
-
 
       <div class="post-list">
         <div class="inner">
@@ -86,10 +84,12 @@
         <div class="sub-info">
           <div class="post-btns">
        
-            <div v-if="!isActive[index]" class="star-btn">
+            <div class="star-btn">
               🤍{{ post.starCount }}
             </div>
-        </div>
+      </div>
+
+       
 
           <div class="tags">
           <ul>
@@ -104,10 +104,15 @@
             <li v-show="post.other">#その他</li>
           </ul>
             </div>
+            
         </div>
       </div>
         </div>
+       <div v-if="isAuth == false">
+          <a @click="signUp" class="btn">ログイン</a>
+      </div>
         </div>
+
 
       </div>
         <div class="bottombox">
@@ -185,7 +190,6 @@ export default {
         this.dates = value
         // const months = this.dates
         // months.sort();
-        console.log(value)
       })
 
 // 投稿をいいね順で表示させています。
@@ -352,8 +356,15 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
 
 .middlebox-right {
-  margin-left: 100px;
-  margin-top: 150px;
+  margin-left: 7rem;
+  margin-top: 5rem;
+  .copyright{
+    font-weight: bold;
+    font-size: 36px;
+  }
+  .copyunder{
+    font-weight: bold;
+  }
 }
 
 .btn {
@@ -456,6 +467,14 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     span {
       font-size: 1.5rem;
     }
+  }
+}
+
+.mnlink{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  .covidlink{
+color: steelblue;
   }
 }
 
@@ -857,4 +876,192 @@ height: 200px;
   }
 }
 
+
+
+@media screen and (max-width: 860px) {
+
+.wrapper {
+  flex-direction: column;
+}
+
+.side-wrapper {
+  width: 100%;
+}
+
+.imgcovid{
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.sidebar {
+  width: 100%;
+  }
+
+.middlebox{
+  width: 100%;
+  height: 400px;
+
+.middlebox-right {
+  margin-left: 0.5rem;
+  margin-right: 2.5rem;
+  margin-top: 5rem;
+  .copyright{
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .copyunder{
+    font-weight: bold;
+    font-size: 12px;
+
+  }
+}
+}
+
+
+.btn {
+  margin: 1rem auto;
+  width: 155px;
+  height: 47px;
+  background: $btn-color;
+  color: #fff;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+  line-height: 47px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  user-select: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  max-width: 1420px;
+}
+
+.word-ttl {
+  width: 300px;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 265px;
+    top: 100%;
+    left: 5%;
+  }
+}
+
+.word-subttl{
+  margin-bottom: 50px;
+}
+
+.patient{
+  border: 3px solid #9ad5ff;
+  border-radius: 10px;
+  margin: 3rem;
+}
+
+
+
+
+.inner {
+  margin: 61px 10% 91px;
+}
+
+
+// 
+.post-list {
+  // width: calc(200% / 3);
+  width: 100%;
+
+}
+
+.nav {
+  display: flex;
+  list-style: none;
+  margin: 1rem 0;
+  li {
+    height: 47px;
+    line-height: 47px;
+    margin-left: 50px;
+    .btn {
+      margin: 0;
+    }
+  }
+}
+
+
+
+.covidbox {
+  height: auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.5rem;
+  .total {
+    // margin: 0 8% 1rem;
+    color: red;
+    font-weight: bold;
+    margin: 1rem 0;
+    text-align: center;
+    span {
+      font-size: 3rem;
+    }
+  }
+  .yesterday {
+    font-size: 1.25rem;
+    margin: 1rem 0;
+    span {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.shuffleword{
+  background: #DEF1FF;
+  border-radius: 30px;
+  height: 150px;
+  width: 75%;
+  align-items: center;
+  text-align: center;
+  font-weight:lighter;
+  font-size: 1rem;
+  font-family: Roboto;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  .shufflems{
+  align-items: center;
+  margin: 0 8% 1rem;
+  }
+}
+
+.hpinfo{
+  align-items: center;
+  width: 300px;
+  text-align: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 75px;
+  margin-top: 100px;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 265px;
+    top: 100%;
+    left: 5%;
+  }
+}
+}
 </style>
