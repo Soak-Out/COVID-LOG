@@ -271,7 +271,6 @@ export default {
               if (this.mypost === post.screen_name) {
                 this.myposts.unshift(post)
               }
-
               for (let i = 0; i < this.starpost.length; i++) {
                 if (post.postId === this.starpost[i]) {
                   this.starPosts.unshift(post)
@@ -284,7 +283,6 @@ export default {
             for (let i = 0; i < this.starpost.length; i++) {
               for (let j = 0; j < this.starPosts.length; j++) {
                 if (this.starPosts[j].postId === this.starpost[i]) {
-                  // console.log(this.$refs[j])
                   this.$refs[j][0].$data.active = true
                   this.$refs[j][0].$data.toggleAnimate = true
                   this.$refs[j][0].$data.toggleColor = true
@@ -332,7 +330,6 @@ export default {
       PD.title = p.title
       PD.text = p.uploadText
       PD.infection = p.infection
-      console.log(this.postData.infection)
       PD.vaccine = p.vaccine
       PD.illLevel = p.illLevel
       PD.fever = p.fever
@@ -482,6 +479,10 @@ $btn-color: rgb(4, 163, 255);
       color: #fff;
       border-radius: 10px;
       cursor: pointer;
+      @media screen and (max-width: 400px) {
+        min-width: 3rem;
+        font-size: 0.9rem;
+      }
     }
   }
 }
@@ -542,8 +543,9 @@ $btn-color: rgb(4, 163, 255);
       }
       .age {
         position: absolute;
+        line-height: 1rem;
         top: 3.25rem;
-        right: 0.4rem;
+        right: 0.5rem;
       }
     }
     .post-status {
@@ -575,6 +577,7 @@ $btn-color: rgb(4, 163, 255);
     font-size: 1rem;
     // font-weight: bold;
     margin: 0 8% 1rem;
+    white-space: pre-wrap;
   }
   .sub-info {
     margin: 1rem 8% 1rem 5%;
@@ -641,6 +644,7 @@ $btn-color: rgb(4, 163, 255);
         position: absolute;
         bottom: -490%;
         right: -350%;
+        color: #c4c4c4;
       }
     }
   }
@@ -671,6 +675,7 @@ $btn-color: rgb(4, 163, 255);
     .change-name {
       margin: 0 auto;
       justify-content: center;
+      margin-bottom: 1rem;
       .inname {
         margin-left: 0;
       }
@@ -687,12 +692,19 @@ $btn-color: rgb(4, 163, 255);
     .tabs {
       .tab,
       span {
-        font-size: 1rem;
+        font-size: 1.25rem;
+        @media screen and (max-width: 400px) {
+          font-size: 1rem;
+        }
+        @media screen and (max-width: 300px) {
+          font-size: 0.9rem;
+        }
       }
     }
   }
   .extendpost {
     margin-top: 1rem;
+    padding-bottom: 0.5rem;
     .time {
       font-size: 0.75rem;
       top: auto;
