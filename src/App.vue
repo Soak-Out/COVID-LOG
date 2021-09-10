@@ -18,16 +18,19 @@
     <headerItem />
     <router-view />
     <hamburger></hamburger>
+  <footerItem/>
   </div>
 </template>
 
 <script>
 import hamburger from "../src/components/hamburger.vue"
 import headerItem from "../src/components/header.vue"
+import footerItem from "../src/components/Footer.vue"
 export default {
   components: {
     hamburger,
     headerItem,
+    footerItem,
   },
 }
 </script>
