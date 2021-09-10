@@ -8,18 +8,29 @@
             <div class="check-block">
               <ul class="attribute">
                 <li>
-                  <input
-                    type="checkbox"
-                    v-model="newarray"
-                    id="newarray"
-                  /><label for="newarray">新着</label>
+                  <label for="newarray">
+                    <input
+                      type="radio"
+                      v-model="newarray"
+                      id="newarray"
+                      name="arraypost"
+                      v-on:change="onChange"
+                      value="新着"
+                      checked="checked"
+                    />新着</label
+                  >
                 </li>
                 <li>
-                  <input
-                    type="checkbox"
-                    v-model="usefularray"
-                    id="usefularray"
-                  /><label for="usefularray">「役に立った」順</label>
+                  <label for="usefularray">
+                    <input
+                      type="radio"
+                      v-model="usefularray"
+                      id="usefularray"
+                      name="arraypost"
+                      v-on:change="onChange"
+                      value="役に立った"
+                    />「役に立った」順</label
+                  >
                 </li>
               </ul>
             </div>
@@ -35,6 +46,7 @@
                       type="checkbox"
                       v-model="infection"
                       id="infection"
+                      checked="checked"
                     /><label for="infection">感染記録</label>
                   </li>
                   <li>
@@ -42,6 +54,7 @@
                       type="checkbox"
                       v-model="vaccine"
                       id="vaccine"
+                      checked="checked"
                     /><label for="vaccine">ワクチン接種記録</label>
                   </li>
                 </ul>
@@ -305,6 +318,105 @@ export default {
           )
       }
     },
+    onChange(event) {
+      if (event.target.value === "新着") {
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .orderBy("post_at")
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "役に立った") {
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .orderBy("post_at")
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+
+                  return this.posts.sort((a, b) => {
+                    return b.starCount - a.starCount
+                  })
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      }
+    },
   },
 }
 </script>
@@ -534,7 +646,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   background-color: $main-color;
 
   user-select: none;
-  cursor: pointer;
 }
 
 .check-block {
