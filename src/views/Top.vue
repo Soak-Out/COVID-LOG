@@ -52,13 +52,35 @@
       </div>
     </div>
 
-    <div class="postbox">
+ 
+
+      <div v-if="isAuth">
+        <router-link to="/covidList" class="link"
+          >投稿一覧ページへ
+        </router-link>
+      </div>
+      <div v-else class="login-page">
+        <a @click="signUp" class="btn">ログイン</a>
+      </div>
+
+                   <label for="usefularray">
+                    <input
+                      type="radio"
+                      v-model="usefularray"
+                      id="usefularray"
+                      name="arraypost"
+                      v-on:change="onChange"
+                      value="役に立った"
+                    />「役に立った」順</label
+                  >
+
+<div class="postbox">
       <h2>最近の投稿</h2>
       <!-- <div v-if="isAuth"> -->
       <div v-for="(post, index) in posts" v-bind:key="index" class="post">
         <div class="status">
           <div class="flex">
-            <img :src="user.photoURL" />
+            <img :src="post.photo" class="photo" />
             <div class="ttl">{{ post.title }}</div>
             <div class="level">
               重症度<span>Lv.{{ post.illLevel }}</span>
@@ -91,21 +113,16 @@
           </ul>
         </div>
       </div>
+      </div>
 
-      <div v-if="isAuth">
-        <router-link to="/covidList" class="link"
-          >投稿一覧ページへ
-        </router-link>
-      </div>
-      <div v-else class="login-page">
-        <a @click="signUp" class="btn">ログイン</a>
-      </div>
+
+      
       <!-- </div> -->
 
       <!-- <div v-else class="login-page">
         <a @click="signUp" class="btn">ログイン</a>
       </div> -->
-    </div>
+
 
     <!-- <div class="wordbox">
       <div>ねぎらいの言葉</div>
@@ -116,7 +133,6 @@
       <h3>配列の内容表示</h3>
       <div>{{ message }}</div>
     </div>
-
     <!-- ここが最下層 -->
   </div>
 </template>
@@ -157,6 +173,57 @@ export default {
         // months.sort();
         console.log(value)
       })
+
+// 投稿をいいね順で表示させています。
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .orderBy("post_at")
+                  .get()
+                this.starpost = doc.data().star_post_id
+
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+
+                  return this.posts.sort((a, b) => {
+                    return b.starCount - a.starCount
+                  })
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
     //ログインしているかどうかでisAuthを変化
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
 
@@ -223,6 +290,7 @@ export default {
         }
       })
     },
+
   },
   computed: {
     reverseItems() {
