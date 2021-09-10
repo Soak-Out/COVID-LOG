@@ -1,44 +1,44 @@
 <template>
   <div class="top">
-    <div class="topheader">
-      <h1>COVID-LOG</h1>
-      <ul class="nav">
-        <li><router-link to="/post-page">投稿ページ</router-link></li>
-        <li>人気商品</li>
-        <li>
-          <div v-if="isAuth">
-            <a @click="signOut" class="btn log-out">ログアウト</a>
-          </div>
-          <div v-else class="login-page">
-            <a @click="signUp" class="btn">ログイン</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-
     <div class="middlebox">
-      <div class="middlebox-left">ここらへんにロゴ画像</div>
+      <div class="middlebox-left"><img src="../assets/logo.png" class="imgcovid"/></div>
       <div class="middlebox-right">
-        <h3>このサイトで<br />１人でも<br />多くの人に情報を。</h3>
-        <p>
+      <div class="copyright">
+        <h1>このサイトで</h1>
+        <h1>１人でも</h1>
+        <h1>多くの人に情報を。</h1>
+        </div>
+  
+        <div class="copyunder">
           新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。
-        </p>
-        <div v-if="isAuth">
+        </div>
+
+        <h1>新型コロナウイルス感染症専門の投稿サイト</h1>
+      </div>
+        <!-- <div v-if="isAuth">
           <router-link to="/post-page">投稿する</router-link>
           <router-link to="/covidList">投稿一覧</router-link>
         </div>
         <div v-else class="login-page">
           <a @click="signUp" class="btn">ログイン</a>
-        </div>
-      </div>
+        </div> -->
     </div>
 
+
+
+
+<div class="wrapper">
+<div class="side-wrapper">
+      <aside class="sidebar">
     <div class="covidbox">
       <!-- <button v-on:click="getcovidPatient">陽性患者を更新する。</button> -->
       <!-- <h2>本日の陽性患者数です。</h2> -->
+        <div class="word-ttl">新型コロナウイルス<br>新着情報</div>
+        <div class="word-subttl">累計感染者数（昨日時点）</div>
+        <div class="patient">
       <div v-for="(npatients, index) in reverseItems" v-bind:key="index">
         <p v-if="index === 0" class="total">
-          累計感染者数<br /><span>{{ npatients.npatients }}</span
+          <br /><span>{{ npatients.npatients }}</span
           >人
         </p>
         <p v-if="index === 0" class="yesterday">
@@ -51,56 +51,48 @@
         </p>
       </div>
     </div>
+    </div>
+        <div class="shuffleword">
+          <div class="shufflems">{{ message }}</div>
+        </div>
 
- 
+        <div class="hpinfo">このサイトについて</div>
+  </aside>
+    </div>
 
-      <div v-if="isAuth">
-        <router-link to="/covidList" class="link"
-          >投稿一覧ページへ
-        </router-link>
-      </div>
-      <div v-else class="login-page">
-        <a @click="signUp" class="btn">ログイン</a>
-      </div>
 
-                   <label for="usefularray">
-                    <input
-                      type="radio"
-                      v-model="usefularray"
-                      id="usefularray"
-                      name="arraypost"
-                      v-on:change="onChange"
-                      value="役に立った"
-                    />「役に立った」順</label
-                  >
-
-<div class="postbox">
-      <h2>最近の投稿</h2>
-      <!-- <div v-if="isAuth"> -->
+      <div class="post-list">
+        <div class="inner">
+      <div class="list-ttl">最近の投稿</div>
       <div v-for="(post, index) in posts" v-bind:key="index" class="post">
-        <div class="status">
-          <div class="flex">
-            <img :src="post.photo" class="photo" />
+        <div class="time">{{ post.postedTime }}</div>
+        <div class="post-info">
+          <img :src="post.photo" />
+
+          <div class="post-status">
             <div class="ttl">{{ post.title }}</div>
+            <div class="post-detail">
             <div class="level">
               重症度<span>Lv.{{ post.illLevel }}</span>
             </div>
+            <span>｜</span>
             <div class="handle-name">{{ post.handleName }}</div>
+          </div>
           </div>
           <div class="time">{{ post.postedTime }}</div>
         </div>
 
         <div class="text">{{ post.uploadText }}</div>
-        <div class="post-info">
+        <div class="sub-info">
           <div class="post-btns">
-            <!-- <div v-if="isActive[index]" class="star-btn">
-              💖{{ post.starCount }}
-            </div> -->
+       
             <div v-if="!isActive[index]" class="star-btn">
               🤍{{ post.starCount }}
             </div>
-          </div>
-          <ul class="tag">
+        </div>
+
+          <div class="tags">
+          <ul>
             <li v-show="post.infection">#感染経験あり</li>
             <li v-show="post.vaccine">#ワクチン接種</li>
             <li v-show="post.headache">#頭痛</li>
@@ -111,12 +103,39 @@
             <li v-show="post.diarrhea">#下痢</li>
             <li v-show="post.other">#その他</li>
           </ul>
+            </div>
         </div>
       </div>
+        </div>
+        </div>
+
       </div>
+        <div class="bottombox">
+          <div class="bottombox-left"><img src="../assets/logo.png" class="imgcovid"/></div>
+            <div class="bottombox-right">
+            <div class="leftli">
+            <ul>
+              <li><router-link to="/top">トップ</router-link></li>
+              <li><router-link to="/covidList">投稿を見る</router-link></li>
+              <li><router-link to="/post-page">投稿する</router-link></li>
+            </ul>
+            </div>
+            <div class="rightli">
+              <ul>
+              <li><router-link to="/mypage">マイページ</router-link></li>
+              <li> <div v-if="isAuth">
+                <a @click="signOut">ログアウト</a>
+              </div>
+              <div v-else class="login-page">
+                <a @click="signUp">ログイン</a>
+              </div></li>
+            </ul>
+            </div>
+    
+            </div>
+        </div>
+<!--  -->
 
-
-      
       <!-- </div> -->
 
       <!-- <div v-else class="login-page">
@@ -128,11 +147,6 @@
       <div>ねぎらいの言葉</div>
       <div v-for="word of words ">{{  word  }}</div>
     </div> -->
-
-    <div class="“shuffleword”">
-      <h3>配列の内容表示</h3>
-      <div>{{ message }}</div>
-    </div>
     <!-- ここが最下層 -->
   </div>
 </template>
@@ -146,7 +160,7 @@ export default {
     return {
       dates: [0],
       npatients: {},
-      words: ["今日もごくろうさま", "いつもありがとう", "体に気をつけて"],
+      words: ["「三密」防げましたか？","不要不急の外出は避けましょう。","「ワクチンを優先的に打てる」という新手の詐欺が発生しているようです。情報源には気をつけましょう。","歯磨きも感染症予防に効果的だそうです。予防も兼ねて歯磨きをしましょう！","マスクの上下はプリーツが下に来るようにするのが正解です。あなたは正しくマスクを着けられていますか？","濃厚接触者の定義は「１ｍ以内」で「マスクを着けず」「15分以上」話した人です。人と会う時に意識しておくと良いかもしれません。","あなたは、あなたであればいい。","もっと自分を好きになってみましょう。すると、まだ見ぬ「私」を見つけることができるかもしれません。","ゆっくりでもいいんです。ゆっくりでいいので、少しずつでも進んでいれば、前に進むことができます。"],
       message: "",
 
       //ログイン関連
@@ -305,8 +319,43 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/_reset.scss";
-
+$main-color: #9ad5ff;
+$sub-color: #4986e1;
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
+
+
+
+
+
+.middlebox {
+  display: flex;
+  height: 400px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.middlebox-left{
+  height: 266px;
+  margin: 0.5rem 5rem;
+}
+.wrapper {
+  max-width: 1420px;
+  display: flex;
+}
+
+.side-wrapper {
+  width: calc(100% / 3);
+  border-right: 1px solid #c4c4c4;
+}
+
+.sidebar {
+  margin: 2rem;
+  }
+
+.middlebox-right {
+  margin-left: 100px;
+  margin-top: 150px;
+}
+
 .btn {
   margin: 1rem auto;
   width: 155px;
@@ -324,9 +373,50 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   cursor: pointer;
 }
 
-.topheader {
-  display: flex;
-  justify-content: space-between;
+.wrapper {
+  max-width: 1420px;
+}
+
+.word-ttl {
+  width: 300px;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 265px;
+    top: 100%;
+    left: 5%;
+  }
+}
+
+.word-subttl{
+  margin-bottom: 50px;
+}
+
+.patient{
+  border: 3px solid #9ad5ff;
+  border-radius: 10px;
+  margin: 3rem;
+}
+
+
+
+
+.inner {
+  margin: 61px 10% 91px;
+}
+
+
+// 
+.post-list {
+  // width: calc(200% / 3);
 }
 
 .nav {
@@ -343,23 +433,21 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
 }
 
-.middlebox {
-  display: flex;
-  justify-content: space-between;
-  background-color: antiquewhite;
-  height: 400px;
-}
+
 
 .covidbox {
-  background-color: azure;
   height: auto;
   text-align: center;
   margin: 3rem 0;
   letter-spacing: 0.5rem;
   .total {
-    font-size: 2rem;
+    // margin: 0 8% 1rem;
+    color: red;
+    font-weight: bold;
+    margin: 1rem 0;
+    text-align: center;
     span {
-      font-size: 5rem;
+      font-size: 3rem;
     }
   }
   .yesterday {
@@ -371,113 +459,402 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
 }
 
-//最新の投稿を表示するスタイリング
-.postbox {
-  background-color: azure;
-  height: auto;
+.shuffleword{
+  background: #DEF1FF;
+  border-radius: 30px;
+  height: 150px;
+  width: 75%;
+  margin-left: 50px;
   text-align: center;
-  padding: 2rem 0;
-  border-bottom: 1px dotted #000;
-  h2 {
-    font-size: 2rem;
-  }
-  .link {
-    text-decoration: none;
-  }
-  .post {
-    text-align: left;
-    border: 4px solid rgb(206, 242, 252);
-    border-radius: 20px;
-    box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
-    margin: 35px;
-    padding: 15px;
-    background-color: #fff;
-    .photo {
-      width: 3rem;
-      height: 3rem;
-      border: #ddd 1px solid;
-      border-radius: 50%;
-    }
-    .status {
-      display: flex;
-      justify-content: space-between;
-      .flex {
-        display: flex;
-        position: relative;
-        .ttl {
-          height: 2rem;
-          line-height: 2rem;
-          font-weight: bold;
-          font-size: 1.25rem;
-          margin: 0 1rem;
-        }
-        .handle-name {
-          @extend .ttl;
-          font-weight: normal;
-          color: rgb(151, 151, 151);
-        }
-        .level {
-          @extend .handle-name;
-          color: #000;
-          span {
-            font-weight: bold;
-            color: red;
-            margin-left: 5px;
-          }
-        }
-      }
-      .time {
-        margin: 5px;
-        font-weight: 500;
-        color: rgb(151, 151, 151);
-      }
-    }
-    .text {
-      margin: 1rem 0;
-      padding: 0 0 10px;
-      line-height: 1.5;
-      letter-spacing: 2px;
-      font-size: 1rem;
-      white-space: pre-wrap;
-    }
-
-    .post-info {
-      display: flex;
-      .tag {
-        display: flex;
-        flex-wrap: wrap;
-        font-weight: 500;
-        color: rgb(0, 140, 255);
-        margin: 10px 0;
-        height: 2rem;
-        line-height: 2rem;
-        li {
-          margin-right: 10px;
-        }
-      }
-      .post-btns {
-        display: flex;
-        flex-direction: row-reverse;
-        .star-btn {
-          width: 4rem;
-          height: 2rem;
-          line-height: 2rem;
-          text-align: center;
-          border-radius: 50%;
-          cursor: pointer;
-          user-select: none;
-          margin: 10px;
-        }
-      }
-    }
+  font-weight:lighter;
+  font-size: 1rem;
+  font-family: Roboto;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  .shufflems{
+  margin: 0 8% 1rem;
   }
 }
 
-.covidbox h1 {
+.hpinfo{
+  width: 300px;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 265px;
+    top: 100%;
+    left: 5%;
+  }
 }
+
+//最新の投稿を表示するスタイリング
+// .postbox {
+//   background-color: azure;
+//   height: auto;
+//   text-align: center;
+//   padding: 2rem 0;
+//   border-bottom: 1px dotted #000;
+//   h2 {
+//     font-size: 2rem;
+//   }
+//   .link {
+//     text-decoration: none;
+//   }
+//   .post {
+//     text-align: left;
+//     border: 4px solid rgb(206, 242, 252);
+//     border-radius: 20px;
+//     box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
+//     margin: 35px;
+//     padding: 15px;
+//     background-color: #fff;
+//     .photo {
+//       width: 3rem;
+//       height: 3rem;
+//       border: #ddd 1px solid;
+//       border-radius: 50%;
+//     }
+//     .status {
+//       display: flex;
+//       justify-content: space-between;
+//       .flex {
+//         display: flex;
+//         position: relative;
+//         .ttl {
+//           height: 2rem;
+//           line-height: 2rem;
+//           font-weight: bold;
+//           font-size: 1.25rem;
+//           margin: 0 1rem;
+//         }
+//         .handle-name {
+//           @extend .ttl;
+//           font-weight: normal;
+//           color: rgb(151, 151, 151);
+//         }
+//         .level {
+//           @extend .handle-name;
+//           color: #000;
+//           span {
+//             font-weight: bold;
+//             color: red;
+//             margin-left: 5px;
+//           }
+//         }
+//       }
+//       .time {
+//         margin: 5px;
+//         font-weight: 500;
+//         color: rgb(151, 151, 151);
+//       }
+//     }
+//     .text {
+//       margin: 1rem 0;
+//       padding: 0 0 10px;
+//       line-height: 1.5;
+//       letter-spacing: 2px;
+//       font-size: 1rem;
+//       white-space: pre-wrap;
+//     }
+
+//     .post-info {
+//       display: flex;
+//       .tag {
+//         display: flex;
+//         flex-wrap: wrap;
+//         font-weight: 500;
+//         color: rgb(0, 140, 255);
+//         margin: 10px 0;
+//         height: 2rem;
+//         line-height: 2rem;
+//         li {
+//           margin-right: 10px;
+//         }
+//       }
+//       .post-btns {
+//         display: flex;
+//         flex-direction: row-reverse;
+//         .star-btn {
+//           width: 4rem;
+//           height: 2rem;
+//           line-height: 2rem;
+//           text-align: center;
+//           border-radius: 50%;
+//           cursor: pointer;
+//           user-select: none;
+//           margin: 10px;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .wordbox {
   background-color: darkkhaki;
   height: 300px;
 }
+
+.post-list {
+  width: calc(200% / 3);
+}
+.list-ttl {
+  width: 130px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 115px;
+    top: 100%;
+    left: 5%;
+  }
+}
+
+.block-ttl {
+  width: 100px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 3px;
+    background-color: $main-color;
+    width: 93.26px;
+    top: 100%;
+    left: 5%;
+  }
+}
+.post {
+  border: 3px solid $main-color;
+  border-radius: 10px;
+  margin-top: 3rem;
+  position: relative;
+  margin: 3rem;
+
+  .time {
+    position: absolute;
+    height: 20px;
+    top: 1%;
+    right: 1%;
+  }
+  .post-info {
+    display: flex;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 3%;
+    }
+    .post-status {
+      margin: 3% 10% 1.45rem 0%;
+      width: 100%;
+      .ttl {
+        font-size: 1rem;
+        padding-left: 0.5rem;
+        padding-bottom: 0.875rem;
+        margin-bottom: 0.875rem;
+        border-bottom: 3px solid $main-color;
+      }
+      .post-detail {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0.875rem;
+        padding-left: 0.5rem;
+        span,
+        div {
+          margin-left: 0.5rem;
+        }
+        span:first-of-type {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .text {
+    font-size: 0.875rem;
+    margin: 0 8% 1rem;
+  }
+  .sub-info {
+    margin: 1rem 8% 1rem 5%;
+    display: flex;
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      font-size: 14px;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 3rem;
+        li {
+          margin-left: 0.5rem;
+          color: $sub-color;
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+    .btns {
+      display: flex;
+      position: relative;
+      width: 10px;
+      height: 10px;
+
+      .like {
+        margin: 0.1rem 0.5rem 0 4rem;
+        position: absolute;
+        bottom: -490%;
+        right: -350%;
+      }
+      .delete-btn,
+      .edit-btn {
+        margin-top: 0.05rem;
+        margin-left: 1rem;
+        color: $main-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.check-list {
+  margin-bottom: 60px;
+  .left-side {
+    width: 60%;
+    .attribute {
+      padding: 2rem 1rem;
+      li {
+        margin-bottom: 0.5rem;
+        input {
+          margin-right: 0.5rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+.severity {
+  margin: 1rem;
+  input {
+    width: 235px;
+    border-radius: 10px;
+    background: #ceeaff;
+    -webkit-appearance: none;
+    border: solid 3px #aad0ee;
+    appearance: none;
+    cursor: pointer;
+    outline: 0;
+  }
+  &:focus {
+    box-shadow: 0 0 3px rgb(0, 161, 255);
+  }
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #53aeff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+  }
+  &::-moz-range-thumb {
+    background: #53aeff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+    border: none;
+  }
+  &::-moz-focus-outer {
+    border: 0;
+  }
+  &:active::-webkit-slider-thumb {
+    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.3);
+  }
+  .numbers {
+    width: 235px;
+    font-weight: bold;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.searchIcon {
+  width: 230px;
+  height: 49px;
+  line-height: 49px;
+  font-size: 1.125rem;
+  display: block;
+  text-align: center;
+  margin: 2rem;
+  color: #fff;
+  background-color: $main-color;
+
+  user-select: none;
+}
+
+.check-block {
+  margin: 2rem 3rem 2rem 3rem;
+  line-height: 2;
+}
+
+.bottombox{;
+border-top: 1px solid #c4c4c4;
+display: flex;
+justify-content: space-between;
+height: 200px;
+}
+
+.bottombox-left{
+  img{
+  height: 87px;
+  margin: 2.5rem 3rem;
+}
+}
+
+.bottombox-right{
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem 1rem;
+  .leftli{
+    margin-right: 5rem;
+    li{
+      margin-top: 0.5rem;
+      :hover {
+        color: #f00;
+        border-bottom: 1px solid #000000;
+      }
+    }
+  }
+  .rightli{
+    margin-right: 5rem;
+    li{
+      margin-top: 0.5rem;
+      :hover {
+        color: #f00;
+        border-bottom: 1px solid #000000;
+      }
+    }
+  }
+}
+
 </style>
