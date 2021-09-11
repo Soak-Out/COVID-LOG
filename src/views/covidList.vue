@@ -63,14 +63,50 @@
 
                 <div class="illlevelbutton">
                   <ul class="tag">
-                    <li v-for="n of 5" :key="n">
+                    <li>
                       <input
                         type="radio"
-                        :id="'illLevel' + n"
+                        id="illLevel1"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        :value="'lv' + n"
-                      /><label :for="'illLevel' + n">{{ n }}</label>
+                        value="lv1"
+                      /><label for="illLevel1">１</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel2"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv2"
+                      /><label for="illLevel2">２</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel3"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv3"
+                      /><label for="illLevel3">３</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel4"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv4"
+                      /><label for="illLevel4">４</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel5"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv5"
+                      /><label for="illLevel5">５</label>
                     </li>
                   </ul>
                 </div>
@@ -178,14 +214,50 @@
                 <div class="check-block">
                   <div class="illlevelbutton">
                     <ul class="attribute">
-                      <li v-for="n of 5" :key="n">
+                      <li>
                         <input
                           type="radio"
-                          :id="'illLevel' + n"
+                          id="illLevel1"
                           name="pharraypost"
                           v-on:change="phonChange"
-                          :value="'lv' + n"
-                        /><label :for="'illLevel' + n">{{ n }}</label>
+                          value="lv1"
+                        /><label for="illLevel1">１</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel2"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv2"
+                        /><label for="illLevel2">２</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel3"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv3"
+                        /><label for="illLevel3">３</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel4"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv4"
+                        /><label for="illLevel4">４</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel5"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv5"
+                        /><label for="illLevel5">５</label>
                       </li>
                     </ul>
                   </div>
@@ -234,8 +306,10 @@
         <div v-for="(post, index) in posts" v-bind:key="index" class="post">
           <div class="time">{{ post.postedTime }}</div>
           <div class="post-info">
-            <img :src="post.photo" />
-
+            <div class="img-age">
+              <img :src="user.photoURL" />
+              <div class="age">{{ post.age }}</div>
+            </div>
             <div class="post-status">
               <div class="ttl">{{ post.title }}</div>
               <div class="post-detail">
@@ -3153,6 +3227,7 @@ $sub-color: #4986e1;
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .illlevelbutton {
   margin-left: 3rem;
+  margin-top: 2rem;
 }
 .pcnotshow {
   display: none;
@@ -3225,11 +3300,20 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   .post-info {
     display: flex;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .img-age {
+      position: relative;
       margin: 3%;
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+      .age {
+        position: absolute;
+        line-height: 1rem;
+        top: 3.25rem;
+        right: 0.5rem;
+      }
     }
     .post-status {
       margin: 3% 10% 1.45rem 0%;
@@ -3239,7 +3323,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         padding-left: 0.5rem;
         padding-bottom: 0.875rem;
         margin-bottom: 0.875rem;
-        border-bottom: 3px solid $main-color;
+        border-bottom: 2px solid $main-color;
       }
       .post-detail {
         display: flex;
@@ -3259,6 +3343,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .text {
     font-size: 0.875rem;
     margin: 0 8% 1rem;
+    white-space: pre-wrap;
   }
   .sub-info {
     margin: 1rem 8% 1rem 5%;
@@ -3286,12 +3371,12 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       position: relative;
       width: 10px;
       height: 10px;
-
       .like {
         margin: 0.1rem 0.5rem 0 4rem;
         position: absolute;
         bottom: -490%;
         right: -350%;
+        color: #c4c4c4;
       }
       .delete-btn,
       .edit-btn {
