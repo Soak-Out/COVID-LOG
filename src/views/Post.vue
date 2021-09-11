@@ -146,7 +146,7 @@ function initialState() {
     postText: "",
     infection: false,
     vaccine: false,
-    illLevel: 0,
+    illLevel: 1,
     fever: false,
     soreThroat: false,
     respiratoryOrgan: false,
@@ -389,7 +389,7 @@ li {
         }
       }
       .age {
-        width: 5rem;
+        width: 5.2rem;
         margin: 0.5rem 1rem;
         font-size: 1.25rem;
         font-weight: 540;
@@ -445,19 +445,19 @@ li {
   }
   .sidebar {
     width: 100%;
-  //   border-right: none;
-  //   margin-top: 1.5rem;
-  //   margin-bottom: 0.5rem;
-  //   .prof {
-  //     margin: 0 auto;
-  //     img {
-  //       width: 8rem;
-  //       margin-bottom: 1rem;
-  //     }
-  //     .name {
-  //       font-size: 1.25rem;
-  //     }
-  //   }
+    border-right: none;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    .prof {
+      margin: 0 auto;
+      img {
+        width: 8rem;
+        margin-bottom: 1rem;
+      }
+      .name {
+        font-size: 1.25rem;
+      }
+    }
   }
   //----------------------------
   //投稿作成欄
