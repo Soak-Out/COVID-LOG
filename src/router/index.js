@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/top",
+    path: "/",
     name: "Top",
     component: Top,
   },
@@ -64,7 +64,7 @@ const isSignedIn = async () => {
 router.beforeEach(async (to, from, next) => {
   const auth = await isSignedIn()
   if (to.name !== "Top" && !auth) {
-    next("/top")
+    next("/")
   } else {
     next()
   }
