@@ -3,13 +3,13 @@
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
     <header id="header">
       <div class="inner">
-        <router-link to="/top">
+        <router-link to="/">
           <img src="../assets/logo.png" alt="COVID-LOG"
         /></router-link>
         <nav>
           <ul>
             <li>
-              <router-link to="/top">トップ</router-link>
+              <router-link to="/">トップ</router-link>
             </li>
             |
             <li :class="{ gray: !isAuth }">
@@ -65,7 +65,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/top"
+          location.href = "/"
         })
     },
     signUp() {

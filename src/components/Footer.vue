@@ -9,7 +9,7 @@
         <div class="bottombox-right">
           <div class="leftli">
             <ul>
-              <li>▶︎<router-link to="/top">トップ</router-link></li>
+              <li>▶︎<router-link to="/">トップ</router-link></li>
               <li>▶︎<router-link to="/covidList">投稿を見る</router-link></li>
               <li>▶︎<router-link to="/post-page">投稿する</router-link></li>
             </ul>
@@ -57,7 +57,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/top"
+          location.href = "/"
         })
     },
     signUp() {
@@ -153,28 +153,25 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-
-
-   .wrapper {
+  .wrapper {
     flex-direction: column;
     height: 500px;
   }
-.botombox-left{
-  width: 100%;
-}
+  .botombox-left {
+    width: 100%;
+  }
 
-.bottombox-right{
-  width: 100%;
+  .bottombox-right {
+    width: 100%;
     margin: 0.5rem 0.5rem;
     display: flex;
     // flex-direction: row;
     // flex-wrap: wrap;
-}
+  }
 
-.blackbox{
+  .blackbox {
     flex-direction: column;
-  margin-bottom: 0.1rem;
-}
-
+    margin-bottom: 0.1rem;
+  }
 }
 </style>

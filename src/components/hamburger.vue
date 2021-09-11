@@ -9,12 +9,12 @@
     <!--サイドメニュー-->
     <transition name="hamburger__menu">
       <div class="hamburger__menu" v-show="ActiveBtn">
-        <router-link to="/top"
+        <router-link to="/"
           ><img src="../assets/logo-text.png" alt="" @click="clickEvent"
         /></router-link>
         <ul class="scroll">
           <li v-if="isAuth" @click="clickEvent">
-            <router-link to="/top">トップ</router-link>
+            <router-link to="/">トップ</router-link>
           </li>
           <li v-if="isAuth" @click="clickEvent">
             <router-link to="/covidList">投稿を見る</router-link>
@@ -68,7 +68,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/top"
+          location.href = "/"
         })
     },
     signUp() {
@@ -97,7 +97,7 @@ export default {
                 star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
-                location.href = "/top"
+                location.href = "/"
               })
           }
         }

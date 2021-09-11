@@ -51,15 +51,18 @@
           </div>
 
           <div class="mnlink">
-            <span>※厚生労働省新型コロナウイルス 特設サイトは<a
+            <span
+              >※厚生労働省新型コロナウイルス 特設サイトは<a
                 href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html"
-                class="covidlink">こちら</a></span >
+                class="covidlink"
+                >こちら</a
+              ></span
+            >
           </div>
 
           <div class="shuffleword">
             <div class="shufflems">{{ message }}</div>
           </div>
-
         </aside>
       </div>
 
@@ -215,7 +218,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "/top"
+          location.href = "/"
         })
     },
     signUp() {
@@ -243,7 +246,7 @@ export default {
                 star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
-                location.href = "/top"
+                location.href = "/"
               })
           }
         }
@@ -273,6 +276,7 @@ $btn-color: rgb(4, 163, 255);
   max-width: 1420px;
   display: flex;
   // margin-top: 3rem;
+  margin: 0 auto;
 }
 
 .side-wrapper {
@@ -709,10 +713,10 @@ $btn-color: rgb(4, 163, 255);
     width: 100%;
     border-right: none;
     margin-top: 0.5rem;
-  
+
     margin-bottom: 0.5rem;
-    .middlebox-left{
-        margin: 0.5rem 0.5rem;
+    .middlebox-left {
+      margin: 0.5rem 0.5rem;
     }
     .middlebox-right {
       margin-left: 0.5rem;
@@ -721,7 +725,7 @@ $btn-color: rgb(4, 163, 255);
       width: 100%;
       .copyright {
         font-weight: bold;
-      margin-right: 2.5rem;
+        margin-right: 2.5rem;
         font-size: 18px;
       }
       .copyunder {
@@ -741,7 +745,7 @@ $btn-color: rgb(4, 163, 255);
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    
+
     &::after {
       position: absolute;
       content: "";
