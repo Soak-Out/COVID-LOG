@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       isAuth: false,
+      handleName: "名無さん",
     }
   },
   created() {

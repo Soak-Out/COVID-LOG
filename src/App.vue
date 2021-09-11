@@ -6,19 +6,11 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
       rel="stylesheet"
     />
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/top">Top</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/post-page">Post-Page</router-link> |
-      <router-link to="/covidList">CovidList</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/mypage">Mypage</router-link> |
-    </div> -->
     <headerItem />
     <router-view />
-    <hamburger></hamburger>
-  <footerItem/>
+    <hamburger />
+    <go-post v-show="this.$route.path !== '/post-page'" />
+    <footerItem />
   </div>
 </template>
 
@@ -26,11 +18,14 @@
 import hamburger from "../src/components/hamburger.vue"
 import headerItem from "../src/components/header.vue"
 import footerItem from "../src/components/Footer.vue"
+import goPost from "../src/components/Gopost.vue"
+
 export default {
   components: {
     hamburger,
     headerItem,
     footerItem,
+    goPost,
   },
 }
 </script>

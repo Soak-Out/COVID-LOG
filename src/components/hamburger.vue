@@ -53,6 +53,7 @@ export default {
     return {
       ActiveBtn: false,
       isAuth: true,
+      handleName: "名無さん",
     }
   },
   created() {
