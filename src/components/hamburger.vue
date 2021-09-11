@@ -97,7 +97,7 @@ export default {
                 star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
-                location.href = "/top"
+                location.href = "/"
               })
           }
         }
