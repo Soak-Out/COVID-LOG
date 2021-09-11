@@ -3,8 +3,7 @@
     <router-link to="/post-page">
       <div v-if="isAuth" class="go-post">
         <font-awesome-icon slot="icon" icon="pen" />
-      </div>
-      /></router-link
+      </div></router-link
     >
   </div>
 </template>

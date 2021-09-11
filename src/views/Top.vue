@@ -51,20 +51,15 @@
           </div>
 
           <div class="mnlink">
-            <span
-              >※厚生労働省新型コロナウイルス 特設サイトは<a
+            <span>※厚生労働省新型コロナウイルス 特設サイトは<a
                 href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html"
-                class="covidlink"
-                >こちら</a
-              ></span
-            >
+                class="covidlink">こちら</a></span >
           </div>
 
           <div class="shuffleword">
             <div class="shufflems">{{ message }}</div>
           </div>
 
-          <div class="hpinfo">このサイトについて</div>
         </aside>
       </div>
 
@@ -400,6 +395,7 @@ $btn-color: rgb(4, 163, 255);
 .mnlink {
   margin-top: 3rem;
   margin-bottom: 3rem;
+  text-align: center;
   .covidlink {
     color: steelblue;
   }
