@@ -70,7 +70,7 @@
 
       <div class="post-list">
         <div class="inner">
-          <div class="list-ttl">最近の投稿</div>
+          <div class="list-ttl">役に立った投稿</div>
           <div v-for="(post, index) in posts" v-bind:key="index" class="post">
             <div class="time">{{ post.postedTime }}</div>
             <div class="post-info">
@@ -266,7 +266,7 @@ $btn-color: rgb(4, 163, 255);
 
 .middlebox {
   display: flex;
-  height: 400px;
+  justify-content: center;
   border-bottom: 1px solid #c4c4c4;
 }
 
@@ -277,6 +277,7 @@ $btn-color: rgb(4, 163, 255);
 .wrapper {
   max-width: 1420px;
   display: flex;
+  // margin-top: 3rem;
 }
 
 .side-wrapper {
@@ -285,7 +286,7 @@ $btn-color: rgb(4, 163, 255);
 }
 
 .sidebar {
-  margin: 2rem;
+  // margin: 2rem;
 }
 
 .middlebox-right {
@@ -592,7 +593,7 @@ $btn-color: rgb(4, 163, 255);
   border-radius: 10px;
   margin-top: 3rem;
   position: relative;
-  margin: 3rem;
+  // margin: 3rem;
 
   .time {
     position: absolute;
@@ -710,14 +711,21 @@ $btn-color: rgb(4, 163, 255);
 
   .middlebox {
     width: 100%;
-    height: 400px;
-
+    border-right: none;
+    margin-top: 0.5rem;
+  
+    margin-bottom: 0.5rem;
+    .middlebox-left{
+        margin: 0.5rem 0.5rem;
+    }
     .middlebox-right {
       margin-left: 0.5rem;
+      // align-items: center;
       margin-right: 2.5rem;
-      margin-top: 5rem;
+      width: 100%;
       .copyright {
         font-weight: bold;
+      margin-right: 2.5rem;
         font-size: 18px;
       }
       .copyunder {
@@ -728,21 +736,25 @@ $btn-color: rgb(4, 163, 255);
   }
 
   .word-ttl {
-    width: 300px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     font-size: 1rem;
     margin-bottom: 75px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    
     &::after {
       position: absolute;
       content: "";
       height: 3px;
       background-color: $main-color;
-      width: 265px;
+      align-items: center;
+      justify-content: center;
       top: 100%;
-      left: 5%;
+      left: 15%;
     }
   }
 
@@ -753,7 +765,6 @@ $btn-color: rgb(4, 163, 255);
   .patient {
     border: 3px solid #9ad5ff;
     border-radius: 10px;
-    margin: 3rem;
   }
 
   //
@@ -762,8 +773,6 @@ $btn-color: rgb(4, 163, 255);
 
     width: 100%;
     .post {
-      padding-bottom: 0.5rem;
-
       .time {
         font-size: 0.75rem;
         top: auto;
@@ -782,7 +791,7 @@ $btn-color: rgb(4, 163, 255);
             font-size: 0.875rem;
             span,
             div {
-              margin-left: 0.5rem;
+              // margin-left: 0.5rem;
             }
             span:first-of-type {
               font-weight: bold;
