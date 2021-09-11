@@ -4,8 +4,7 @@
       <div v-if="isAuth" class="go-post">
         <font-awesome-icon slot="icon" icon="pen" />
       </div>
-      /></router-link
-    >
+    </router-link>
   </div>
 </template>
 
@@ -49,4 +48,3 @@ $btn-color: rgb(4, 163, 255);
   }
 }
 </style>
-ｓ
