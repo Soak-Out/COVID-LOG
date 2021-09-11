@@ -17,8 +17,8 @@
     </div> -->
     <headerItem />
     <router-view />
-    <hamburger></hamburger>
-    <go-post />
+    <hamburger />
+    <go-post v-show="this.$route.path !== '/post-page'" />
     <footerItem />
   </div>
 </template>
