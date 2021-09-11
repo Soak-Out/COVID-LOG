@@ -307,7 +307,7 @@
           <div class="time">{{ post.postedTime }}</div>
           <div class="post-info">
             <div class="img-age">
-              <img :src="user.photoURL" />
+              <img :src="post.photo" />
               <div class="age">{{ post.age }}</div>
             </div>
             <div class="post-status">
@@ -3242,6 +3242,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .wrapper {
   max-width: 1420px;
   display: flex;
+  margin: 0 auto;
 }
 .inner {
   margin: 61px 10% 91px;
