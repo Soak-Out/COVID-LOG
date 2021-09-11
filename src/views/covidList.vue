@@ -2794,17 +2794,23 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1rem;
+        font-size: 1.25rem;
         padding-left: 0.5rem;
-        padding-bottom: 0.875rem;
-        margin-bottom: 0.875rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
         border-bottom: 2px solid $main-color;
+        @media screen and (max-width: 1024px) {
+          font-size: 1rem;
+        }
       }
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 0.875rem;
+        font-size: 1rem;
         padding-left: 0.5rem;
+        @media screen and (max-width: 1024px) {
+          font-size: 0.875rem;
+        }
         span,
         div {
           margin-left: 0.5rem;
@@ -2816,7 +2822,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     }
   }
   .text {
-    font-size: 0.875rem;
+    font-size: 1rem;
     margin: 0 8% 1rem;
     white-space: pre-wrap;
   }
@@ -2852,6 +2858,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         bottom: -490%;
         right: -350%;
         color: #c4c4c4;
+        z-index: 2;
       }
       .delete-btn,
       .edit-btn {
@@ -2954,7 +2961,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     margin-top: 3rem;
     position: relative;
     margin: 2rem;
-    text-align: center;
+    text-align: left;
   }
   .block-ttl {
     margin: auto;
@@ -2990,7 +2997,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .post-detail {
     display: flex;
     flex-wrap: wrap;
-    font-size: 0.3rem;
+    font-size: 0.875rem;
     padding-left: 0.3rem;
     span,
     div {
@@ -3019,10 +3026,16 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     padding: 2rem 1rem;
     display: table;
   }
+  .ttl {
+    font-size: 1rem;
+    margin-top: 0.3rem;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
   .post-detail {
     display: flex;
     flex-wrap: wrap;
-    font-size: 0.3rem;
+    font-size: 0.875rem;
     padding-left: 0.3rem;
     span,
     div {
@@ -3070,7 +3083,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     margin-top: 3rem;
     position: relative;
     margin: 2rem;
-    text-align: center;
+    text-align: left;
   }
   .block-ttl {
     margin: auto;

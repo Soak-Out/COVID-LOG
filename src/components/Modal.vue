@@ -11,7 +11,7 @@
         <div class="share">
           <p>Twitterでシェアしませんか？</p>
           <a
-            href="http://twitter.com/share?&text=コロナウイルス感染者やワクチン接種者の症状や対策方法が一覧で見れるサイトです！ぜひ参考にしてください！ #拡散希望"
+            href="http://twitter.com/share?&text=コロナウイルス感染者やワクチン接種者の症状や対策方法が投稿・閲覧できるサイトです！あなたの経験を投稿して一人でも多くの人を救いませんか？サイトはこちら👉https://soak-out.web.app/"
             class="to-twitter"
           >
             <font-awesome-icon

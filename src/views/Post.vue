@@ -6,7 +6,7 @@
         <router-link to="/mypage" class="name"> {{ handleName }}</router-link
         ><br />
         <router-link to="/mypage" class="text"
-          >マイページでで名前を変更</router-link
+          >マイページで名前を変更</router-link
         >
       </div>
     </aside>

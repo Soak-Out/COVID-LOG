@@ -201,7 +201,7 @@
           </div>
           <div v-else class="nopost-msg">
             <p>いいねした投稿がありません</p>
-            <router-link to="/post-page">投稿一覧ページへ</router-link>
+            <router-link to="/covidList">投稿一覧ページへ</router-link>
           </div>
         </div>
       </div>
