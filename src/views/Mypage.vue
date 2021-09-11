@@ -42,150 +42,166 @@
 
         <!-- あなたの投稿 -->
         <div class="mypost" :class="{ hidden: hiddenMyPost }">
-          <div v-for="(post, index) in myposts" v-bind:key="index" class="post">
-            <div class="time">{{ post.postedTime }}</div>
-            <div class="post-info">
-              <div class="img-age">
-                <img :src="user.photoURL" />
-                <div class="age">{{ post.age }}</div>
-              </div>
-              <div class="post-status">
-                <div class="ttl">{{ post.title }}</div>
-                <div class="post-detail">
-                  <div>
-                    重症度<span>{{ post.illLevel }}</span>
+          <div v-if="myposts.length">
+            <div
+              v-for="(post, index) in myposts"
+              v-bind:key="index"
+              class="post"
+            >
+              <div class="time">{{ post.postedTime }}</div>
+              <div class="post-info">
+                <div class="img-age">
+                  <img :src="user.photoURL" />
+                  <div class="age">{{ post.age }}</div>
+                </div>
+                <div class="post-status">
+                  <div class="ttl">{{ post.title }}</div>
+                  <div class="post-detail">
+                    <div>
+                      重症度<span>{{ post.illLevel }}</span>
+                    </div>
+                    <span>｜</span>
+                    <div v-show="post.infection">感染記録</div>
+                    <span v-show="post.infection">｜</span>
+                    <div v-show="post.vaccine">ワクチン接種記録</div>
+                    <span v-show="post.vaccine">｜</span>
+                    <div class="handle-name">{{ post.handleName }} さん</div>
                   </div>
-                  <span>｜</span>
-                  <div v-show="post.infection">感染記録</div>
-                  <span v-show="post.infection">｜</span>
-                  <div v-show="post.vaccine">ワクチン接種記録</div>
-                  <span v-show="post.vaccine">｜</span>
-                  <div class="handle-name">{{ post.handleName }} さん</div>
                 </div>
               </div>
+
+              <div class="text">{{ post.uploadText }}</div>
+
+              <div class="sub-info">
+                <div class="tags">
+                  <ul>
+                    <p>症状：</p>
+                    <li v-show="post.headache">#頭痛</li>
+                    <li v-show="post.fever">#発熱</li>
+                    <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+                    <li v-show="post.soreThroat">#喉の渇き</li>
+                    <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+                    <li v-show="post.diarrhea">#下痢</li>
+                    <li v-show="post.other">#その他</li>
+                  </ul>
+                </div>
+
+                <div class="btns">
+                  <font-awesome-icon slot="icon" icon="heart" class="like" />{{
+                    post.starCount
+                  }}
+                  <div @click="deletePost(index)">
+                    <font-awesome-icon
+                      slot="icon"
+                      icon="trash"
+                      class="delete-btn"
+                    />
+                  </div>
+                  <div @click="editPost(index)" class="edit-btn">
+                    <font-awesome-icon slot="icon" icon="pen" />
+                  </div>
+                </div>
+              </div>
+
+              <modal
+                v-if="showContent"
+                @close="closeModal"
+                :title="postData.title"
+                :text="postData.text"
+                :infection="postData.infection"
+                :vaccine="postData.vaccine"
+                :illLevel="postData.illLevel"
+                :fever="postData.fever"
+                :soreThroat="postData.soreThroat"
+                :respiratoryOrgan="postData.respiratoryOrgan"
+                :diarrhea="postData.diarrhea"
+                :headache="postData.headache"
+                :tasteOrDisappearance="postData.tasteOrDisappearance"
+                :other="postData.other"
+                :screen_name="postData.screen_name"
+                :handleName="postData.handleName"
+                :post_at="postData.post_at"
+                :photo="postData.photo"
+                :postId="postData.postId"
+                :starCount="postData.starCount"
+                :age="postData.age"
+              />
             </div>
-
-            <div class="text">{{ post.uploadText }}</div>
-
-            <div class="sub-info">
-              <div class="tags">
-                <ul>
-                  <p>症状：</p>
-                  <li v-show="post.headache">#頭痛</li>
-                  <li v-show="post.fever">#発熱</li>
-                  <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-                  <li v-show="post.soreThroat">#喉の渇き</li>
-                  <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
-                  <li v-show="post.diarrhea">#下痢</li>
-                  <li v-show="post.other">#その他</li>
-                </ul>
-              </div>
-
-              <div class="btns">
-                <font-awesome-icon slot="icon" icon="heart" class="like" />{{
-                  post.starCount
-                }}
-                <div @click="deletePost(index)">
-                  <font-awesome-icon
-                    slot="icon"
-                    icon="trash"
-                    class="delete-btn"
-                  />
-                </div>
-                <div @click="editPost(index)" class="edit-btn">
-                  <font-awesome-icon slot="icon" icon="pen" />
-                </div>
-              </div>
-            </div>
-
-            <modal
-              v-if="showContent"
-              @close="closeModal"
-              :title="postData.title"
-              :text="postData.text"
-              :infection="postData.infection"
-              :vaccine="postData.vaccine"
-              :illLevel="postData.illLevel"
-              :fever="postData.fever"
-              :soreThroat="postData.soreThroat"
-              :respiratoryOrgan="postData.respiratoryOrgan"
-              :diarrhea="postData.diarrhea"
-              :headache="postData.headache"
-              :tasteOrDisappearance="postData.tasteOrDisappearance"
-              :other="postData.other"
-              :screen_name="postData.screen_name"
-              :handleName="postData.handleName"
-              :post_at="postData.post_at"
-              :photo="postData.photo"
-              :postId="postData.postId"
-              :starCount="postData.starCount"
-              :age="postData.age"
-            />
+          </div>
+          <div v-else class="nopost-msg">
+            <p>投稿がありません</p>
+            <router-link to="/post-page">投稿する</router-link>
           </div>
         </div>
 
         <!-- いいねした投稿 -->
         <div class="myliked" :class="{ hidden: hiddenMyLiked }">
-          <div
-            v-for="(post, index) in starPosts"
-            v-bind:key="index"
-            class="post"
-          >
-            <div class="time">{{ post.postedTime }}</div>
-            <div class="post-info">
-              <div class="img-age">
-                <img :src="post.photo" />
-                <div class="age">{{ post.age }}</div>
+          <div v-if="starPosts.length">
+            <div
+              v-for="(post, index) in starPosts"
+              v-bind:key="index"
+              class="post"
+            >
+              <div class="time">{{ post.postedTime }}</div>
+              <div class="post-info">
+                <div class="img-age">
+                  <img :src="post.photo" />
+                  <div class="age">{{ post.age }}</div>
+                </div>
+
+                <div class="post-status">
+                  <div class="ttl">{{ post.title }}</div>
+                  <div class="post-detail">
+                    <div>
+                      重症度<span>{{ post.illLevel }}</span>
+                    </div>
+                    <span>｜</span>
+                    <div v-show="post.infection">感染記録</div>
+                    <span v-show="post.infection">｜</span>
+                    <div v-show="post.vaccine">ワクチン接種記録</div>
+                    <span v-show="post.vaccine">｜</span>
+                    <div class="handle-name">{{ post.handleName }} さん</div>
+                  </div>
+                </div>
               </div>
 
-              <div class="post-status">
-                <div class="ttl">{{ post.title }}</div>
-                <div class="post-detail">
-                  <div>
-                    重症度<span>{{ post.illLevel }}</span>
-                  </div>
-                  <span>｜</span>
-                  <div v-show="post.infection">感染記録</div>
-                  <span v-show="post.infection">｜</span>
-                  <div v-show="post.vaccine">ワクチン接種記録</div>
-                  <span v-show="post.vaccine">｜</span>
-                  <div class="handle-name">{{ post.handleName }} さん</div>
+              <div class="text">{{ post.uploadText }}</div>
+
+              <div class="sub-info">
+                <div class="tags">
+                  <ul>
+                    <p>症状：</p>
+                    <li v-show="post.headache">#頭痛</li>
+                    <li v-show="post.fever">#発熱</li>
+                    <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+                    <li v-show="post.soreThroat">#喉の渇き</li>
+                    <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+                    <li v-show="post.diarrhea">#下痢</li>
+                    <li v-show="post.other">#その他</li>
+                  </ul>
+                </div>
+
+                <div class="btns">
+                  <vue-star
+                    animate="animated rubberBand"
+                    color="#F05654"
+                    :ref="`${index}`"
+                    class="like"
+                  >
+                    <font-awesome-icon
+                      slot="icon"
+                      icon="heart"
+                      @click="StarButton(index)"
+                    />
+                  </vue-star>
+                  {{ post.starCount }}
                 </div>
               </div>
             </div>
-
-            <div class="text">{{ post.uploadText }}</div>
-
-            <div class="sub-info">
-              <div class="tags">
-                <ul>
-                  <p>症状：</p>
-                  <li v-show="post.headache">#頭痛</li>
-                  <li v-show="post.fever">#発熱</li>
-                  <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-                  <li v-show="post.soreThroat">#喉の渇き</li>
-                  <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
-                  <li v-show="post.diarrhea">#下痢</li>
-                  <li v-show="post.other">#その他</li>
-                </ul>
-              </div>
-
-              <div class="btns">
-                <vue-star
-                  animate="animated rubberBand"
-                  color="#F05654"
-                  :ref="`${index}`"
-                  class="like"
-                >
-                  <font-awesome-icon
-                    slot="icon"
-                    icon="heart"
-                    @click="StarButton(index)"
-                  />
-                </vue-star>
-                {{ post.starCount }}
-              </div>
-            </div>
+          </div>
+          <div v-else class="nopost-msg">
+            <p>いいねした投稿がありません</p>
+            <router-link to="/post-page">投稿一覧ページへ</router-link>
           </div>
         </div>
       </div>
@@ -461,6 +477,7 @@ $btn-color: rgb(4, 163, 255);
   .change-name {
     text-align: left;
     display: flex;
+    margin-bottom: 4rem;
     .inname {
       width: 169px;
       height: 27px;
@@ -489,7 +506,7 @@ $btn-color: rgb(4, 163, 255);
 .posts {
   width: calc(200% / 3);
   .inner {
-    margin: 61px 10% 91px;
+    margin: 3rem 10% 91px;
   }
   .tabs {
     width: 100%;
@@ -606,6 +623,7 @@ $btn-color: rgb(4, 163, 255);
       .like {
         margin: 0.1rem 0.5rem 0 0;
         vertical-align: bottom;
+        z-index: 2;
       }
       .delete-btn,
       .edit-btn {
@@ -650,6 +668,30 @@ $btn-color: rgb(4, 163, 255);
   }
 }
 
+.nopost-msg {
+  text-align: center;
+  margin-top: 9rem;
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 2rem;
+    margin-top: 3rem;
+  }
+  p {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    @media screen and (max-width: 400px) {
+      font-size: 1rem;
+    }
+  }
+  a {
+    display: block;
+    padding: 0.5rem;
+    background-color: $btn-color;
+    width: 12rem;
+    margin: 0 auto;
+    border-radius: 10px;
+    color: #fff;
+  }
+}
 //----------------------------
 //SP
 //----------------------------

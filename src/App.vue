@@ -18,7 +18,8 @@
     <headerItem />
     <router-view />
     <hamburger></hamburger>
-  <footerItem/>
+    <go-post />
+    <footerItem />
   </div>
 </template>
 
@@ -26,11 +27,14 @@
 import hamburger from "../src/components/hamburger.vue"
 import headerItem from "../src/components/header.vue"
 import footerItem from "../src/components/Footer.vue"
+import goPost from "../src/components/Gopost.vue"
+
 export default {
   components: {
     hamburger,
     headerItem,
     footerItem,
+    goPost,
   },
 }
 </script>
