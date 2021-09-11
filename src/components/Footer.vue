@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
     <footer id="footer">
       <div class="bottombox">
@@ -9,19 +9,21 @@
         <div class="bottombox-right">
           <div class="leftli">
             <ul>
-              <li><router-link to="/top">トップ</router-link></li>
-              <li><router-link to="/covidList">投稿を見る</router-link></li>
-              <li><router-link to="/post-page">投稿する</router-link></li>
+              <li>▶︎<router-link to="/top">トップ</router-link></li>
+              <li>▶︎<router-link to="/covidList">投稿を見る</router-link></li>
+              <li>▶︎<router-link to="/post-page">投稿する</router-link></li>
             </ul>
           </div>
           <div class="rightli">
             <ul>
-              <li><router-link to="/mypage">マイページ</router-link></li>
+              <li>▶︎<router-link to="/mypage">マイページ</router-link></li>
               <li>
                 <div v-if="isAuth">
+                  ▶︎
                   <a @click="signOut">ログアウト</a>
                 </div>
                 <div v-else class="login-page">
+                  ▶︎
                   <a @click="signUp">ログイン</a>
                 </div>
               </li>
@@ -148,5 +150,31 @@ export default {
       }
     }
   }
+}
+
+@media screen and (max-width: 1024px) {
+
+
+   .wrapper {
+    flex-direction: column;
+    height: 500px;
+  }
+.botombox-left{
+  width: 100%;
+}
+
+.bottombox-right{
+  width: 100%;
+    margin: 0.5rem 0.5rem;
+    display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+}
+
+.blackbox{
+    flex-direction: column;
+  margin-bottom: 0.1rem;
+}
+
 }
 </style>
