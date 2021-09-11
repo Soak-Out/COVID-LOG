@@ -95,66 +95,30 @@
                 <div class="block-ttl">症状</div>
                 <div class="check-block">
                   <ul class="tag">
-                    <li>
-                      <input type="radio" id="fever" name="pcarraypost" /><label
-                        for="fever"
-                        v-on:change="pconChange"
-                        value="発熱"
-                        >発熱</label
-                      >
-                    </li>
-                    <li>
+                    <li v-for="item in illUniqueList" :key="item.value">
                       <input
                         type="radio"
-                        id="headache"
+                        :id="item.value"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        value="頭痛"
-                      /><label for="headache">頭痛</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
-                    <li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <div class="block-ttl">年齢</div>
+                <div class="check-block">
+                  <ul class="attribute">
+                    <li v-for="item in ageRangeList" :key="item.value">
                       <input
                         type="radio"
-                        id="soreThroat"
+                        :id="item.value"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        value="喉の渇き"
-                      /><label for="soreThroat">喉の渇き</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="respiratoryOrgan"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="呼吸困難"
-                      /><label for="respiratoryOrgan">呼吸困難</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="diarrhea"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="下痢"
-                      /><label for="diarrhea">下痢</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="tasteOrDisappearance"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="味覚などの異常"
-                      /><label for="tasteOrDisappearance">味覚などの異常</label>
-                    </li>
-                    <li>
-                      <input type="radio" id="other" name="pcarraypost" /><label
-                        for="other"
-                        value="その他"
-                        v-on:change="pconChange"
-                        >その他</label
-                      >
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -258,67 +222,31 @@
               <div>
                 <div class="block-ttl">症状</div>
                 <div class="check-block">
-                  <ul class="tag">
-                    <li>
-                      <input type="radio" id="fever" name="pharraypost" /><label
-                        for="fever"
-                        v-on:change="phonChange"
-                        value="発熱"
-                        >発熱</label
-                      >
-                    </li>
-                    <li>
+                  <ul class="attribute">
+                    <li v-for="item in illUniqueList" :key="item.value">
                       <input
                         type="radio"
-                        id="headache"
+                        :id="item.value"
                         name="pharraypost"
                         v-on:change="phonChange"
-                        value="頭痛"
-                      /><label for="headache">頭痛</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
-                    <li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <div class="block-ttl">年齢</div>
+                <div class="check-block">
+                  <ul class="attribute">
+                    <li v-for="item in ageRangeList" :key="item.value">
                       <input
                         type="radio"
-                        id="soreThroat"
+                        :id="item.value"
                         name="pharraypost"
                         v-on:change="phonChange"
-                        value="喉の渇き"
-                      /><label for="soreThroat">喉の渇き</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="respiratoryOrgan"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="呼吸困難"
-                      /><label for="respiratoryOrgan">呼吸困難</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="diarrhea"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="下痢"
-                      /><label for="diarrhea">下痢</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="tasteOrDisappearance"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="味覚などの異常"
-                      /><label for="tasteOrDisappearance">味覚などの異常</label>
-                    </li>
-                    <li>
-                      <input type="radio" id="other" name="pharraypost" /><label
-                        for="other"
-                        value="その他"
-                        v-on:change="phonChange"
-                        >その他</label
-                      >
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -334,8 +262,10 @@
         <div v-for="(post, index) in posts" v-bind:key="index" class="post">
           <div class="time">{{ post.postedTime }}</div>
           <div class="post-info">
-            <img :src="post.photo" />
-
+            <div class="img-age">
+              <img :src="user.photoURL" />
+              <div class="age">{{ post.age }}</div>
+            </div>
             <div class="post-status">
               <div class="ttl">{{ post.title }}</div>
               <div class="post-detail">
@@ -404,6 +334,27 @@ export default {
       handleName: "",
       illLevel: 1,
       showarraybox: false,
+      ageRangeList: [
+        { title: "10歳未満", value: "u10" },
+        { title: "10代", value: "a10" },
+        { title: "20代", value: "a20" },
+        { title: "30代", value: "a30" },
+        { title: "40代", value: "a40" },
+        { title: "50代", value: "a50" },
+        { title: "60代", value: "a60" },
+        { title: "70代", value: "a70" },
+        { title: "80代", value: "a80" },
+        { title: "90代", value: "a90" },
+      ],
+      illUniqueList: [
+        { value: "fever", title: "発熱" },
+        { value: "headache", title: "頭痛" },
+        { value: "soreThroat", title: "喉の乾き" },
+        { value: "respiratoryOrgan", title: "呼吸困難" },
+        { value: "diarrhea", title: "下痢" },
+        { value: "tasteOrDisappearance", title: "味覚などの異常" },
+        { value: "other", title: "その他" },
+      ],
     }
   },
   created() {
@@ -1929,6 +1880,7 @@ $sub-color: #4986e1;
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .illlevelbutton {
   margin-left: 3rem;
+  margin-top: 2rem;
 }
 .pcnotshow {
   display: none;
@@ -2001,11 +1953,20 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   .post-info {
     display: flex;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .img-age {
+      position: relative;
       margin: 3%;
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+      .age {
+        position: absolute;
+        line-height: 1rem;
+        top: 3.25rem;
+        right: 0.5rem;
+      }
     }
     .post-status {
       margin: 3% 10% 1.45rem 0%;
@@ -2015,7 +1976,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         padding-left: 0.5rem;
         padding-bottom: 0.875rem;
         margin-bottom: 0.875rem;
-        border-bottom: 3px solid $main-color;
+        border-bottom: 2px solid $main-color;
       }
       .post-detail {
         display: flex;
@@ -2035,6 +1996,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .text {
     font-size: 0.875rem;
     margin: 0 8% 1rem;
+    white-space: pre-wrap;
   }
   .sub-info {
     margin: 1rem 8% 1rem 5%;
@@ -2062,12 +2024,12 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       position: relative;
       width: 10px;
       height: 10px;
-
       .like {
         margin: 0.1rem 0.5rem 0 4rem;
         position: absolute;
         bottom: -490%;
         right: -350%;
+        color: #c4c4c4;
       }
       .delete-btn,
       .edit-btn {
