@@ -284,7 +284,7 @@ li {
   width: calc(200% / 3);
   margin: 0 auto;
   .inner {
-    margin: 61px 10% 91px;
+    margin: 3rem 10% 91px;
   }
   .block-ttl {
     width: 100px;

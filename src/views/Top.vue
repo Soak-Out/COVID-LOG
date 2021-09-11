@@ -82,7 +82,7 @@
                 <div class="ttl">{{ post.title }}</div>
                 <div class="post-detail">
                   <div class="level">
-                    重症度<span>Lv.{{ post.illLevel }}</span>
+                    重症度<span>{{ post.illLevel }}</span>
                   </div>
                   <span>｜</span>
                   <div class="handle-name">{{ post.handleName }}</div>
@@ -353,7 +353,7 @@ $btn-color: rgb(4, 163, 255);
 }
 
 .inner {
-  margin: 61px 10% 91px;
+  margin: 3rem 10% 91px;
 }
 
 //
