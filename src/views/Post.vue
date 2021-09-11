@@ -241,6 +241,7 @@ $btn-color: rgb(4, 163, 255);
 .wrapper {
   max-width: 1420px;
   display: flex;
+  margin: 0 auto;
 }
 li {
   user-select: none;
