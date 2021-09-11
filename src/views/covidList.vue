@@ -63,50 +63,14 @@
 
                 <div class="illlevelbutton">
                   <ul class="tag">
-                    <li>
+                    <li v-for="n of 5" :key="n">
                       <input
                         type="radio"
-                        id="illLevel1"
+                        :id="'illLevel' + n"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        value="lv1"
-                      /><label for="illLevel1">１</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="illLevel2"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="lv2"
-                      /><label for="illLevel2">２</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="illLevel3"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="lv3"
-                      /><label for="illLevel3">３</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="illLevel4"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="lv4"
-                      /><label for="illLevel4">４</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="illLevel5"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="lv5"
-                      /><label for="illLevel5">５</label>
+                        :value="'lv' + n"
+                      /><label :for="'illLevel' + n">{{ n }}</label>
                     </li>
                   </ul>
                 </div>
@@ -117,67 +81,14 @@
                 <div class="block-ttl">症状</div>
                 <div class="check-block">
                   <ul class="tag">
-                    <li>
-                      <input type="radio" id="fever" name="pcarraypost" /><label
-                        for="fever"
-                        v-on:change="pconChange"
-                        value="発熱"
-                        >発熱</label
-                      >
-                    </li>
-                    <li>
+                    <li v-for="item in illUniqueList" :key="item.value">
                       <input
                         type="radio"
-                        id="headache"
+                        :id="item.value"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        value="頭痛"
-                      /><label for="headache">頭痛</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="soreThroat"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="喉の渇き"
-                      /><label for="soreThroat">喉の渇き</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="respiratoryOrgan"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="呼吸困難"
-                      /><label for="respiratoryOrgan">呼吸困難</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="diarrhea"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="下痢"
-                      /><label for="diarrhea">下痢</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="tasteOrDisappearance"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="味覚などの異常"
-                      /><label for="tasteOrDisappearance">味覚などの異常</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="other"
-                        name="pcarraypost"
-                        value="その他"
-                        v-on:change="pconChange"
-                      /><label for="other">その他</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -186,94 +97,14 @@
                 <div class="block-ttl">年齢</div>
                 <div class="check-block">
                   <ul class="attribute">
-                    <li>
-                      <input type="radio" id="u10" name="pcarraypost" /><label
-                        for="u10"
-                        v-on:change="pconChange"
-                        value="10歳未満"
-                        >10歳未満</label
-                      >
-                    </li>
-                    <li>
+                    <li v-for="item in ageRangeList" :key="item.value">
                       <input
                         type="radio"
-                        id="a10"
+                        :id="item.value"
                         name="pcarraypost"
                         v-on:change="pconChange"
-                        value="10代"
-                      /><label for="a10">10代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a20"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="20代"
-                      /><label for="a20">20代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a30"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="30代"
-                      /><label for="a30">30代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a40"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="40代"
-                      /><label for="a40">40代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a50"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="50代"
-                      /><label for="a50">50代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a60"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="60代"
-                      /><label for="a60">60代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a70"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="70代"
-                      /><label for="a70">70代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a80"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="80代"
-                      /><label for="a80">80代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a90"
-                        name="pcarraypost"
-                        v-on:change="pconChange"
-                        value="90代"
-                      /><label for="a90">90代</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -347,50 +178,14 @@
                 <div class="check-block">
                   <div class="illlevelbutton">
                     <ul class="attribute">
-                      <li>
+                      <li v-for="n of 5" :key="n">
                         <input
                           type="radio"
-                          id="illLevel1"
+                          :id="'illLevel' + n"
                           name="pharraypost"
                           v-on:change="phonChange"
-                          value="lv1"
-                        /><label for="illLevel1">１</label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          id="illLevel2"
-                          name="pharraypost"
-                          v-on:change="phonChange"
-                          value="lv2"
-                        /><label for="illLevel2">２</label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          id="illLevel3"
-                          name="pharraypost"
-                          v-on:change="phonChange"
-                          value="lv3"
-                        /><label for="illLevel3">３</label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          id="illLevel4"
-                          name="pharraypost"
-                          v-on:change="phonChange"
-                          value="lv4"
-                        /><label for="illLevel4">４</label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          id="illLevel5"
-                          name="pharraypost"
-                          v-on:change="phonChange"
-                          value="lv5"
-                        /><label for="illLevel5">５</label>
+                          :value="'lv' + n"
+                        /><label :for="'illLevel' + n">{{ n }}</label>
                       </li>
                     </ul>
                   </div>
@@ -400,67 +195,14 @@
                 <div class="block-ttl">症状</div>
                 <div class="check-block">
                   <ul class="attribute">
-                    <li>
-                      <input type="radio" id="fever" name="pharraypost" /><label
-                        for="fever"
-                        v-on:change="phonChange"
-                        value="発熱"
-                        >発熱</label
-                      >
-                    </li>
-                    <li>
+                    <li v-for="item in illUniqueList" :key="item.value">
                       <input
                         type="radio"
-                        id="headache"
+                        :id="item.value"
                         name="pharraypost"
                         v-on:change="phonChange"
-                        value="頭痛"
-                      /><label for="headache">頭痛</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="soreThroat"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="喉の渇き"
-                      /><label for="soreThroat">喉の渇き</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="respiratoryOrgan"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="呼吸困難"
-                      /><label for="respiratoryOrgan">呼吸困難</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="diarrhea"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="下痢"
-                      /><label for="diarrhea">下痢</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="tasteOrDisappearance"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="味覚などの異常"
-                      /><label for="tasteOrDisappearance">味覚などの異常</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="other"
-                        name="pharraypost"
-                        value="その他"
-                        v-on:change="phonChange"
-                      /><label for="other">その他</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -469,94 +211,14 @@
                 <div class="block-ttl">年齢</div>
                 <div class="check-block">
                   <ul class="attribute">
-                    <li>
-                      <input type="radio" id="u10" name="pharraypost" /><label
-                        for="u10"
-                        v-on:change="phonChange"
-                        value="10歳未満"
-                        >10歳未満</label
-                      >
-                    </li>
-                    <li>
+                    <li v-for="item in ageRangeList" :key="item.value">
                       <input
                         type="radio"
-                        id="a10"
+                        :id="item.value"
                         name="pharraypost"
                         v-on:change="phonChange"
-                        value="10代"
-                      /><label for="a10">10代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a20"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="20代"
-                      /><label for="a20">20代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a30"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="30代"
-                      /><label for="a30">30代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a40"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="40代"
-                      /><label for="a40">40代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a50"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="50代"
-                      /><label for="a50">50代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a60"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="60代"
-                      /><label for="a60">60代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a70"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="70代"
-                      /><label for="a70">70代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a80"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="80代"
-                      /><label for="a80">80代</label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        id="a90"
-                        name="pharraypost"
-                        v-on:change="phonChange"
-                        value="90代"
-                      /><label for="a90">90代</label>
+                        :value="item.title"
+                      /><label :for="item.value">{{ item.title }}</label>
                     </li>
                   </ul>
                 </div>
@@ -642,6 +304,27 @@ export default {
       handleName: "",
       illLevel: 1,
       showarraybox: false,
+      ageRangeList: [
+        { title: "10歳未満", value: "u10" },
+        { title: "10代", value: "a10" },
+        { title: "20代", value: "a20" },
+        { title: "30代", value: "a30" },
+        { title: "40代", value: "a40" },
+        { title: "50代", value: "a50" },
+        { title: "60代", value: "a60" },
+        { title: "70代", value: "a70" },
+        { title: "80代", value: "a80" },
+        { title: "90代", value: "a90" },
+      ],
+      illUniqueList: [
+        { value: "fever", title: "発熱" },
+        { value: "headache", title: "頭痛" },
+        { value: "soreThroat", title: "喉の乾き" },
+        { value: "respiratoryOrgan", title: "呼吸困難" },
+        { value: "diarrhea", title: "下痢" },
+        { value: "tasteOrDisappearance", title: "味覚などの異常" },
+        { value: "other", title: "その他" },
+      ],
     }
   },
   created() {
