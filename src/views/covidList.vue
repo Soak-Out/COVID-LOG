@@ -32,7 +32,6 @@
                 </li>
               </ul>
             </div>
-
             <div class="check-list">
               <div>
                 <div class="searchIcon">詳細検索</div>
@@ -60,36 +59,56 @@
                   </ul>
                 </div>
                 <div class="block-ttl">重症度</div>
-                <ul class="illlevelbutton">
-                  <li>
-                    <input
-                      type="radio"
-                      id="illLevel"
-                      name="pcarraypost"
-                      v-on:change="pconChange"
-                      value="重症度を指定"
-                    /><label for="illLevel">重症度を指定</label>
-                  </li>
-                </ul>
-                <div class="check-block">
-                  <div class="severity">
-                    <input
-                      type="range"
-                      v-model="illLevel"
-                      min="1"
-                      max="5"
-                      step="1"
-                      id="illLevel"
-                    />
-                    <div class="numbers">
-                      <span>1</span>
-                      <span>2</span>
-                      <span>3</span>
-                      <span>4</span>
-                      <span>5</span>
-                    </div>
-                  </div>
+                <div class="illlevelbutton">
+                  <ul class="tag">
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel1"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv1"
+                      /><label for="illLevel1">１</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel2"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv2"
+                      /><label for="illLevel2">２</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel3"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv3"
+                      /><label for="illLevel3">３</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel4"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv4"
+                      /><label for="illLevel4">４</label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        id="illLevel5"
+                        name="pcarraypost"
+                        v-on:change="pconChange"
+                        value="lv5"
+                      /><label for="illLevel5">５</label>
+                    </li>
+                  </ul>
                 </div>
+                <div class="check-block"></div>
               </div>
               <div>
                 <div class="block-ttl">症状</div>
@@ -160,7 +179,6 @@
                 </li>
               </ul>
             </div>
-
             <div class="check-list">
               <div>
                 <div class="searchIcon">詳細検索</div>
@@ -188,34 +206,55 @@
                   </ul>
                 </div>
                 <div class="block-ttl">重症度</div>
-                <ul class="illlevelbutton">
-                  <li>
-                    <input
-                      type="radio"
-                      id="illLevel"
-                      name="pharraypost"
-                      v-on:change="pconChange"
-                      value="重症度を指定"
-                    /><label for="illLevel">重症度を指定</label>
-                  </li>
-                </ul>
                 <div class="check-block">
-                  <div class="severity">
-                    <input
-                      type="range"
-                      v-model="illLevel"
-                      min="1"
-                      max="5"
-                      step="1"
-                      id="illLevel"
-                    />
-                    <div class="numbers">
-                      <span>1</span>
-                      <span>2</span>
-                      <span>3</span>
-                      <span>4</span>
-                      <span>5</span>
-                    </div>
+                  <div class="illlevelbutton">
+                    <ul class="attribute">
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel1"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv1"
+                        /><label for="illLevel1">１</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel2"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv2"
+                        /><label for="illLevel2">２</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel3"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv3"
+                        /><label for="illLevel3">３</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel4"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv4"
+                        /><label for="illLevel4">４</label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          id="illLevel5"
+                          name="pharraypost"
+                          v-on:change="phonChange"
+                          value="lv5"
+                        /><label for="illLevel5">５</label>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -281,9 +320,7 @@
               </div>
             </div>
           </div>
-
           <div class="text">{{ post.uploadText }}</div>
-
           <div class="sub-info">
             <div class="tags">
               <ul>
@@ -297,7 +334,6 @@
                 <li v-show="post.other">#その他</li>
               </ul>
             </div>
-
             <div class="btns">
               <vue-star
                 animate="animated rubberBand"
@@ -319,13 +355,10 @@
     </div>
   </div>
 </template>
-
 <script>
 // import InfiniteLoading from "vue-infinite-loading"
 import firebase from "firebase"
-
 const db = firebase.firestore()
-
 export default {
   data() {
     return {
@@ -362,7 +395,6 @@ export default {
       const userDoc = await db.collection("users").doc(user.uid).get()
       if (userDoc.exists) {
         const docRef = db.collection("users").doc(user.uid)
-
         docRef
           .get()
           .then(async (doc) => {
@@ -371,20 +403,16 @@ export default {
               .orderBy("post_at")
               .get()
             this.starpost = doc.data().star_post_id
-
             postRef.forEach((postdoc) => {
               const post = postdoc.data()
               //ドキュメントID取得
               post.postId = postdoc.id
-
               // 投稿時間を取得し文字列にし、不必要な部分をカット
               const getpostedTime = post.post_at.toDate()
               const strigTime = String(getpostedTime)
               post.postedTime = strigTime.slice(0, -20)
               //post.textを改行
-
               post.uploadText = post.text.replaceAll("\\n", "\n")
-
               //posts配列にいれる
               this.posts.unshift(post)
             })
@@ -403,7 +431,6 @@ export default {
           })
       }
     })
-
     this.arrayActive = ".pcnotshow"
   },
   computed: {
@@ -412,9 +439,11 @@ export default {
     },
   },
   methods: {
+    //詳細検索の表示非表示
     showArray() {
       this.showarraybox = !this.showarraybox
     },
+    //いいね
     StarButton(index) {
       if (this.$refs[index][0].$data.active === false) {
         this.usefulButton(index)
@@ -422,6 +451,7 @@ export default {
         this.NOTusefulButton(index)
       }
     },
+    //役に立った
     usefulButton(index) {
       const docPath = this.posts[index].postId
       if (this.user.uid) {
@@ -431,7 +461,6 @@ export default {
             starCount: firebase.firestore.FieldValue.increment(1),
           })
         this.posts[index].starCount += 1
-
         db.collection(`users`)
           .doc(this.user.uid)
           .set(
@@ -453,7 +482,6 @@ export default {
             starCount: firebase.firestore.FieldValue.increment(-1),
           })
         this.posts[index].starCount -= 1
-
         db.collection(`users`)
           .doc(this.user.uid)
           .set(
@@ -466,6 +494,7 @@ export default {
           )
       }
     },
+    //PC並び替え
     phonChange(event) {
       if (event.target.value === "新着") {
         this.posts = []
@@ -473,7 +502,6 @@ export default {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
             const docRef = db.collection("users").doc(user.uid)
-
             docRef
               .get()
               .then(async (doc) => {
@@ -482,20 +510,16 @@ export default {
                   .orderBy("post_at")
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -520,7 +544,6 @@ export default {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
             const docRef = db.collection("users").doc(user.uid)
-
             docRef
               .get()
               .then(async (doc) => {
@@ -529,23 +552,18 @@ export default {
                   .orderBy("post_at")
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
-
                   this.posts.sort((a, b) => {
                     return b.starCount - a.starCount
                   })
@@ -571,35 +589,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("infection", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -623,35 +631,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("vaccine", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -675,35 +673,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("fever", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -727,35 +715,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("headache", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -779,35 +757,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("soreThroat", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -831,35 +799,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("respiratoryOrgan", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -883,35 +841,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("diarrhea", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -935,35 +883,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("tasteOrDisappearance", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -987,35 +925,655 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("other", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv1") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "1")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv2") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "2")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv3") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "3")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv4") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "4")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv5") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "5")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "10歳未満") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "10歳未満")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "10代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "10代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "20代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "20代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "30代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "30代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "40代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "40代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "50代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "50代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "60代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "60代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "70代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "70代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "80代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "80代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "90代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "90代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1036,6 +1594,7 @@ export default {
         })
       }
     },
+    //PH並び替え
     pconChange(event) {
       if (event.target.value === "新着") {
         this.posts = []
@@ -1043,7 +1602,6 @@ export default {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
             const docRef = db.collection("users").doc(user.uid)
-
             docRef
               .get()
               .then(async (doc) => {
@@ -1052,20 +1610,16 @@ export default {
                   .orderBy("post_at")
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1090,7 +1644,6 @@ export default {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
             const docRef = db.collection("users").doc(user.uid)
-
             docRef
               .get()
               .then(async (doc) => {
@@ -1099,23 +1652,18 @@ export default {
                   .orderBy("post_at")
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
-
                   this.posts.sort((a, b) => {
                     return b.starCount - a.starCount
                   })
@@ -1141,35 +1689,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("infection", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1193,35 +1731,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("vaccine", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1245,35 +1773,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("fever", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1297,35 +1815,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("headache", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1349,35 +1857,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("soreThroat", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1401,35 +1899,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("respiratoryOrgan", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1453,35 +1941,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("diarrhea", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1505,35 +1983,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("tasteOrDisappearance", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1557,35 +2025,25 @@ export default {
         firebase.auth().onAuthStateChanged(async (user) => {
           const userDoc = await db.collection("users").doc(user.uid).get()
           if (userDoc.exists) {
-            const docRef = db
-              .collection("users")
-
-              .doc(user.uid)
-
+            const docRef = db.collection("users").doc(user.uid)
             docRef
               .get()
-
               .then(async (doc) => {
                 const postRef = await db
                   .collection("posts")
                   .where("other", "==", true)
-
                   .get()
                 this.starpost = doc.data().star_post_id
-
                 postRef.forEach((postdoc) => {
                   const post = postdoc.data()
                   //ドキュメントID取得
                   post.postId = postdoc.id
-
                   // 投稿時間を取得し文字列にし、不必要な部分をカット
                   const getpostedTime = post.post_at.toDate()
                   const strigTime = String(getpostedTime)
                   post.postedTime = strigTime.slice(0, -20)
                   //post.textを改行
-
                   post.uploadText = post.text.replaceAll("\\n", "\n")
-
                   //posts配列にいれる
                   this.posts.unshift(post)
                 })
@@ -1604,279 +2062,645 @@ export default {
               })
           }
         })
-      } else if (event.target.value === "重症度を指定") {
-        if (event.target.illLevel === 1) {
-          this.posts = []
-          firebase.auth().onAuthStateChanged(async (user) => {
-            const userDoc = await db.collection("users").doc(user.uid).get()
-            if (userDoc.exists) {
-              const docRef = db
-                .collection("users")
-
-                .doc(user.uid)
-
-              docRef
-                .get()
-
-                .then(async (doc) => {
-                  const postRef = await db
-                    .collection("posts")
-                    .where("illLevel", "===", "1")
-
-                    .get()
-                  this.starpost = doc.data().star_post_id
-
-                  postRef.forEach((postdoc) => {
-                    const post = postdoc.data()
-                    //ドキュメントID取得
-                    post.postId = postdoc.id
-
-                    // 投稿時間を取得し文字列にし、不必要な部分をカット
-                    const getpostedTime = post.post_at.toDate()
-                    const strigTime = String(getpostedTime)
-                    post.postedTime = strigTime.slice(0, -20)
-                    //post.textを改行
-
-                    post.uploadText = post.text.replaceAll("\\n", "\n")
-
-                    //posts配列にいれる
-                    this.posts.unshift(post)
-                  })
+      } else if (event.target.value === "lv1") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "1")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-                .then(() => {
-                  for (let i = 0; i < this.starpost.length; i++) {
-                    for (let j = 0; j < this.posts.length; j++) {
-                      if (this.posts[j].postId === this.starpost[i]) {
-                        // console.log(this.$refs[j])
-                        this.$refs[j][0].$data.active = true
-                        this.$refs[j][0].$data.toggleAnimate = true
-                        this.$refs[j][0].$data.toggleColor = true
-                      }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
                     }
                   }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv2") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "2")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-            }
-          })
-        } else if (event.target.illLevel === 2) {
-          this.posts = []
-          firebase.auth().onAuthStateChanged(async (user) => {
-            const userDoc = await db.collection("users").doc(user.uid).get()
-            if (userDoc.exists) {
-              const docRef = db
-                .collection("users")
-
-                .doc(user.uid)
-
-              docRef
-                .get()
-
-                .then(async (doc) => {
-                  const postRef = await db
-                    .collection("posts")
-                    .where("illLevel", "===", "2")
-
-                    .get()
-                  this.starpost = doc.data().star_post_id
-
-                  postRef.forEach((postdoc) => {
-                    const post = postdoc.data()
-                    //ドキュメントID取得
-                    post.postId = postdoc.id
-
-                    // 投稿時間を取得し文字列にし、不必要な部分をカット
-                    const getpostedTime = post.post_at.toDate()
-                    const strigTime = String(getpostedTime)
-                    post.postedTime = strigTime.slice(0, -20)
-                    //post.textを改行
-
-                    post.uploadText = post.text.replaceAll("\\n", "\n")
-
-                    //posts配列にいれる
-                    this.posts.unshift(post)
-                  })
-                })
-                .then(() => {
-                  for (let i = 0; i < this.starpost.length; i++) {
-                    for (let j = 0; j < this.posts.length; j++) {
-                      if (this.posts[j].postId === this.starpost[i]) {
-                        // console.log(this.$refs[j])
-                        this.$refs[j][0].$data.active = true
-                        this.$refs[j][0].$data.toggleAnimate = true
-                        this.$refs[j][0].$data.toggleColor = true
-                      }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
                     }
                   }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv3") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "3")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-            }
-          })
-        } else if (event.target.illLevel === 3) {
-          this.posts = []
-          firebase.auth().onAuthStateChanged(async (user) => {
-            const userDoc = await db.collection("users").doc(user.uid).get()
-            if (userDoc.exists) {
-              const docRef = db
-                .collection("users")
-
-                .doc(user.uid)
-
-              docRef
-                .get()
-
-                .then(async (doc) => {
-                  const postRef = await db
-                    .collection("posts")
-                    .where("illLevel", "===", "3")
-
-                    .get()
-                  this.starpost = doc.data().star_post_id
-
-                  postRef.forEach((postdoc) => {
-                    const post = postdoc.data()
-                    //ドキュメントID取得
-                    post.postId = postdoc.id
-
-                    // 投稿時間を取得し文字列にし、不必要な部分をカット
-                    const getpostedTime = post.post_at.toDate()
-                    const strigTime = String(getpostedTime)
-                    post.postedTime = strigTime.slice(0, -20)
-                    //post.textを改行
-
-                    post.uploadText = post.text.replaceAll("\\n", "\n")
-
-                    //posts配列にいれる
-                    this.posts.unshift(post)
-                  })
-                })
-                .then(() => {
-                  for (let i = 0; i < this.starpost.length; i++) {
-                    for (let j = 0; j < this.posts.length; j++) {
-                      if (this.posts[j].postId === this.starpost[i]) {
-                        // console.log(this.$refs[j])
-                        this.$refs[j][0].$data.active = true
-                        this.$refs[j][0].$data.toggleAnimate = true
-                        this.$refs[j][0].$data.toggleColor = true
-                      }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
                     }
                   }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv4") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "4")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-            }
-          })
-        } else if (event.target.illLevel === 4) {
-          this.posts = []
-          firebase.auth().onAuthStateChanged(async (user) => {
-            const userDoc = await db.collection("users").doc(user.uid).get()
-            if (userDoc.exists) {
-              const docRef = db
-                .collection("users")
-
-                .doc(user.uid)
-
-              docRef
-                .get()
-
-                .then(async (doc) => {
-                  const postRef = await db
-                    .collection("posts")
-                    .where("illLevel", "===", "4")
-
-                    .get()
-                  this.starpost = doc.data().star_post_id
-
-                  postRef.forEach((postdoc) => {
-                    const post = postdoc.data()
-                    //ドキュメントID取得
-                    post.postId = postdoc.id
-
-                    // 投稿時間を取得し文字列にし、不必要な部分をカット
-                    const getpostedTime = post.post_at.toDate()
-                    const strigTime = String(getpostedTime)
-                    post.postedTime = strigTime.slice(0, -20)
-                    //post.textを改行
-
-                    post.uploadText = post.text.replaceAll("\\n", "\n")
-
-                    //posts配列にいれる
-                    this.posts.unshift(post)
-                  })
-                })
-                .then(() => {
-                  for (let i = 0; i < this.starpost.length; i++) {
-                    for (let j = 0; j < this.posts.length; j++) {
-                      if (this.posts[j].postId === this.starpost[i]) {
-                        // console.log(this.$refs[j])
-                        this.$refs[j][0].$data.active = true
-                        this.$refs[j][0].$data.toggleAnimate = true
-                        this.$refs[j][0].$data.toggleColor = true
-                      }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
                     }
                   }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "lv5") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("illLevel", "==", "5")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-            }
-          })
-        } else if (event.target.illLevel === 5) {
-          this.posts = []
-          firebase.auth().onAuthStateChanged(async (user) => {
-            const userDoc = await db.collection("users").doc(user.uid).get()
-            if (userDoc.exists) {
-              const docRef = db
-                .collection("users")
-
-                .doc(user.uid)
-
-              docRef
-                .get()
-
-                .then(async (doc) => {
-                  const postRef = await db
-                    .collection("posts")
-                    .where("illLevel", "===", "5")
-
-                    .get()
-                  this.starpost = doc.data().star_post_id
-
-                  postRef.forEach((postdoc) => {
-                    const post = postdoc.data()
-                    //ドキュメントID取得
-                    post.postId = postdoc.id
-
-                    // 投稿時間を取得し文字列にし、不必要な部分をカット
-                    const getpostedTime = post.post_at.toDate()
-                    const strigTime = String(getpostedTime)
-                    post.postedTime = strigTime.slice(0, -20)
-                    //post.textを改行
-
-                    post.uploadText = post.text.replaceAll("\\n", "\n")
-
-                    //posts配列にいれる
-                    this.posts.unshift(post)
-                  })
-                })
-                .then(() => {
-                  for (let i = 0; i < this.starpost.length; i++) {
-                    for (let j = 0; j < this.posts.length; j++) {
-                      if (this.posts[j].postId === this.starpost[i]) {
-                        // console.log(this.$refs[j])
-                        this.$refs[j][0].$data.active = true
-                        this.$refs[j][0].$data.toggleAnimate = true
-                        this.$refs[j][0].$data.toggleColor = true
-                      }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
                     }
                   }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "10歳未満") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "10歳未満")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
                 })
-            }
-          })
-        }
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "10代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "10代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "20代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "20代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "30代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "30代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "40代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "40代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "50代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "50代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "60代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "60代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "70代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "70代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "80代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "80代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
+      } else if (event.target.value === "90代") {
+        this.posts = []
+        firebase.auth().onAuthStateChanged(async (user) => {
+          const userDoc = await db.collection("users").doc(user.uid).get()
+          if (userDoc.exists) {
+            const docRef = db.collection("users").doc(user.uid)
+            docRef
+              .get()
+              .then(async (doc) => {
+                const postRef = await db
+                  .collection("posts")
+                  .where("age", "==", "90代")
+                  .get()
+                this.starpost = doc.data().star_post_id
+                postRef.forEach((postdoc) => {
+                  const post = postdoc.data()
+                  //ドキュメントID取得
+                  post.postId = postdoc.id
+                  // 投稿時間を取得し文字列にし、不必要な部分をカット
+                  const getpostedTime = post.post_at.toDate()
+                  const strigTime = String(getpostedTime)
+                  post.postedTime = strigTime.slice(0, -20)
+                  //post.textを改行
+                  post.uploadText = post.text.replaceAll("\\n", "\n")
+                  //posts配列にいれる
+                  this.posts.unshift(post)
+                })
+              })
+              .then(() => {
+                for (let i = 0; i < this.starpost.length; i++) {
+                  for (let j = 0; j < this.posts.length; j++) {
+                    if (this.posts[j].postId === this.starpost[i]) {
+                      // console.log(this.$refs[j])
+                      this.$refs[j][0].$data.active = true
+                      this.$refs[j][0].$data.toggleAnimate = true
+                      this.$refs[j][0].$data.toggleColor = true
+                    }
+                  }
+                }
+              })
+          }
+        })
       }
     },
   },
 }
 </script>
-
 <style lang="scss" scoped>
 @import "../assets/css/_reset.scss";
 $main-color: #9ad5ff;
 $sub-color: #4986e1;
-
 $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .illlevelbutton {
   margin-left: 3rem;
@@ -1900,7 +2724,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .inner {
   margin: 61px 10% 91px;
 }
-
 .post-list {
   width: calc(200% / 3);
 }
@@ -1922,7 +2745,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     left: 5%;
   }
 }
-
 .block-ttl {
   width: 100px;
   text-align: center;
@@ -1945,7 +2767,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   margin-top: 3rem;
   position: relative;
   margin: 3rem;
-
   .time {
     position: absolute;
     height: 20px;
@@ -2047,9 +2868,13 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .left-side {
     width: 60%;
     .attribute {
+      margin: auto;
       padding: 2rem 1rem;
+      display: table;
       li {
+        margin: auto;
         margin-bottom: 0.5rem;
+        width: 50%;
         input {
           margin-right: 0.5rem;
           cursor: pointer;
@@ -2070,40 +2895,16 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     cursor: pointer;
     outline: 0;
   }
-  &:focus {
-    box-shadow: 0 0 3px rgb(0, 161, 255);
-  }
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: #53aeff;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
-  }
-  &::-moz-range-thumb {
-    background: #53aeff;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
-    border: none;
-  }
-  &::-moz-focus-outer {
-    border: 0;
-  }
-  &:active::-webkit-slider-thumb {
-    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.3);
-  }
-  .numbers {
-    width: 235px;
-    font-weight: bold;
-    font-size: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-  }
 }
+.numbers {
+  width: 235px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
 .searchIcon {
   width: 230px;
   height: 49px;
@@ -2114,18 +2915,15 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   margin: 2rem;
   color: #fff;
   background-color: $main-color;
-
   user-select: none;
 }
 .pcnotshow {
   display: none;
 }
-
 .check-block {
   margin: 2rem 3rem 2rem 3rem;
   line-height: 2;
 }
-
 .pcarraybox {
   display: block;
 }
@@ -2135,6 +2933,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 @media screen and (max-width: 1024px) {
   .pcnotshow {
     display: block;
+    cursor: pointer;
   }
   .wrapper {
     flex-direction: column;
@@ -2160,6 +2959,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .block-ttl {
     margin: auto;
     margin-top: 2rem;
+    margin-left: 8rem;
   }
   .severity {
     margin: auto;
@@ -2170,18 +2970,16 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   li {
     text-align: left;
+    margin: auto;
   }
   .pcarraybox {
     display: none;
   }
   .pharraybox {
     display: block;
-    border: 3px solid $main-color;
+    border: 3px solid $sub-color;
     border-radius: 10px;
     margin-top: 3rem;
-  }
-  .pcnotshow {
-    display: block;
   }
   .inner {
     margin: auto;
@@ -2201,9 +2999,26 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     span:first-of-type {
       font-weight: bold;
     }
+  }
+  .attribute {
+    margin: auto;
+    padding: 2rem 1rem;
+    display: table;
+  }
+  .illlevelbutton {
+    margin-left: auto;
+    padding-right: 6rem;
   }
 }
 @media screen and (max-width: 767px) {
+  .illlevelbutton {
+    margin-left: auto;
+  }
+  .attribute {
+    margin: auto;
+    padding: 2rem 1rem;
+    display: table;
+  }
   .post-detail {
     display: flex;
     flex-wrap: wrap;
@@ -2228,12 +3043,13 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   .pharraybox {
     display: block;
-    border: 3px solid $main-color;
+    border: 3px solid $sub-color;
     border-radius: 10px;
     margin-top: 3rem;
   }
   .pcnotshow {
     display: block;
+    cursor: pointer;
   }
   .wrapper {
     flex-direction: column;
@@ -2259,6 +3075,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .block-ttl {
     margin: auto;
     margin-top: 2rem;
+    margin-left: 8rem;
   }
   .severity {
     margin: auto;
@@ -2269,9 +3086,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   li {
     text-align: left;
-  }
-  .pcnotshow {
-    display: block;
+    margin: auto;
   }
 }
 </style>
