@@ -345,6 +345,7 @@
                   slot="icon"
                   icon="heart"
                   @click="StarButton(index)"
+                  class="heart"
                 />
               </vue-star>
               {{ post.starCount }}
@@ -2859,6 +2860,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
         right: -350%;
         color: #c4c4c4;
         z-index: 2;
+        .heart {
+          cursor: pointer;
+        }
       }
       .delete-btn,
       .edit-btn {

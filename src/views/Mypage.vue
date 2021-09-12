@@ -192,6 +192,7 @@
                       slot="icon"
                       icon="heart"
                       @click="StarButton(index)"
+                      class="heart"
                     />
                   </vue-star>
                   {{ post.starCount }}
@@ -664,6 +665,9 @@ $btn-color: rgb(4, 163, 255);
         bottom: -490%;
         right: -350%;
         color: #c4c4c4;
+        .heart {
+          cursor: pointer;
+        }
       }
     }
   }
