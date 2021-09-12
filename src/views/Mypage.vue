@@ -192,6 +192,7 @@
                       slot="icon"
                       icon="heart"
                       @click="StarButton(index)"
+                      class="heart"
                     />
                   </vue-star>
                   {{ post.starCount }}
@@ -201,7 +202,7 @@
           </div>
           <div v-else class="nopost-msg">
             <p>いいねした投稿がありません</p>
-            <router-link to="/post-page">投稿一覧ページへ</router-link>
+            <router-link to="/covidList">投稿一覧ページへ</router-link>
           </div>
         </div>
       </div>
@@ -570,7 +571,6 @@ $btn-color: rgb(4, 163, 255);
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1.25rem;
         padding-left: 0.5rem;
         padding-bottom: 0.5rem;
         margin-bottom: 0.5rem;
@@ -579,7 +579,7 @@ $btn-color: rgb(4, 163, 255);
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 1rem;
+        font-size: 0.875rem;
         padding-left: 0.5rem;
         span,
         div {
@@ -664,6 +664,9 @@ $btn-color: rgb(4, 163, 255);
         bottom: -490%;
         right: -350%;
         color: #c4c4c4;
+        .heart {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -763,7 +766,7 @@ $btn-color: rgb(4, 163, 255);
           margin-bottom: 0.4rem;
         }
         .post-detail {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           span,
           div {
             margin-left: 0.5rem;

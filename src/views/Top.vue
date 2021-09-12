@@ -68,7 +68,7 @@
 
       <div class="post-list">
         <div class="inner">
-          <div class="list-ttl">役に立った投稿</div>
+          <div class="list-ttl">いいねの多い投稿</div>
           <div v-for="(post, index) in posts" v-bind:key="index" class="post">
             <div class="time">{{ post.postedTime }}</div>
             <div class="post-info">
@@ -93,6 +93,7 @@
             <div class="sub-info">
               <div class="tags">
                 <ul>
+                  <li><p>症状：</p></li>
                   <li v-show="post.infection">#感染経験あり</li>
                   <li v-show="post.vaccine">#ワクチン接種</li>
                   <li v-show="post.headache">#頭痛</li>
@@ -442,109 +443,6 @@ $btn-color: rgb(4, 163, 255);
     left: 5%;
   }
 }
-
-//最新の投稿を表示するスタイリング
-// .postbox {
-//   background-color: azure;
-//   height: auto;
-//   text-align: center;
-//   padding: 2rem 0;
-//   border-bottom: 1px dotted #000;
-//   h2 {
-//     font-size: 2rem;
-//   }
-//   .link {
-//     text-decoration: none;
-//   }
-//   .post {
-//     text-align: left;
-//     border: 4px solid rgb(206, 242, 252);
-//     border-radius: 20px;
-//     box-shadow: 10px 10px 5px 0px rgba(100, 100, 100, 0.6);
-//     margin: 35px;
-//     padding: 15px;
-//     background-color: #fff;
-//     .photo {
-//       width: 3rem;
-//       height: 3rem;
-//       border: #ddd 1px solid;
-//       border-radius: 50%;
-//     }
-//     .status {
-//       display: flex;
-//       justify-content: space-between;
-//       .flex {
-//         display: flex;
-//         position: relative;
-//         .ttl {
-//           height: 2rem;
-//           line-height: 2rem;
-//           font-weight: bold;
-//           font-size: 1.25rem;
-//           margin: 0 1rem;
-//         }
-//         .handle-name {
-//           @extend .ttl;
-//           font-weight: normal;
-//           color: rgb(151, 151, 151);
-//         }
-//         .level {
-//           @extend .handle-name;
-//           color: #000;
-//           span {
-//             font-weight: bold;
-//             color: red;
-//             margin-left: 5px;
-//           }
-//         }
-//       }
-//       .time {
-//         margin: 5px;
-//         font-weight: 500;
-//         color: rgb(151, 151, 151);
-//       }
-//     }
-//     .text {
-//       margin: 1rem 0;
-//       padding: 0 0 10px;
-//       line-height: 1.5;
-//       letter-spacing: 2px;
-//       font-size: 1rem;
-//       white-space: pre-wrap;
-//     }
-
-//     .post-info {
-//       display: flex;
-//       .tag {
-//         display: flex;
-//         flex-wrap: wrap;
-//         font-weight: 500;
-//         color: rgb(0, 140, 255);
-//         margin: 10px 0;
-//         height: 2rem;
-//         line-height: 2rem;
-//         li {
-//           margin-right: 10px;
-//         }
-//       }
-//       .post-btns {
-//         display: flex;
-//         flex-direction: row-reverse;
-//         .star-btn {
-//           width: 4rem;
-//           height: 2rem;
-//           line-height: 2rem;
-//           text-align: center;
-//           border-radius: 50%;
-//           cursor: pointer;
-//           user-select: none;
-//           margin: 10px;
-//         }
-//       }
-//     }
-//   }
-// }
-
 .wordbox {
   background-color: darkkhaki;
   height: 300px;
@@ -554,7 +452,7 @@ $btn-color: rgb(4, 163, 255);
   width: calc(200% / 3);
 }
 .list-ttl {
-  width: 130px;
+  width: 230px;
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 10px;
@@ -566,9 +464,9 @@ $btn-color: rgb(4, 163, 255);
     content: "";
     height: 3px;
     background-color: $main-color;
-    width: 115px;
-    top: 100%;
-    left: 5%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
   }
 }
 
@@ -623,7 +521,6 @@ $btn-color: rgb(4, 163, 255);
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1.25rem;
         padding-left: 0.5rem;
         padding-bottom: 0.5rem;
         margin-bottom: 0.5rem;
@@ -632,7 +529,7 @@ $btn-color: rgb(4, 163, 255);
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 1rem;
+        font-size: 0.875rem;
         padding-left: 0.5rem;
         span,
         div {
@@ -668,6 +565,9 @@ $btn-color: rgb(4, 163, 255);
           &:first-child {
             margin-left: 0;
           }
+          p {
+            color: #000;
+          }
         }
       }
     }
@@ -692,7 +592,7 @@ $btn-color: rgb(4, 163, 255);
   line-height: 2;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 1024px) {
   .wrapper {
     flex-direction: column;
   }
@@ -788,10 +688,10 @@ $btn-color: rgb(4, 163, 255);
             margin-bottom: 0.4rem;
           }
           .post-detail {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             span,
             div {
-              // margin-left: 0.5rem;
+              margin-left: 0.5rem;
             }
             span:first-of-type {
               font-weight: bold;

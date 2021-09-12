@@ -6,7 +6,7 @@
         <router-link to="/mypage" class="name"> {{ handleName }}</router-link
         ><br />
         <router-link to="/mypage" class="text"
-          >マイページでで名前を変更</router-link
+          >マイページで名前を変更</router-link
         >
       </div>
     </aside>
@@ -225,7 +225,7 @@ export default {
     },
     closeModal() {
       this.showContent = false
-      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+      location.href = "/covidList"
     },
   },
 }
