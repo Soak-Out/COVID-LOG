@@ -571,7 +571,6 @@ $btn-color: rgb(4, 163, 255);
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1.25rem;
         padding-left: 0.5rem;
         padding-bottom: 0.5rem;
         margin-bottom: 0.5rem;
@@ -580,7 +579,7 @@ $btn-color: rgb(4, 163, 255);
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 1rem;
+        font-size: 0.875rem;
         padding-left: 0.5rem;
         span,
         div {
@@ -767,7 +766,7 @@ $btn-color: rgb(4, 163, 255);
           margin-bottom: 0.4rem;
         }
         .post-detail {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           span,
           div {
             margin-left: 0.5rem;

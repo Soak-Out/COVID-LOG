@@ -74,7 +74,12 @@ export default {
         // 未ログイン時
         if (!user) {
           const provider = new firebase.auth.GoogleAuthProvider()
-          firebase.auth().signInWithPopup(provider)
+          firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then(() => {
+              location.href = "/covidList"
+            })
         }
         // ログイン時
         else {
@@ -94,7 +99,7 @@ export default {
                 star_post_id: firebase.firestore.FieldValue.arrayUnion(),
               })
               .then(() => {
-                location.href = "/"
+                location.href = "/covidList"
               })
           }
         }

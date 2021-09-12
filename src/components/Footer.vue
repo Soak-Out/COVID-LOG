@@ -1,37 +1,42 @@
 <template>
-  <div class="wrapper">
+  <div>
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
     <footer id="footer">
-      <div class="bottombox">
-        <div class="bottombox-left">
-          <img src="../assets/logo.png" class="imgcovid" />
+      <div class="inner">
+        <div class="img">
+          <img src="../assets/logo-text.png" class="logo" />
         </div>
-        <div class="bottombox-right">
-          <div class="leftli">
-            <ul>
-              <li>▶︎<router-link to="/">トップ</router-link></li>
-              <li>▶︎<router-link to="/covidList">投稿を見る</router-link></li>
-              <li>▶︎<router-link to="/post-page">投稿する</router-link></li>
-            </ul>
-          </div>
-          <div class="rightli">
-            <ul>
-              <li>▶︎<router-link to="/mypage">マイページ</router-link></li>
-              <li>
-                <div v-if="isAuth">
-                  ▶︎
-                  <a @click="signOut">ログアウト</a>
-                </div>
-                <div v-else class="login-page">
-                  ▶︎
-                  <a @click="signUp">ログイン</a>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <div class="links">
+          <ul>
+            <li :class="{ gray: !isAuth }">
+              ▶︎<router-link to="/">トップ</router-link>
+            </li>
+            <li :class="{ gray: !isAuth }">
+              ▶︎<router-link to="/covidList">投稿を見る</router-link>
+            </li>
+            <li :class="{ gray: !isAuth }">
+              ▶︎<router-link to="/post-page">投稿する</router-link>
+            </li>
+          </ul>
+
+          <ul>
+            <li :class="{ gray: !isAuth }">
+              ▶︎<router-link to="/mypage">マイページ</router-link>
+            </li>
+            <li>
+              <div v-if="isAuth">
+                ▶︎
+                <a @click="signOut" class="sign">ログアウト</a>
+              </div>
+              <div v-else>
+                ▶︎
+                <a @click="signUp" class="sign">ログイン</a>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="blackbox">
+      <div class="copyright">
         <span>copyright c 2021 09/11 soakout</span>
       </div>
     </footer>
@@ -100,78 +105,66 @@ export default {
 @import "../assets/css/_reset.scss";
 
 #footer {
-  .blackbox {
-    height: 50px;
-    width: 100%;
-    background-color: rgb(53, 51, 51);
-    color: white;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bottombox {
-    border-top: 1px solid #c4c4c4;
+  border-top: 1px solid #c4c4c4;
+  .inner {
+    max-width: 1420px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    height: 200px;
+    padding: 1.5rem 4rem;
   }
-
-  .bottombox-left {
-    img {
-      height: 87px;
-      margin: 2.5rem 3rem;
-    }
+  .img {
+    width: 100%;
   }
-
-  .bottombox-right {
+  .links {
     display: flex;
-    justify-content: center;
-    margin: 2.5rem 1rem;
-    .leftli {
-      margin-right: 5rem;
+    // background-color: orange;
+    ul {
+      width: 150px;
       li {
-        margin-top: 0.5rem;
-        :hover {
-          color: #f00;
-          border-bottom: 1px solid #000000;
-        }
+        margin: 1rem;
+        cursor: pointer;
+        user-select: none;
       }
     }
-    .rightli {
-      margin-right: 5rem;
-      li {
-        margin-top: 0.5rem;
-        :hover {
-          color: #f00;
-          border-bottom: 1px solid #000000;
+  }
+  .copyright {
+    text-align: center;
+    background-color: #000;
+    padding: 0.5rem;
+    color: #fff;
+  }
+  .sign {
+    color: rgb(4, 163, 255);
+  }
+  .gray {
+    color: #aaa;
+    cursor: default;
+  }
+}
+@media screen and (max-width: 740px) {
+  #footer {
+    .inner {
+      padding: 1rem 2rem;
+      flex-direction: column-reverse;
+    }
+    .img {
+      display: none;
+    }
+    .links {
+      ul {
+        li {
+          margin: 1rem 0.5rem 1rem 1rem;
         }
       }
     }
   }
 }
-
-@media screen and (max-width: 1024px) {
-  .wrapper {
-    flex-direction: column;
-    height: 500px;
-  }
-  .botombox-left {
-    width: 100%;
-  }
-
-  .bottombox-right {
-    width: 100%;
-    margin: 0.5rem 0.5rem;
-    display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-  }
-
-  .blackbox {
-    flex-direction: column;
-    margin-bottom: 0.1rem;
+@media screen and (max-width: 315px) {
+  #footer {
+    li {
+      font-size: 0.82rem;
+    }
   }
 }
 </style>

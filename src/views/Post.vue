@@ -225,7 +225,7 @@ export default {
     },
     closeModal() {
       this.showContent = false
-      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+      location.href = "/covidList"
     },
   },
 }

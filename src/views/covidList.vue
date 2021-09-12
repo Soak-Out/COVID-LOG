@@ -27,7 +27,7 @@
                       name="pcarraypost"
                       v-on:change="pconChange"
                       value="役に立った"
-                    />「役に立った」順</label
+                    />いいね順</label
                   >
                 </li>
               </ul>
@@ -174,7 +174,7 @@
                       name="pharraypost"
                       v-on:change="phonChange"
                       value="役に立った"
-                    />「役に立った」順</label
+                    />いいね順</label
                   >
                 </li>
               </ul>
@@ -2795,7 +2795,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       margin: 3% 10% 1.45rem 0%;
       width: 100%;
       .ttl {
-        font-size: 1.25rem;
         padding-left: 0.5rem;
         padding-bottom: 0.5rem;
         margin-bottom: 0.5rem;
@@ -2807,10 +2806,10 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       .post-detail {
         display: flex;
         flex-wrap: wrap;
-        font-size: 1rem;
+        font-size: 0.875rem;
         padding-left: 0.5rem;
         @media screen and (max-width: 1024px) {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
         }
         span,
         div {

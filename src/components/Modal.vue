@@ -18,7 +18,7 @@
               slot="icon"
               :icon="['fab', 'twitter']"
               class="twitter"
-            />Twitterに投稿
+            />Twitterでシェア
           </a>
         </div>
       </div>
