@@ -2,7 +2,7 @@
   <div class="top">
     <div class="middlebox">
       <div class="middlebox-left">
-        <img src="../assets/logo.png" class="imgcovid" />
+        <img src="../assets/logo-text.png" class="imgcovid" />
       </div>
       <div class="middlebox-right">
         <div class="copyright">
@@ -10,8 +10,9 @@
         </div>
         <br />
         <div class="copyunder">
-          新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br />
-          新型コロナウイルス感染症専門の投稿サイト
+          <p class="sitemes">新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br /></p>
+          <br />
+          <p class="sitemes">新型コロナウイルス感染症専門の投稿サイト</p>
         </div>
       </div>
       <!-- <div v-if="isAuth">
@@ -30,7 +31,7 @@
             <div class="word-ttl">新型コロナウイルス<br />新着情報</div>
             <div class="word-subttl">累計感染者数（昨日時点）</div>
             <div class="patient">
-              <div
+              <div class="patientshow"
                 v-for="(npatients, index) in reverseItems"
                 v-bind:key="index"
               >
@@ -267,12 +268,33 @@ $btn-color: rgb(4, 163, 255);
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #c4c4c4;
+  margin: 0 auto;
 }
 
 .middlebox-left {
+  // width: 50%;
   height: 266px;
-  margin: 0.5rem 5rem;
+  margin: 0 auto;
+  // margin-left: 5rem;
+  margin-top: 0.5rem ;
+  display: flex;
+  align-items: center;
 }
+  .middlebox-right {
+    margin: 0 auto;
+    // margin-top: 5rem;
+    .copyright {
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+    }
+    .copyunder {
+  font-size: 0.875rem;
+      // font-weight: bold;
+        // font-size: 3px;
+
+    }
+  }
 .wrapper {
   max-width: 1420px;
   display: flex;
@@ -289,17 +311,6 @@ $btn-color: rgb(4, 163, 255);
   // margin: 2rem;
 }
 
-.middlebox-right {
-  margin-left: 7rem;
-  margin-top: 5rem;
-  .copyright {
-    font-weight: bold;
-    font-size: 36px;
-  }
-  .copyunder {
-    font-weight: bold;
-  }
-}
 
 .btn {
   width: 12rem;
@@ -420,7 +431,7 @@ $btn-color: rgb(4, 163, 255);
   align-items: center;
   text-align: center;
   .shufflems {
-    margin: 0 8% 1rem;
+    margin: 0 auto;
   }
 }
 
@@ -438,7 +449,7 @@ $btn-color: rgb(4, 163, 255);
     content: "";
     height: 3px;
     background-color: $main-color;
-    width: 265px;
+    width: 259px;
     top: 100%;
     left: 5%;
   }
@@ -592,7 +603,7 @@ $btn-color: rgb(4, 163, 255);
   line-height: 2;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1000px) {
   .wrapper {
     flex-direction: column;
   }
@@ -601,7 +612,7 @@ $btn-color: rgb(4, 163, 255);
   }
 
   .imgcovid {
-    margin-top: 5rem;
+    // margin-top: 5rem;
     width: 100%;
   }
 
@@ -616,47 +627,27 @@ $btn-color: rgb(4, 163, 255);
 
     margin-bottom: 0.5rem;
     .middlebox-left {
-      margin: 0.5rem 0.5rem;
+
     }
     .middlebox-right {
-      margin-left: 0.5rem;
+      margin: 0 auto;
+      // margin-left: 0.5rem;
       // align-items: center;
-      margin-right: 2.5rem;
-      width: 100%;
-      .copyright {
-        font-weight: bold;
-        margin-right: 2.5rem;
-        font-size: 18px;
+      // margin-right: 2.5rem;
+      .copyright{
+        align-items: center;
+        text-align: center;
+        font-size: 90%;
       }
-      .copyunder {
-        font-weight: bold;
-        font-size: 12px;
+      .sitemes{
+        align-items: center;
+        text-align: center;
+        transform: scale(0.8); 
       }
     }
   }
 
-  .word-ttl {
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 75px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
 
-    &::after {
-      position: absolute;
-      content: "";
-      height: 3px;
-      background-color: $main-color;
-      align-items: center;
-      justify-content: center;
-      top: 100%;
-      left: 15%;
-    }
-  }
 
   .word-subttl {
     margin-bottom: 50px;
@@ -665,6 +656,9 @@ $btn-color: rgb(4, 163, 255);
   .patient {
     border: 3px solid #9ad5ff;
     border-radius: 10px;
+    .patientshow{
+      margin-bottom: 1.5rem;
+    }
   }
 
   //
@@ -755,9 +749,10 @@ $btn-color: rgb(4, 163, 255);
     display: flex;
     align-items: center;
     text-align: center;
+    margin: 0 auto;
     .shufflems {
       align-items: center;
-      margin: 0 8% 1rem;
+      margin: 0 auto;
     }
   }
 
@@ -780,5 +775,38 @@ $btn-color: rgb(4, 163, 255);
       left: 5%;
     }
   }
+}
+
+@media screen and (max-width: 400px) {
+.middlebox{
+
+}
+.middlebox-left{
+  width: 50%;
+  margin-left: 1rem;
+.imgcovid{
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+}
+}
+.middlebox-right{
+margin: 0 auto;
+// height: auto;
+font-size: 70%;
+
+.copyright{
+  margin-top: 2rem;
+}
+.copyunder{
+  display: block;
+  font-size: 0.875px;
+  
+  // font-weight: lighter;
+  .sitemes{
+    font-size: 30%;
+  }
+}
+}
 }
 </style>
