@@ -1,37 +1,42 @@
 <template>
-  <div class="top">
-    <div class="middlebox">
-      <div class="middlebox-left">
-        <img src="../assets/logo-text.png" class="imgcovid" />
-      </div>
-      <div class="middlebox-right">
-        <div class="copyright">
-          このサイトで<br />１人でも<br />多くの人に情報を。
+  <div>
+    <div class="main">
+      <div class="main-inner">
+        <div class="main-img">
+          <img src="../assets/logo-text.png" />
         </div>
-        <br />
-        <div class="copyunder">
-          <p class="sitemes">新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br /></p>
+        <div class="main-text">
+          <div class="copyright">
+            このサイトで<br />１人でも<br />多くの人に情報を。
+          </div>
           <br />
-          <p class="sitemes">新型コロナウイルス感染症専門の投稿サイト</p>
+          <div>
+            <p>
+              新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br />
+            </p>
+            <br />
+            <p>新型コロナウイルス感染症専用の投稿サイト</p>
+          </div>
+          <div v-if="isAuth == false">
+            <a @click="signUp" class="btn">ログイン</a>
+            <p class="alert">※投稿・閲覧にはログインが必要です</p>
+          </div>
+          <div v-if="isAuth != false">
+            <router-link to="/post-page" class="btn">投稿する</router-link>
+          </div>
         </div>
       </div>
-      <!-- <div v-if="isAuth">
-          <router-link to="/post-page">投稿する</router-link>
-          <router-link to="/covidList">投稿一覧</router-link>
-        </div>
-        <div v-else class="login-page">
-          <a @click="signUp" class="btn">ログイン</a>
-        </div> -->
     </div>
-
     <div class="wrapper">
-      <div class="side-wrapper">
+      <div class="sub-wrapper">
         <aside class="sidebar">
-          <div class="covidbox">
-            <div class="word-ttl">新型コロナウイルス<br />新着情報</div>
-            <div class="word-subttl">累計感染者数（昨日時点）</div>
-            <div class="patient">
-              <div class="patientshow"
+          <div class="sidebar-inner">
+            <div class="block-ttl br">新型コロナウイルス<br />新着情報</div>
+
+            <div class="covidbox">
+              <div class="sub-ttl">累計感染者数（昨日時点）</div>
+              <div
+                class="patientshow"
                 v-for="(npatients, index) in reverseItems"
                 v-bind:key="index"
               >
@@ -40,99 +45,90 @@
                   >人
                 </p>
                 <p v-if="index === 0" class="yesterday">
-                  昨日+<span>{{ npatients.adpatients }}</span
+                  昨日 <span>+{{ npatients.adpatients }}</span
                   >人
                 </p>
-                <p v-if="index === 1">
-                  一昨日+<span>{{ npatients.adpatients }}</span
+                <p v-if="index === 1" class="more-yesterday">
+                  一昨日 <span>+{{ npatients.adpatients }}</span
                   >人
                 </p>
               </div>
             </div>
-          </div>
 
-          <div class="mnlink">
-            <span
-              >※厚生労働省新型コロナウイルス 特設サイトは<a
-                href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html"
-                class="covidlink"
-                >こちら</a
-              ></span
-            >
-          </div>
+            <div class="mnlink">
+              <p class="br">
+                ※厚生労働省新型コロナウイルス <br />特設サイトは<a
+                  href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html"
+                  class="covidlink"
+                  >こちら</a
+                >
+              </p>
+            </div>
 
-          <div class="shuffleword">
-            <div class="shufflems">{{ message }}</div>
+            <div class="block-ttl">ちょこっと ひとこと</div>
+            <div class="shuffleword">
+              <div class="shufflems">{{ message }}</div>
+            </div>
           </div>
         </aside>
-      </div>
 
-      <div class="post-list">
-        <div class="inner">
-          <div class="list-ttl">いいねの多い投稿</div>
-          <div v-for="(post, index) in posts" v-bind:key="index" class="post">
-            <div class="time">{{ post.postedTime }}</div>
-            <div class="post-info">
-              <div class="img-age">
-                <img :src="post.photo" />
-                <div class="age">{{ post.age }}</div>
-              </div>
-              <div class="post-status">
-                <div class="ttl">{{ post.title }}</div>
-                <div class="post-detail">
-                  <div class="level">
-                    重症度<span>{{ post.illLevel }}</span>
-                  </div>
-                  <span>｜</span>
-                  <div class="handle-name">{{ post.handleName }}</div>
-                </div>
-              </div>
+        <div class="post-list">
+          <div class="inner">
+            <div class="list-ttl">いいねの多い投稿</div>
+            <div v-for="(post, index) in posts" v-bind:key="index" class="post">
               <div class="time">{{ post.postedTime }}</div>
-            </div>
-
-            <div class="text">{{ post.uploadText }}</div>
-            <div class="sub-info">
-              <div class="tags">
-                <ul>
-                  <li><p>症状：</p></li>
-                  <li v-show="post.infection">#感染経験あり</li>
-                  <li v-show="post.vaccine">#ワクチン接種</li>
-                  <li v-show="post.headache">#頭痛</li>
-                  <li v-show="post.fever">#発熱</li>
-                  <li v-show="post.respiratoryOrgan">#呼吸困難</li>
-                  <li v-show="post.soreThroat">#喉の渇き</li>
-                  <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
-                  <li v-show="post.diarrhea">#下痢</li>
-                  <li v-show="post.other">#その他</li>
-                </ul>
+              <div class="post-info">
+                <div class="img-age">
+                  <img :src="post.photo" />
+                  <div class="age">{{ post.age }}</div>
+                </div>
+                <div class="post-status">
+                  <div class="ttl">{{ post.title }}</div>
+                  <div class="post-detail">
+                    <div class="level">
+                      重症度<span>{{ post.illLevel }}</span>
+                    </div>
+                    <span>｜</span>
+                    <div class="handle-name">{{ post.handleName }} さん</div>
+                  </div>
+                </div>
+                <div class="time">{{ post.postedTime }}</div>
               </div>
-              <div class="btns">
-                <font-awesome-icon slot="icon" icon="heart" class="like" />{{
-                  post.starCount
-                }}
+
+              <div class="text">{{ post.uploadText }}</div>
+              <div class="sub-info">
+                <div class="tags">
+                  <ul>
+                    <li><p>症状：</p></li>
+                    <li v-show="post.infection">#感染経験あり</li>
+                    <li v-show="post.vaccine">#ワクチン接種</li>
+                    <li v-show="post.headache">#頭痛</li>
+                    <li v-show="post.fever">#発熱</li>
+                    <li v-show="post.respiratoryOrgan">#呼吸困難</li>
+                    <li v-show="post.soreThroat">#喉の渇き</li>
+                    <li v-show="post.tasteOrDisappearance">#味覚などの異常</li>
+                    <li v-show="post.diarrhea">#下痢</li>
+                    <li v-show="post.other">#その他</li>
+                  </ul>
+                </div>
+                <div class="btns">
+                  <font-awesome-icon slot="icon" icon="heart" class="like" />{{
+                    post.starCount
+                  }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div v-if="isAuth == false">
-          <a @click="signUp" class="btn">ログイン</a>
+          <div v-if="isAuth == false">
+            <a @click="signUp" class="btn">ログイン</a>
+            <p class="alert">※投稿作成・閲覧にはログインが必要です</p>
+          </div>
+          <div v-if="isAuth != false">
+            <router-link to="/covidList" class="btn">投稿を見る</router-link>
+          </div>
         </div>
       </div>
     </div>
-
-    <!--  -->
-
-    <!-- </div> -->
-
-    <!-- <div v-else class="login-page">
-        <a @click="signUp" class="btn">ログイン</a>
-      </div> -->
-
-    <!-- <div class="wordbox">
-      <div>ねぎらいの言葉</div>
-      <div v-for="word of words ">{{  word  }}</div>
-    </div> -->
-    <!-- ここが最下層 -->
   </div>
 </template>
 
@@ -187,10 +183,8 @@ export default {
       .then((value) => {
         this.dates = value
       })
-
     //ログインしているかどうかでisAuthを変化
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
-
     // 投稿をいいね順で表示させています。
     db.collection("posts")
       .orderBy("starCount", "desc")
@@ -264,54 +258,10 @@ $main-color: #9ad5ff;
 $sub-color: #4986e1;
 $btn-color: rgb(4, 163, 255);
 
-.middlebox {
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #c4c4c4;
-  margin: 0 auto;
-}
-
-.middlebox-left {
-  // width: 50%;
-  height: 266px;
-  margin: 0 auto;
-  // margin-left: 5rem;
-  margin-top: 0.5rem ;
-  display: flex;
-  align-items: center;
-}
-  .middlebox-right {
-    margin: 0 auto;
-    // margin-top: 5rem;
-    .copyright {
-  margin-top: 2rem;
-  font-weight: bold;
-  font-size: 1.2rem;
-    }
-    .copyunder {
-  font-size: 0.875rem;
-      // font-weight: bold;
-        // font-size: 3px;
-
-    }
-  }
 .wrapper {
   max-width: 1420px;
-  display: flex;
-  // margin-top: 3rem;
   margin: 0 auto;
 }
-
-.side-wrapper {
-  width: calc(100% / 3);
-  border-right: 1px solid #c4c4c4;
-}
-
-.sidebar {
-  // margin: 2rem;
-}
-
-
 .btn {
   width: 12rem;
   height: 49px;
@@ -324,349 +274,289 @@ $btn-color: rgb(4, 163, 255);
   border-radius: 10px;
   user-select: none;
   cursor: pointer;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   background-color: $btn-color;
   &:hover {
     opacity: 0.7;
   }
 }
-
-.wrapper {
-  max-width: 1420px;
-}
-
-.word-ttl {
-  width: 300px;
+.alert {
   text-align: center;
-  font-size: 1rem;
-  margin-bottom: 75px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 3px;
-    background-color: $main-color;
-    width: 265px;
-    top: 100%;
-    left: 5%;
-  }
+  margin-bottom: 2rem;
 }
-
-.word-subttl {
-  margin-bottom: 50px;
-}
-
-.patient {
-  border: 3px solid #9ad5ff;
-  border-radius: 10px;
-  margin: 3rem;
-}
-
-.inner {
-  margin: 3rem 10% 91px;
-}
-
-//
-
-.nav {
-  display: flex;
-  list-style: none;
-  margin: 1rem 0;
-  li {
-    height: 47px;
-    line-height: 47px;
-    margin-left: 50px;
-    .btn {
-      margin: 0;
-    }
-  }
-}
-
-.covidbox {
-  height: auto;
-  text-align: center;
-  margin: 3rem 0;
-  letter-spacing: 0.5rem;
-  .total {
-    // margin: 0 8% 1rem;
-    color: red;
-    font-weight: bold;
-    margin: 1rem 0;
-    text-align: center;
-    span {
-      font-size: 3rem;
-    }
-  }
-  .yesterday {
-    font-size: 1.25rem;
-    margin: 1rem 0;
-    span {
-      font-size: 1.5rem;
-    }
-  }
-}
-
-.mnlink {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  text-align: center;
-  .covidlink {
-    color: steelblue;
-  }
-}
-
-.shuffleword {
-  background: #def1ff;
-  border-radius: 30px;
-  height: 150px;
-  width: 75%;
-  margin-left: 50px;
-  font-weight: lighter;
-  font-size: 1rem;
-  font-family: Roboto;
-  line-height: 16px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  .shufflems {
+.main {
+  border-bottom: 1px solid #c4c4c4;
+  .main-inner {
+    display: flex;
+    max-width: 1420px;
     margin: 0 auto;
   }
-}
+  .main-img {
+    // background-color: antiquewhite;
+    width: 60%;
+    padding: 3% 3% 3% 5%;
 
-.hpinfo {
-  width: 300px;
-  text-align: center;
-  font-size: 1rem;
-  margin-bottom: 75px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 100px;
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 3px;
-    background-color: $main-color;
-    width: 259px;
-    top: 100%;
-    left: 5%;
+    img {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding-bottom: 1rem;
+    }
+  }
+  .main-text {
+    width: 40%;
+    // background-color: aquamarine;
+    padding: 7% 0 5% 3%;
+    font-weight: bold;
+    .copyright {
+      font-size: 1.75rem;
+      text-decoration: rgb(100, 224, 255) underline 0.25rem;
+    }
+    .btn {
+      margin: 1rem 0 0 0;
+      font-weight: normal;
+    }
+    .alert {
+      margin-top: 0.25rem;
+      font-weight: normal;
+      text-align: left;
+      margin-bottom: 0;
+    }
   }
 }
-.wordbox {
-  background-color: darkkhaki;
-  height: 300px;
+.sub-wrapper {
+  width: 100%;
+  display: flex;
 }
-
+.sidebar {
+  width: calc(100% / 3);
+  border-right: 1px solid #c4c4c4;
+  text-align: center;
+  .sidebar-inner {
+    margin: 5rem 8%;
+  }
+  .block-ttl {
+    display: block;
+    width: 60%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      height: 3px;
+      background-color: $main-color;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+    @media screen and (max-width: 1024px) {
+      width: 200px;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      width: 70%;
+    }
+  }
+  .covidbox {
+    border: solid 3px $main-color;
+    border-radius: 10px;
+    padding: 1rem;
+    .sub-ttl {
+      font-size: 0.9rem;
+    }
+    .total {
+      display: inline-block;
+      color: #f00;
+      margin-top: -2rem;
+      margin-bottom: 1rem;
+      @media screen and (max-width: 370px) {
+        margin-bottom: 0.5rem;
+      }
+      span {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-size: 3rem;
+        font-weight: bold;
+        letter-spacing: 0.375rem;
+        @media screen and (max-width: 370px) {
+          font-size: 2rem;
+        }
+      }
+    }
+    .yesterday {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      span {
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.375rem;
+      }
+    }
+    .more-yesterday {
+      font-size: 0.8rem;
+      span {
+        font-size: 0.9rem;
+        font-weight: bold;
+        letter-spacing: 0.375rem;
+      }
+    }
+  }
+  .mnlink {
+    font-size: 0.8rem;
+    margin: 2rem 0 7rem;
+    .covidlink {
+      color: $sub-color;
+      text-decoration: underline;
+    }
+    .br {
+      br {
+        display: none;
+        @media screen and (max-width: 370px) {
+          display: flex;
+        }
+      }
+    }
+  }
+  .shuffleword {
+    border-radius: 30px;
+    background-color: #def1ff;
+    text-align: left;
+    .shufflems {
+      padding: 2rem 10%;
+    }
+  }
+}
 .post-list {
   width: calc(200% / 3);
-}
-.list-ttl {
-  width: 230px;
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 3px;
-    background-color: $main-color;
-    width: 100%;
-    bottom: 0;
-    left: 0;
+  .inner {
+    margin: 3rem 10% 1.5rem;
   }
-}
-
-.block-ttl {
-  width: 100px;
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 3px;
-    background-color: $main-color;
-    width: 93.26px;
-    top: 100%;
-    left: 5%;
-  }
-}
-.post {
-  border: 3px solid $main-color;
-  border-radius: 10px;
-  margin-top: 3rem;
-  position: relative;
-  // margin: 3rem;
-
-  .time {
-    position: absolute;
-    height: 20px;
-    top: 1%;
-    right: 1%;
-  }
-  .post-info {
-    display: flex;
-    .img-age {
-      position: relative;
-      margin: 3%;
-      img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin: 3%;
-      }
-      .age {
-        position: absolute;
-        line-height: 1rem;
-        top: 3.5rem;
-        right: 0.45rem;
-      }
-    }
-    .post-status {
-      margin: 3% 10% 1.45rem 0%;
+  .list-ttl {
+    //いいねの多い投稿
+    width: 230px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      height: 3px;
+      background-color: $main-color;
       width: 100%;
-      .ttl {
-        padding-left: 0.5rem;
-        padding-bottom: 0.5rem;
-        margin-bottom: 0.5rem;
-        border-bottom: 2px solid $main-color;
-      }
-      .post-detail {
-        display: flex;
-        flex-wrap: wrap;
-        font-size: 0.875rem;
-        padding-left: 0.5rem;
-        span,
-        div {
-          margin-left: 0.5rem;
-        }
-        span:first-of-type {
-          font-weight: bold;
-        }
-      }
+      bottom: 0;
+      left: 0;
     }
   }
 
-  .text {
-    font-size: 0.875rem;
-    margin: 0 8% 1rem;
-    white-space: pre-wrap;
-  }
-  .sub-info {
-    margin: 1rem 8% 1rem 5%;
-    display: flex;
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      font-size: 14px;
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        padding-right: 3rem;
-        li {
-          margin-left: 0.5rem;
-          color: $sub-color;
-          &:first-child {
-            margin-left: 0;
-          }
-          p {
-            color: #000;
-          }
-        }
-      }
-    }
-    .btns {
-      display: flex;
-      position: relative;
-      width: 10px;
-      height: 10px;
-      .like {
-        margin: 0.1rem 0.5rem 0 4rem;
-        position: absolute;
-        bottom: -75%;
-        right: 80%;
-        color: #c4c4c4;
-      }
-    }
-  }
-}
-
-.check-block {
-  margin: 2rem 3rem 2rem 3rem;
-  line-height: 2;
-}
-
-@media screen and (max-width: 1000px) {
-  .wrapper {
-    flex-direction: column;
-  }
-  .side-wrapper {
-    width: 100%;
-  }
-
-  .imgcovid {
-    // margin-top: 5rem;
-    width: 100%;
-  }
-
-  .sidebar {
-    width: 100%;
-  }
-
-  .middlebox {
-    width: 100%;
-    border-right: none;
-    margin-top: 0.5rem;
-
-    margin-bottom: 0.5rem;
-    .middlebox-left {
-
-    }
-    .middlebox-right {
-      margin: 0 auto;
-      // margin-left: 0.5rem;
-      // align-items: center;
-      // margin-right: 2.5rem;
-      .copyright{
-        align-items: center;
-        text-align: center;
-        font-size: 90%;
-      }
-      .sitemes{
-        align-items: center;
-        text-align: center;
-        transform: scale(0.8); 
-      }
-    }
-  }
-
-
-
-  .word-subttl {
-    margin-bottom: 50px;
-  }
-
-  .patient {
-    border: 3px solid #9ad5ff;
+  //-------------------
+  //投稿
+  //-------------------
+  .post {
+    border: 3px solid $main-color;
     border-radius: 10px;
-    .patientshow{
-      margin-bottom: 1.5rem;
+    margin-top: 3rem;
+    position: relative;
+    .time {
+      position: absolute;
+      height: 20px;
+      top: 1%;
+      right: 1%;
+    }
+    .post-info {
+      display: flex;
+      .img-age {
+        position: relative;
+        margin: 3%;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin: 3%;
+        }
+        .age {
+          position: absolute;
+          line-height: 1rem;
+          top: 3.5rem;
+          right: 0.45rem;
+        }
+      }
+      .post-status {
+        margin: 3% 10% 1.45rem 0%;
+        width: 100%;
+        .ttl {
+          padding-left: 0.5rem;
+          padding-bottom: 0.5rem;
+          margin-bottom: 0.5rem;
+          border-bottom: 2px solid $main-color;
+        }
+        .post-detail {
+          display: flex;
+          flex-wrap: wrap;
+          font-size: 0.875rem;
+          padding-left: 0.5rem;
+          span,
+          div {
+            margin-left: 0.5rem;
+          }
+          span:first-of-type {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .text {
+      font-size: 0.875rem;
+      margin: 0 8% 1rem;
+      white-space: pre-wrap;
+    }
+    .sub-info {
+      margin: 1rem 8% 1rem 5%;
+      display: flex;
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        font-size: 14px;
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          padding-right: 3rem;
+          li {
+            margin-left: 0.5rem;
+            color: $sub-color;
+            &:first-child {
+              margin-left: 0;
+            }
+            p {
+              color: #000;
+            }
+          }
+        }
+      }
+      .btns {
+        display: flex;
+        position: relative;
+        width: 10px;
+        height: 10px;
+        .like {
+          margin: 0.1rem 0.5rem 0 4rem;
+          position: absolute;
+          bottom: -75%;
+          right: 80%;
+          color: #c4c4c4;
+        }
+      }
     }
   }
-
-  //
-  .post-list {
-    // width: calc(200% / 3);
-
-    width: 100%;
+  @media screen and (max-width: 1024px) {
     .post {
+      margin-top: 1rem;
+      padding-bottom: 0.5rem;
       .time {
         font-size: 0.75rem;
         top: auto;
@@ -693,120 +583,72 @@ $btn-color: rgb(4, 163, 255);
           }
         }
       }
-    }
-  }
-
-  .nav {
-    display: flex;
-    list-style: none;
-    margin: 1rem 0;
-    li {
-      height: 47px;
-      line-height: 47px;
-      margin-left: 50px;
-      .btn {
-        margin: 0;
+      .text {
+        margin: 0 5%;
       }
     }
   }
+}
 
-  .covidbox {
-    height: auto;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    letter-spacing: 0.5rem;
-    .total {
-      // margin: 0 8% 1rem;
-      color: red;
-      font-weight: bold;
-      margin: 1rem 0;
-      text-align: center;
-      span {
-        font-size: 3rem;
+@media screen and (max-width: 1024px) {
+  .main {
+    .main-inner {
+      flex-direction: column;
+      padding: 0;
+      position: relative;
+    }
+    .main-img {
+      width: 100%;
+      padding: 0;
+      height: 450px;
+      background-image: url(../assets/logo-text.png);
+      background-position: center;
+      background-size: cover;
+      object-fit: cover;
+      opacity: 0.3;
+      img {
+        display: none;
       }
     }
-    .yesterday {
-      font-size: 1.25rem;
-      margin: 1rem 0;
-      span {
-        font-size: 1.5rem;
-      }
-    }
-  }
-
-  .shuffleword {
-    background: #def1ff;
-    border-radius: 30px;
-    height: 150px;
-    width: 75%;
-    align-items: center;
-    text-align: center;
-    font-weight: lighter;
-    font-size: 1rem;
-    font-family: Roboto;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    .shufflems {
-      align-items: center;
-      margin: 0 auto;
-    }
-  }
-
-  .hpinfo {
-    align-items: center;
-    width: 300px;
-    text-align: center;
-    align-items: center;
-    font-size: 1rem;
-    margin-bottom: 75px;
-    margin-top: 100px;
-    position: relative;
-    &::after {
+    .main-text {
       position: absolute;
-      content: "";
-      height: 3px;
-      background-color: $main-color;
-      width: 265px;
-      top: 100%;
-      left: 5%;
+      padding: 5% 0;
+      width: 100%;
+      text-align: center;
+      z-index: 5;
+      .btn {
+        margin: 1rem auto;
+      }
+      .alert {
+        text-align: center;
+      }
     }
   }
-}
-
-@media screen and (max-width: 400px) {
-.middlebox{
-
-}
-.middlebox-left{
-  width: 50%;
-  margin-left: 1rem;
-.imgcovid{
-  width: 100%;
-  margin: 0 auto;
-  height: auto;
-}
-}
-.middlebox-right{
-margin: 0 auto;
-// height: auto;
-font-size: 70%;
-
-.copyright{
-  margin-top: 2rem;
-}
-.copyunder{
-  display: block;
-  font-size: 0.875px;
-  
-  // font-weight: lighter;
-  .sitemes{
-    font-size: 30%;
+  .sub-wrapper {
+    flex-direction: column;
   }
-}
-}
+  .sidebar {
+    width: 100%;
+    .sidebar-inner {
+      margin: 2rem 8%;
+    }
+    .br {
+      br {
+        display: none;
+        @media screen and (max-width: 400px) {
+          display: flex;
+        }
+      }
+    }
+    .mnlink {
+      margin: 2rem 0 3rem;
+    }
+  }
+  .post-list {
+    width: 100%;
+    .inner {
+      margin: 2rem 4%;
+    }
+  }
 }
 </style>
