@@ -32,10 +32,11 @@
                 >ログアウト</a
               >
             </div>
-            <div v-else class="login-page">
+            <div v-else>
               <a @click="clickEvent" v-on:click="signUp" class="btn"
                 >ログイン</a
               >
+              <p class="alert">※投稿・閲覧にはログインが必要です</p>
             </div>
           </li>
         </ul>
@@ -235,6 +236,11 @@ $btn-color: rgb(4, 163, 255);
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
+    }
+    .alert {
+      font-size: 0.875rem;
+      text-align: center;
+      margin-top: 0.5rem;
     }
   }
 }

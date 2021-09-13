@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="copyright">
-        <span>copyright c 2021 09/11 soakout</span>
+        <span>©️soakout 2021 09/11</span>
       </div>
     </footer>
   </div>
