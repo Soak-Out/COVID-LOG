@@ -2724,6 +2724,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 }
 .inner {
   margin: 61px 10% 91px;
+  @media screen and (max-width: 1024px) {
+    margin: 2rem 3%;
+  }
 }
 .post-list {
   width: calc(200% / 3);
@@ -2767,7 +2770,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   border-radius: 10px;
   margin-top: 3rem;
   position: relative;
-  margin: 3rem;
+  @media screen and (max-width: 1024px) {
+    margin-top: 1rem;
+  }
   .time {
     position: absolute;
     height: 20px;
@@ -2933,6 +2938,9 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
 .check-block {
   margin: 2rem 3rem 2rem 3rem;
   line-height: 2;
+  @media screen and (max-width: 1024px) {
+    margin: 0.5rem;
+  }
 }
 .pcarraybox {
   display: block;
@@ -2961,15 +2969,15 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .post {
     border: 3px solid $main-color;
     border-radius: 10px;
-    margin-top: 3rem;
+    margin-top: 1rem;
     position: relative;
-    margin: 2rem;
     text-align: left;
   }
   .block-ttl {
     margin: auto;
-    margin-top: 2rem;
-    margin-left: 8rem;
+    margin-top: 1rem;
+    // margin-left: 8rem;
+    text-align: center;
   }
   .severity {
     margin: auto;
@@ -2991,9 +2999,6 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
     border-radius: 10px;
     margin-top: 3rem;
   }
-  .inner {
-    margin: auto;
-  }
   .time {
     display: none;
   }
@@ -3012,22 +3017,17 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   }
   .attribute {
     margin: auto;
-    padding: 2rem 1rem;
+    padding: 0.5rem;
     display: table;
   }
   .illlevelbutton {
-    margin-left: auto;
     padding-right: 6rem;
   }
 }
 @media screen and (max-width: 767px) {
-  .illlevelbutton {
-    margin-left: auto;
-  }
   .attribute {
     margin: auto;
-    padding: 2rem 1rem;
-    display: table;
+    padding: 0.5rem;
   }
   .ttl {
     font-size: 1rem;
@@ -3048,9 +3048,7 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
       font-weight: bold;
     }
   }
-  .inner {
-    margin: auto;
-  }
+
   .time {
     display: none;
   }
@@ -3083,15 +3081,14 @@ $btn-color: linear-gradient(to right, #7dbaf3, #386de0);
   .post {
     border: 3px solid $main-color;
     border-radius: 10px;
-    margin-top: 3rem;
+    margin-top: 1rem;
     position: relative;
-    margin: 2rem;
     text-align: left;
   }
   .block-ttl {
     margin: auto;
-    margin-top: 2rem;
-    margin-left: 8rem;
+    margin-top: 1rem;
+    text-align: center;
   }
   .severity {
     margin: auto;

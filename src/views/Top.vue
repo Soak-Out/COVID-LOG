@@ -573,6 +573,7 @@ $btn-color: rgb(4, 163, 255);
         top: auto;
         bottom: 0;
         right: 1%;
+        display: none;
       }
       .post-info {
         .post-status {
