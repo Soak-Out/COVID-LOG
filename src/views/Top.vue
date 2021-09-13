@@ -12,10 +12,10 @@
           <br />
           <div>
             <p>
-              新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その予防策を投稿して共有しましょう。<br />
+              新型コロナウイルス感染症や<br />ワクチン接種の経験、<br />その対策などを共有しましょう。<br />
             </p>
             <br />
-            <p>新型コロナウイルス感染症専用の投稿サイト</p>
+            <p class="br">新型コロナウイルス感染症専用<br />投稿サイト</p>
           </div>
           <div v-if="isAuth == false">
             <a @click="signUp" class="btn">ログイン</a>
@@ -321,6 +321,14 @@ $btn-color: rgb(4, 163, 255);
       text-align: left;
       margin-bottom: 0;
     }
+    .br {
+      br {
+        display: none;
+        @media screen and (max-width: 400px) {
+          display: flex;
+        }
+      }
+    }
   }
 }
 .sub-wrapper {
@@ -441,6 +449,9 @@ $btn-color: rgb(4, 163, 255);
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    @media screen and (max-width: 1024px) {
+      font-size: 1.1rem;
+    }
     &::after {
       position: absolute;
       content: "";
@@ -605,14 +616,14 @@ $btn-color: rgb(4, 163, 255);
       background-position: center;
       background-size: cover;
       object-fit: cover;
-      opacity: 0.3;
+      opacity: 0.2;
       img {
         display: none;
       }
     }
     .main-text {
       position: absolute;
-      padding: 5% 0;
+      padding: 5% 3%;
       width: 100%;
       text-align: center;
       z-index: 5;
